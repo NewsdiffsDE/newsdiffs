@@ -5,7 +5,7 @@ import sys
 # Use dev settings if not otherwise configured.
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 try:
-    os.symlink('settings_dev.py', THIS_DIR+'/settings.py')
+    os.symlink('settings_main.py', THIS_DIR+'/settings.py')
 except OSError:
     pass
 
