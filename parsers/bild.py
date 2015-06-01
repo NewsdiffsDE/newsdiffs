@@ -17,6 +17,10 @@ class BildParser(BaseParser):
                              fromEncoding='utf-8')
 
         self.meta = soup.findAll('meta')
+        # category
+        keywords = soup.find('meta', {'name': 'keywords'})
+        self.category = self.compute_category(keywords['content'] if keywords else '')
+        print(self.category)
         #article headline
         try:
             elt = soup.find('meta', {'property': 'og:title'})['content']
@@ -32,7 +36,7 @@ class BildParser(BaseParser):
         created_at = soup.find('div', {'class': 'date'})
         self.date = created_at.getText() if created_at else ''
         #article content
-        div = soup.find('div', {'itemprop':'articleBody isFamilyFriendly'})
+        div = soup.find('div', {'itemprop': 'articleBody isFamilyFriendly'})
         if div is None:
             self.real_article = False
             return

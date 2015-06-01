@@ -97,6 +97,7 @@ class BaseParser(object):
 
     # These should be filled in by self._parse(html)
     date = None
+    category = None
     title = None
     byline = None
     body = None
@@ -105,6 +106,14 @@ class BaseParser(object):
     SUFFIX = ''         # append suffix, like '?fullpage=yes', to urls
 
     meta = []  # Currently unused.
+
+    categories = {'Allgemein': ['Allgemein', 'Sonstiges', 'Vermischtes'],
+                  'Politik':['Politik'],
+                  'Wirtschaft':['Geld','Finanzen','Wirtschaft','Arbeit'],
+                  'Regional':['Regional'],
+                  'Technik':['Digital', 'Internet'],
+                  'Wissenschaft':['Wissen'],
+                  'Gesellschaft':['Gesellschaft']}
 
     # Used when finding articles to parse
     feeder_pat   = None # Look for links matching this regular expression
@@ -164,3 +173,15 @@ class BaseParser(object):
         comments = html.findAll(text=lambda text:isinstance(text, Comment))
         [comment.extract() for comment in comments]
         return html
+
+        #extracts the first matching category from keywords
+    def compute_category(self, keywords):
+        matched_category = "Allgemein"
+        keywords = keywords.lower().split(',')
+        for cats in self.categories.itervalues():
+            for key in keywords:
+                for cat in cats:
+                    if key in cat.lower():
+                        matched_category = [k for k, v in self.categories.iteritems() if v == cats][0]
+                        break;
+        return matched_category
