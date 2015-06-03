@@ -15,6 +15,8 @@ spiegel.SpiegelParser
 zeit.ZeitParser
 RPOnline.RPOParser
 faz.FAZParser
+welt.WeltParser
+n-tv.NTVParser
 """.split()
 
 parser_dict = {}
