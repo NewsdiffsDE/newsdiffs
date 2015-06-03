@@ -25,6 +25,8 @@ PublicationDict = {'www.zeit.de': 'Zeit Online',
                    'www.sueddeutsche.de': 'Sueddeutsche Zeitung',
                    'www.spiegel.de': 'Der Spiegel',
                    'www.faz.de': 'FAZ',
+                   'www.n-tv.de': 'N-TV',
+                   'www.welt.de': 'Die Welt',
                    }
 
 ancient = datetime(1901, 1, 1)
