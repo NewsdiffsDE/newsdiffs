@@ -107,13 +107,13 @@ class BaseParser(object):
 
     meta = []  # Currently unused.
 
-    categories = {'Allgemein': ['Allgemein', 'Sonstiges', 'Vermischtes'],
-                  'Politik':['Politik'],
-                  'Wirtschaft':['Geld','Finanzen','Wirtschaft','Arbeit'],
-                  'Regional':['Regional'],
-                  'Technik':['Digital', 'Internet'],
-                  'Wissenschaft':['Wissen'],
-                  'Gesellschaft':['Gesellschaft']}
+    categories = {u'Allgemein': [u'Allgemein', u'Sonstiges', u'Vermischtes'],
+                  u'Politik':[u'Politik'],
+                  u'Wirtschaft':[u'Geld',u'Finanzen',u'Wirtschaft',u'Arbeit'],
+                  u'Regional':[u'Regional'],
+                  u'Technik':[u'Digital', u'Internet'],
+                  u'Wissenschaft':[u'Wissen'],
+                  u'Gesellschaft':[u'Gesellschaft']}
 
     # Used when finding articles to parse
     feeder_pat   = None # Look for links matching this regular expression
@@ -144,7 +144,7 @@ class BaseParser(object):
         raise NotImplementedError()
 
     def __unicode__(self):
-        return canonicalize(u'\n'.join((self.date, self.title, self.byline,
+        return canonicalize(u'\n'.join((self.date, self.category, self.title, self.byline,
                                         self.body,)))
 
     @classmethod
@@ -175,8 +175,9 @@ class BaseParser(object):
         return html
 
         #extracts the first matching category from keywords
+        # TODO save category in Database
     def compute_category(self, keywords):
-        matched_category = "Allgemein"
+        matched_category = str("Allgemein")
         keywords = keywords.lower().split(',')
         for cats in self.categories.itervalues():
             for key in keywords:
@@ -184,4 +185,4 @@ class BaseParser(object):
                     if key in cat.lower():
                         matched_category = [k for k, v in self.categories.iteritems() if v == cats][0]
                         break;
-        return matched_category
+        return str(matched_category)
