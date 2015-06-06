@@ -18,6 +18,13 @@ class FAZParser(BaseParser):
         soup = BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES,
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
+        # category
+        try:
+            keywords = soup.find('ul', {'id': 'nav'}).find('li', {'class': 'Selected'}).find('a')
+        except:
+            self.real_article = False
+            return
+        self.category = self.compute_category(keywords.text if keywords else '')
         #article headline
         elt = soup.find('meta', {'property': 'og:title'})
         if elt is None:

@@ -184,5 +184,6 @@ class BaseParser(object):
                 for cat in cats:
                     if key in cat.lower():
                         matched_category = [k for k, v in self.categories.iteritems() if v == cats][0]
+                        print(matched_category)
                         break;
         return str(matched_category)

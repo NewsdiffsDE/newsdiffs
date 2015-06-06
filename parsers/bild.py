@@ -20,7 +20,6 @@ class BildParser(BaseParser):
         # category
         keywords = soup.find('meta', {'name': 'keywords'})
         self.category = self.compute_category(keywords['content'] if keywords else '')
-        print(self.category)
         #article headline
         try:
             elt = soup.find('meta', {'property': 'og:title'})['content']
