@@ -13,6 +13,9 @@ class SpiegelParser(BaseParser):
                              fromEncoding='utf-8')
 
         self.meta = soup.findAll('meta')
+        # category
+        keywords = self.url.strip('http://www.spiegel.de/').replace('/', ',')
+        self.category = self.compute_category(keywords if keywords else '')
         #article headline
         elt = soup.find('h2', {'class': 'article-title'})
         if elt is None:

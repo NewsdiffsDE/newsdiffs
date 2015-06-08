@@ -109,10 +109,10 @@ class BaseParser(object):
 
     categories = {u'Allgemein': [u'Allgemein', u'Sonstiges', u'Vermischtes'],
                   u'Politik': [u'Politik'],
-                  u'Wirtschaft': [u'Geld',u'Finanzen',u'Wirtschaft',u'Arbeit'],
+                  u'Wirtschaft': [u'Geld', u'Finanzen', u'Wirtschaft', u'Arbeit'],
                   u'Regional': [u'Regional', u'Region'],
-                  u'Technik': [u'Digital', u'Internet', u'Technik'],
-                  u'Wissenschaft': [u'Wissen'],
+                  u'Technik': [u'Digital', u'Internet', u'Technik', u'Netzwelt'],
+                  u'Wissenschaft': [u'Wissen', u'Gesundheit'],
                   u'Gesellschaft': [u'Gesellschaft']}
 
     # Used when finding articles to parse
@@ -184,6 +184,6 @@ class BaseParser(object):
                 for cat in cats:
                     if key in cat.lower():
                         matched_category = [k for k, v in self.categories.iteritems() if v == cats][0]
-                        print(matched_category)
                         break;
+        print(matched_category)
         return str(matched_category)
