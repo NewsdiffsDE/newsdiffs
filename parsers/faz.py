@@ -11,7 +11,6 @@ class FAZParser(BaseParser):
                     'http://www.faz.net/aktuell/politik',
                     'http://www.faz.net/aktuell/wirtschaft',
                     'http://www.faz.net/aktuell/wissen',
-                    'http://www.faz.net/aktuell/feuilleton',
                     ]
 
     def _parse(self, html):
@@ -19,12 +18,8 @@ class FAZParser(BaseParser):
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
         # category
-        try:
-            keywords = soup.find('ul', {'id': 'nav'}).find('li', {'class': 'Selected'}).find('a')
-        except:
-            self.real_article = False
-            return
-        self.category = self.compute_category(keywords.text if keywords else '')
+        keywords = self.url.strip('http://www.faz.net').replace('/', ',')
+        self.category = self.compute_category(keywords if keywords else '')
         #article headline
         elt = soup.find('meta', {'property': 'og:title'})
         if elt is None:

@@ -6,7 +6,7 @@ class FocusParser(BaseParser):
     SUFFIX = '?drucken=1'
     domains = ['www.focus.de']
 
-    feeder_pat   = '^http://www.focus.de/(politik|finanzen|gesundheit|wissen)'
+    feeder_pat   = '^http://www.focus.de/(politik|finanzen|gesundheit|wissen|panorama|digital)'
     feeder_pages = ['http://www.focus.de/']
 
     def _parse(self, html):
@@ -15,16 +15,7 @@ class FocusParser(BaseParser):
 
         self.meta = soup.findAll('meta')
         # category
-        keywords = ''
-        try:
-            keywords = soup.select('#navigation > div > ul > li.active > a').text
-        except:
-            pass
-        try:
-            keywords = soup.select('.ressort-label').getText()
-        except:
-            self.real_article = False
-            return
+        keywords = self.url.strip('http://www.focus.de').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')
         #article headline
         elt = soup.find('h1')

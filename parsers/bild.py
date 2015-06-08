@@ -18,8 +18,8 @@ class BildParser(BaseParser):
 
         self.meta = soup.findAll('meta')
         # category
-        keywords = soup.find('meta', {'name': 'keywords'})
-        self.category = self.compute_category(keywords['content'] if keywords else '')
+        keywords = self.url.strip('http://www.bild.de').replace('/', ',')
+        self.category = self.compute_category(keywords if keywords else '')
         #article headline
         try:
             elt = soup.find('meta', {'property': 'og:title'})['content']
