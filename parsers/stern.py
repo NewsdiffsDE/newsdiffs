@@ -6,7 +6,7 @@ class SternParser(BaseParser):
     SUFFIX = ''
     domains = ['www.stern.de']
 
-    feeder_pat   = '^http://www.stern.de/(politik|wirtschaft|panorama|lifestyle|wissen|digital)/'
+    feeder_pat   = '^http://www.stern.de/(politik|wirtschaft|panorama|wissen|digital)/'
     feeder_pages = ['http://www.stern.de/news',
                     'http://www.stern.de/news/2',
                     'http://www.stern.de/news/3',
@@ -18,6 +18,9 @@ class SternParser(BaseParser):
                              fromEncoding='utf-8')
 
         self.meta = soup.findAll('meta')
+        # category
+        keywords = self.url.strip('http://www.stern.de/').replace('/', ',')
+        self.category = self.compute_category(keywords if keywords else '')
         #article headline
         elt = soup.find('h2', {'id': 'div_article_headline'})
         if elt is None:

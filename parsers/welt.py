@@ -6,13 +6,16 @@ class WeltParser(BaseParser):
 
     domains = ['www.welt.de']
 
-    feeder_pat   = 'article\d*'
+    feeder_pat   = '^http://www.welt.de/(politik|wirtschaft|finanzen|vermischtes|wissenschaft|regionales|debatte)/'
     feeder_pages = ['http://www.welt.de/']
 
     def _parse(self, html):
         soup = BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES,
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
+        # category
+        keywords = self.url.strip('http://www.welt.de/').replace('/', ',')
+        self.category = self.compute_category(keywords if keywords else '')
         #article headline
         elt = soup.find('h1', 'widget storyContent title    prefix_1 grid_8')
         if elt is None:

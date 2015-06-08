@@ -110,9 +110,9 @@ class BaseParser(object):
     categories = {u'Allgemein': [u'Allgemein', u'Sonstiges', u'Vermischtes'],
                   u'Politik': [u'Politik'],
                   u'Wirtschaft': [u'Geld', u'Finanzen', u'Wirtschaft', u'Arbeit'],
-                  u'Regional': [u'Regional', u'Region'],
+                  u'Regional': [u'Regional', u'Region', u'Regionales'],
                   u'Technik': [u'Digital', u'Internet', u'Technik', u'Netzwelt'],
-                  u'Wissenschaft': [u'Wissen', u'Gesundheit'],
+                  u'Wissenschaft': [u'Wissen', u'Gesundheit', u'Bildung'],
                   u'Gesellschaft': [u'Gesellschaft']}
 
     # Used when finding articles to parse

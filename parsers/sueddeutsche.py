@@ -5,13 +5,16 @@ from BeautifulSoup import BeautifulSoup, Tag
 class SDParser(BaseParser):
     domains = ['www.sueddeutsche.de']
 
-    feeder_pat   = '1\.\d*$'
+    feeder_pat   = '^http://www.sueddeutsche.de/(politik|wirtschaft|panorama|wissen|digital)/'
     feeder_pages = ['http://www.sueddeutsche.de/']
 
     def _parse(self, html):
         soup = BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES,
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
+        # category
+        keywords = self.url.strip('http://www.sueddeutsche.de/').replace('/', ',')
+        self.category = self.compute_category(keywords if keywords else '')
         #article headline
         elt = soup.find('meta', {'property': 'og:title'})
         if elt is None:
