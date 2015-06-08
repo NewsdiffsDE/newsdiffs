@@ -14,6 +14,18 @@ class FocusParser(BaseParser):
                              fromEncoding='utf-8')
 
         self.meta = soup.findAll('meta')
+        # category
+        keywords = ''
+        try:
+            keywords = soup.select('#navigation > div > ul > li.active > a').text
+        except:
+            pass
+        try:
+            keywords = soup.select('.ressort-label').getText()
+        except:
+            self.real_article = False
+            return
+        self.category = self.compute_category(keywords if keywords else '')
         #article headline
         elt = soup.find('h1')
         if elt is None:
