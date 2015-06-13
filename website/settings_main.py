@@ -1,7 +1,7 @@
 # Django settings for the newsdiffs project.
 
-ALLOWED_HOSTS = ['.newsdiffs.org', '.newsdiffs.org.',
-                 'newsdiffs.scripts.mit.edu', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['.newsdiffs.de', '.newsdiffs.de.',
+                 'dev.newsdiffs.de', 'localhost', '127.0.0.1']
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -15,15 +15,21 @@ ADMINS = (
 MANAGERS = ADMINS
 SERVER_EMAIL = "newsdiffs@mit.edu"
 
-for line in open('/mit/newsdiffs/.my.cnf').read().split():
+for line in open('/var/www/dev/.passdb.cnf').read().split():
     if line.startswith('password='):
         pwd = line.split('=')[1]
+    if line.startswith('host='):
+        host = line.split('=')[1] 
+    if line.startswith('name='):
+        name = line.split('=')[1]
+    if line.startswith('user='):
+        user = line.split('=')[1] 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'sql.mit.edu',
-        'NAME': 'newsdiffs+newsdiffs',
-        'USER': 'newsdiffs',
+        'HOST': host,
+        'NAME': name,
+        'USER': user,
         'PASSWORD': pwd,
         'OPTIONS': {
 # This doesn't seem to work.
@@ -34,10 +40,10 @@ DATABASES = {
 
 if False: #django 1.3
     DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-    DATABASE_NAME = 'ecprice+newsdiffs'             # Or path to database file if using sqlite3.
-    DATABASE_USER = 'ecprice'             # Not used with sqlite3.
+    DATABASE_NAME = name            # Or path to database file if using sqlite3.
+    DATABASE_USER = user             # Not used with sqlite3.
     DATABASE_PASSWORD = pwd         # Not used with sqlite3.
-    DATABASE_HOST = 'sql.mit.edu'             # Set to empty string for localhost. Not used with sqlite3.
+    DATABASE_HOST = host             # Set to empty string for localhost. Not used with sqlite3.
     DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
 
 # Local time zone for this installation. Choices can be found here:
