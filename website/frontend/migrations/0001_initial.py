@@ -23,6 +23,7 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('article', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['frontend.Article'])),
             ('v', self.gf('django.db.models.fields.CharField')(unique=True, max_length=255)),
+            ('category', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('byline', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('date', self.gf('django.db.models.fields.DateTimeField')()),
@@ -31,27 +32,12 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('frontend', ['Version'])
 
-        # Adding model 'Upvote'
-        db.create_table('upvotes', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('article_id', self.gf('django.db.models.fields.IntegerField')()),
-            ('diff_v1', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('diff_v2', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('creation_time', self.gf('django.db.models.fields.DateTimeField')()),
-            ('upvoter_ip', self.gf('django.db.models.fields.CharField')(max_length=255)),
-        ))
-        db.send_create_signal('frontend', ['Upvote'])
-
-
     def backwards(self, orm):
         # Deleting model 'Article'
         db.delete_table('Articles')
 
         # Deleting model 'Version'
         db.delete_table('version')
-
-        # Deleting model 'Upvote'
-        db.delete_table('upvotes')
 
 
     models = {
@@ -63,15 +49,6 @@ class Migration(SchemaMigration):
             'last_update': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(1901, 1, 1, 0, 0)'}),
             'url': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255', 'db_index': 'True'})
         },
-        'frontend.upvote': {
-            'Meta': {'object_name': 'Upvote', 'db_table': "'upvotes'"},
-            'article_id': ('django.db.models.fields.IntegerField', [], {}),
-            'creation_time': ('django.db.models.fields.DateTimeField', [], {}),
-            'diff_v1': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'diff_v2': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'upvoter_ip': ('django.db.models.fields.CharField', [], {'max_length': '255'})
-        },
         'frontend.version': {
             'Meta': {'object_name': 'Version', 'db_table': "'version'"},
             'article': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['frontend.Article']"}),
@@ -80,6 +57,7 @@ class Migration(SchemaMigration):
             'date': ('django.db.models.fields.DateTimeField', [], {}),
             'diff_json': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'category': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'v': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'})
         }
