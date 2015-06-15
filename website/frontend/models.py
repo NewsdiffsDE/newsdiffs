@@ -104,18 +104,6 @@ class Version(models.Model):
             self.diff_json = json.dumps(val)
     diff_info = property(get_diff_info, set_diff_info)
 
-
-class Upvote(models.Model):
-    class Meta:
-        db_table = 'upvotes'
-
-    article_id = models.IntegerField(blank=False)
-    diff_v1 = models.CharField(max_length=255, blank=False)
-    diff_v2 = models.CharField(max_length=255, blank=False)
-    creation_time = models.DateTimeField(blank=False)
-    upvoter_ip = models.CharField(max_length=255)
-
-
 # subprocess.check_output appeared in python 2.7.
 # backport it to 2.6
 def check_output(*popenargs, **kwargs):
