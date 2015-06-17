@@ -19,9 +19,9 @@ n-tv.NTVParser
 welt.WeltParser
 """
 
+# stern funktioniert noch nicht, nach fix zurück in die liste
 parsers = """
 sueddeutsche.SDParser
-stern.SternParser
 bild.BildParser
 focus.FocusParser
 spiegel.SpiegelParser

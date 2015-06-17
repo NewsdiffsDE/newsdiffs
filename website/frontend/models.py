@@ -17,9 +17,9 @@ def strip_prefix(string, prefix):
         string = string[len(prefix):]
     return string
 
-PublicationDict = {'www.zeit.de': 'Zeit Online',
+PublicationDict = {
                    'www.bild.de': 'Bild',
-                   'www.focus.de': 'Focus Online',
+                   'www.focus.de': 'Focus',
                    'www.stern.de': 'Der Stern',
                    'www.zeit.de': 'Die Zeit',
                    'www.sueddeutsche.de': 'Sueddeutsche Zeitung',
