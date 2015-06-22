@@ -19,17 +19,8 @@ n-tv.NTVParser
 welt.WeltParser
 """
 
-# stern funktioniert noch nicht, nach fix zurück in die liste
 parsers = """
-sueddeutsche.SDParser
 bild.BildParser
-focus.FocusParser
-spiegel.SpiegelParser
-zeit.ZeitParser
-RPOnline.RPOParser
-faz.FAZParser
-n-tv.NTVParser
-welt.WeltParser
 """.split()
 
 parser_dict = {}

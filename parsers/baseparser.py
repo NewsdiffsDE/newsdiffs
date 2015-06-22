@@ -115,6 +115,8 @@ class BaseParser(object):
                   u'Wissenschaft': [u'Wissen', u'Gesundheit', u'Bildung'],
                   u'Gesellschaft': [u'Gesellschaft']}
 
+    tags = []   # list of tags/keywords
+
     # Used when finding articles to parse
     feeder_pat   = None # Look for links matching this regular expression
     feeder_pages = []   # on these pages
@@ -186,3 +188,10 @@ class BaseParser(object):
                         matched_category = [k for k, v in self.categories.iteritems() if v == cats][0]
                         break
         return str(matched_category)
+
+        #extracts keywords from text
+    def extract_keywords(self, text):
+        words = text.replace(',', ' ').split(' ')
+        keywords = list(words)
+        map(lambda x : (keywords.remove(x) if x[0].islower() else None), words)
+        return keywords
