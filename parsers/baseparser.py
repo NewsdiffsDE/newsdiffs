@@ -193,5 +193,5 @@ class BaseParser(object):
     def extract_keywords(self, text):
         words = text.replace(',', ' ').split(' ')
         keywords = list(words)
-        map(lambda x : (keywords.remove(x) if x[0].islower() else None), words)
+        map(lambda x : (keywords.remove(x) if x and x[0].islower() else None), words)
         return keywords
