@@ -32,7 +32,6 @@ class BildParser(BaseParser):
         meta_keywords = soup.find('meta', {'name': 'news_keywords'})['content'] if soup.find('meta', {'name': 'news_keywords'}) else ""
         self.tags = self.extract_keywords(meta_keywords)
         self.tags += self.extract_keywords(self.title)
-        print(self.tags)
         # byline / author
         author = soup.find('div', {'itemprop':'author'})
         self.byline = author.getText() if author else ''

@@ -191,7 +191,8 @@ class BaseParser(object):
 
         #extracts keywords from text
     def extract_keywords(self, text):
+        text.encode('utf-8')
         words = text.replace(',', ' ').split(' ')
-        keywords = list(words)
-        map(lambda x : (keywords.remove(x) if x and x[0].islower() else None), words)
-        return keywords
+        results = []
+        map(lambda x : (results.append(x) if x and x[0].isupper() else None), words)
+        return ', '.join(results)
