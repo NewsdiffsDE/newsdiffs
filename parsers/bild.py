@@ -6,7 +6,7 @@ class BildParser(BaseParser):
     SUFFIX = ''
     domains = ['www.bild.de']
 
-    feeder_pat   = '^http://www.bild.de/(politik|regional|geld|digital/[a-z])'
+    feeder_pat   = '^http://www.bild.de/(politik|regional|geld|digital)/(?!(startseite)/)'
     feeder_pages = ['http://www.bild.de/politik/startseite',
                     'http://www.bild.de/geld/startseite/',
                     'http://www.bild.de/regional/startseite/',

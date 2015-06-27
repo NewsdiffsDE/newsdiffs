@@ -5,7 +5,7 @@ from BeautifulSoup import BeautifulSoup, Tag
 class RPOParser(BaseParser):
     domains = ['www.rp-online.de']
 
-    feeder_pat = '1\.\d*$'
+    feeder_pat = '(?<!(vid|bid|iid))(-1\.\d*)$'
     feeder_pages = ['http://www.rp-online.de/']
 
     def _parse(self, html):

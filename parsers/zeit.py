@@ -6,7 +6,7 @@ class ZeitParser(BaseParser):
     SUFFIX = '?print=true'
     domains = ['www.zeit.de']
 
-    feeder_pat = '^http://www.zeit.de/(politik|wirtschaft|gesellschaft|wissen|digital)/'
+    feeder_pat = '^http://www.zeit.de/(politik|wirtschaft|gesellschaft|wissen|digital)/.*\d{4}-\d{2}/.*'
     feeder_pages = ['http://www.zeit.de/index/']
 
     def _parse(self, html):

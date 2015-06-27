@@ -6,7 +6,7 @@ class WeltParser(BaseParser):
 
     domains = ['www.welt.de']
 
-    feeder_pat   = '^http://www.welt.de/(politik|wirtschaft|finanzen|vermischtes|wissenschaft|regionales|debatte)/'
+    feeder_pat   = '^http://www.welt.de/(politik|wirtschaft|finanzen|vermischtes|wissenschaft|regionales|debatte)/.*\.html$'
     feeder_pages = ['http://www.welt.de/']
 
     def _parse(self, html):

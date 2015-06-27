@@ -120,6 +120,7 @@ class BaseParser(object):
     # Used when finding articles to parse
     feeder_pat   = None # Look for links matching this regular expression
     feeder_pages = []   # on these pages
+    feed_div = None
 
     feeder_bs = BeautifulSoup #use this version of beautifulsoup for feed
 
@@ -155,8 +156,10 @@ class BaseParser(object):
         for feeder_url in cls.feeder_pages:
             html = grab_url(feeder_url)
             soup = cls.feeder_bs(html)
+            if(cls.feed_div):
+                soup = soup.find(cls.feed_div)
 
-            # "or ''" to make None into str
+            # "or ''" to make None into strgit
             urls = [a.get('href') or '' for a in soup.findAll('a')]
 
             # If no http://, prepend domain name
@@ -164,8 +167,8 @@ class BaseParser(object):
             urls = [url if '://' in url else concat(domain, url) for url in urls]
 
             all_urls = all_urls + [url for url in urls if
-                                   re.search(cls.feeder_pat, url)]
-        return all_urls
+                                   re.search(cls.feeder_pat, url) and "#" not in url]
+        return set(all_urls)
 
         #removes all non-content
     def remove_non_content(self, html):
@@ -190,9 +193,11 @@ class BaseParser(object):
         return str(matched_category)
 
         #extracts keywords from text
+        # TODO save keywords in Database
     def extract_keywords(self, text):
         text.encode('utf-8')
         words = text.replace(',', ' ').split(' ')
         results = []
         map(lambda x : (results.append(x) if x and x[0].isupper() else None), words)
         return ', '.join(results)
+
