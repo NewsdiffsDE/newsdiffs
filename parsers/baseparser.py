@@ -154,8 +154,8 @@ class BaseParser(object):
         for feeder_url in cls.feeder_pages:
             html = grab_url(feeder_url)
             soup = cls.feeder_bs(html)
-        if(cls.feed_div):
-            soup = soup.find(cls.feed_div)
+        #if(cls.feed_div):
+         #   soup = soup.find(cls.feed_div)
 
             # "or ''" to make None into strgit
             urls = [a.get('href') or '' for a in soup.findAll('a')]
