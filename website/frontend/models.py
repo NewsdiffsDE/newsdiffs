@@ -79,6 +79,7 @@ class Version(models.Model):
 
     article = models.ForeignKey('Article', null=False)
     v = models.CharField(max_length=255, blank=False, unique=True)
+    #category = models.CharField(max_length=255, blank=False)
     title = models.CharField(max_length=255, blank=False)
     byline = models.CharField(max_length=255,blank=False)
     date = models.DateTimeField(blank=False)
