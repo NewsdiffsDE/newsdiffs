@@ -28,7 +28,9 @@ class Migration(SchemaMigration):
             'last_check': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(1901, 1, 1, 0, 0)'}),
             'last_update': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(1901, 1, 1, 0, 0)'}),
             'url': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255', 'db_index': 'True'}),
-            'category': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+            'category': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'keywords': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'source': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         'frontend.version': {
             'Meta': {'object_name': 'Version', 'db_table': "'version'"},

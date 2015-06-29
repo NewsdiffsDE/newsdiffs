@@ -97,10 +97,12 @@ class BaseParser(object):
 
     # These should be filled in by self._parse(html)
     date = None
-    category = 'lilala'
+    category = None
     title = None
     byline = None
     body = None
+    keywords = "Maus, Tod, Baum"
+    source = None
 
     real_article = True # If set to False, ignore this article
     SUFFIX = ''         # append suffix, like '?fullpage=yes', to urls
@@ -154,8 +156,8 @@ class BaseParser(object):
         for feeder_url in cls.feeder_pages:
             html = grab_url(feeder_url)
             soup = cls.feeder_bs(html)
-        if(cls.feed_div):
-            soup = soup.find(cls.feed_div)
+        #if(cls.feed_div):
+         #   soup = soup.find(cls.feed_div)
 
             # "or ''" to make None into strgit
             urls = [a.get('href') or '' for a in soup.findAll('a')]

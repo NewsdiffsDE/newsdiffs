@@ -14,6 +14,7 @@ class ZeitParser(BaseParser):
                              fromEncoding='utf-8')
 
         self.meta = soup.findAll('meta')
+        self.source = ', '.join(self.domains)
         # category
         keywords = self.url.strip('http://www.zeit.de').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')

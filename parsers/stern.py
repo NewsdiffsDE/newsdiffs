@@ -18,6 +18,7 @@ class SternParser(BaseParser):
                              fromEncoding='utf-8')
 
         self.meta = soup.findAll('meta')
+        self.source = ', '.join(self.domains)
         # category
         keywords = self.url.strip('http://www.stern.de/').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')

@@ -12,6 +12,7 @@ class SDParser(BaseParser):
         soup = BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES,
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
+        self.source = ', '.join(self.domains)
         # category
         keywords = self.url.strip('http://www.sueddeutsche.de/').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')
