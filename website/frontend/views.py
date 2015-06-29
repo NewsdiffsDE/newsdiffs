@@ -325,14 +325,15 @@ def article_author(request, authorarg=''):
     if author is None:
         author = authorarg
 
+
     # Otherwise gives an error, since our table character set is latin1.
     author = author.encode('ascii', 'ignore')
-    print(author)
 
-    full_name = author.split(' ')  #list
+    if author is None:
+        return render_to_response('article_history_missing.html', {'searchword':'query ist leer'})
 
     try:
-        article = Version.objects.filter(byline=author).get(Article)
+        article = Version.objects.filter(byline=author).ForeignKey(Article)
     except Article.DoesNotExist:
         try:
             return render_to_response('article_history_missing.html', {'searchword': author})
@@ -346,7 +347,7 @@ def article_author(request, authorarg=''):
     rowinfo = get_rowinfo(article)
     return render_to_response('article_history.html', {'article':article,
                                                        'versions':rowinfo,
-            'display_search_banner': came_from_search_engine(request),
+                                                        'display_search_banner': came_from_search_engine(request),
                                                        })
 def article_history_feed(request, url=''):
     url = prepend_http(url)

@@ -15,7 +15,7 @@ urlpatterns = [
   url(r'^examples/$', 'frontend.views.examples', name='examples'),
   url(r'^feed/article-history/(.*)$', 'frontend.views.article_history_feed', name='article_history_feed'),
   url(r'^article-history/(?P<urlarg>.*)$', 'frontend.views.article_history', name='article_history'),
-  url(r'^article-history/(?P<authorarg>.*)$', 'frontend.views.article_history', name='article_author'),
+  url(r'^article-history/(?P<authorarg>.*)$', 'frontend.views.article_author', name='article_author'),
   url(r'^json/view/(?P<vid>\d+)/?$', 'frontend.views.json_view'),
   url(r'^$', 'frontend.views.front', name='root'),
 ]
