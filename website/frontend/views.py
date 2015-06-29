@@ -299,14 +299,14 @@ def article_history(request, urlarg=''):
     # database.  These queries are usually spam.
     domain = url.split('/')[2]
     if not is_valid_domain(domain):
-        return render_to_response('article_history_missing.html', {'url': url})
+        return render_to_response('article_history_missing.html', {'searchword': url})
 
 
     try:
         article = Article.objects.get(url=url)
     except Article.DoesNotExist:
         try:
-            return render_to_response('article_history_missing.html', {'url': url})
+            return render_to_response('article_history_missing.html', {'searchword': url})
         except (TypeError, ValueError):
             # bug in django + mod_rewrite can cause this. =/
             return HttpResponse('Bug!')
@@ -323,18 +323,19 @@ def article_history(request, urlarg=''):
 def article_author(request, authorarg=''):
     author = request.REQUEST.get('author') # this is the deprecated interface.
     if author is None:
-        url = authorarg
+        author = authorarg
 
     # Otherwise gives an error, since our table character set is latin1.
     author = author.encode('ascii', 'ignore')
+    print(author)
 
-    full_name = url.split(' ')  #list
+    full_name = author.split(' ')  #list
 
     try:
-        article = Version.objects.get(byline=full_name[0]).get(Article)
+        article = Version.objects.filter(byline=author).get(Article)
     except Article.DoesNotExist:
         try:
-            return render_to_response('article_history_missing.html', {'byline': author})
+            return render_to_response('article_history_missing.html', {'searchword': author})
         except (TypeError, ValueError):
             # bug in django + mod_rewrite can cause this. =/
             return HttpResponse('Bug!')
