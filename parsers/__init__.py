@@ -18,18 +18,10 @@ faz.FAZParser
 n-tv.NTVParser
 welt.WeltParser
 """
-
 parsers = """
-sueddeutsche.SDParser
 bild.BildParser
-focus.FocusParser
-spiegel.SpiegelParser
-zeit.ZeitParser
-RPOnline.RPOParser
-faz.FAZParser
-n-tv.NTVParser
-welt.WeltParser
 """.split()
+
 
 parser_dict = {}
 

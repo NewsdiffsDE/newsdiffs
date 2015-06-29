@@ -284,8 +284,8 @@ def article_history(request, urlarg=''):
     url = request.REQUEST.get('url') # this is the deprecated interface.
     if url is None:
         url = urlarg
-    if len(url) == 0:
-        return HttpResponseRedirect(reverse(front))
+    #if len(url) == 0:
+     #   return HttpResponseRedirect(reverse(front))
 
     url = url.split('?')[0]  #For if user copy-pastes from news site
 
@@ -319,6 +319,34 @@ def article_history(request, urlarg=''):
                                                        'versions':rowinfo,
             'display_search_banner': came_from_search_engine(request),
                                                        })
+
+def article_author(request, authorarg=''):
+    author = request.REQUEST.get('author') # this is the deprecated interface.
+    if author is None:
+        url = authorarg
+
+    # Otherwise gives an error, since our table character set is latin1.
+    author = author.encode('ascii', 'ignore')
+
+    full_name = url.split(' ')  #list
+
+    try:
+        article = Version.objects.get(byline=full_name[0]).get(Article)
+    except Article.DoesNotExist:
+        try:
+            return render_to_response('article_history_missing.html', {'byline': author})
+        except (TypeError, ValueError):
+            # bug in django + mod_rewrite can cause this. =/
+            return HttpResponse('Bug!')
+
+    if len(authorarg) == 0:
+        return HttpResponseRedirect(reverse(article_history, args=[article.filename()]))
+
+    rowinfo = get_rowinfo(article)
+    return render_to_response('article_history.html', {'article':article,
+                                                       'versions':rowinfo,
+            'display_search_banner': came_from_search_engine(request),
+                                                       })
 def article_history_feed(request, url=''):
     url = prepend_http(url)
     article = get_object_or_404(Article, url=url)
@@ -334,7 +362,6 @@ def article_history_feed(request, url=''):
 def json_view(request, vid):
     version = get_object_or_404(Version, id=int(vid))
     data = dict(
-        category=version.category,
         title=version.title,
         byline = version.byline,
         date = version.date.isoformat(),
