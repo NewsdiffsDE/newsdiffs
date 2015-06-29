@@ -97,7 +97,7 @@ class BaseParser(object):
 
     # These should be filled in by self._parse(html)
     date = None
-    category = None
+    category = 'lilala'
     title = None
     byline = None
     body = None

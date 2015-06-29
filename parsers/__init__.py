@@ -19,7 +19,7 @@ n-tv.NTVParser
 welt.WeltParser
 """
 parsers = """
-bild.BildParser
+faz.FAZParser
 """.split()
 
 
