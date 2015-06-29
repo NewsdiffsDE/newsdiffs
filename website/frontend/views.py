@@ -334,7 +334,7 @@ def article_history_feed(request, url=''):
 def json_view(request, vid):
     version = get_object_or_404(Version, id=int(vid))
     data = dict(
-        category=version.category,
+        #category=version.category,
         title=version.title,
         byline = version.byline,
         date = version.date.isoformat(),
