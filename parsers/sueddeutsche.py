@@ -25,6 +25,7 @@ class SDParser(BaseParser):
         # byline / author
         author = soup.find('div', {'class': 'authorProfileContainer'})
         self.byline = author.getText() if author else ''
+        self._cleanByline()
         # article date
         created_at = soup.find('time', {'class': 'timeformat'})
         if created_at is None:

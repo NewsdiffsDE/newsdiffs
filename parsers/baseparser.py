@@ -134,6 +134,7 @@ class BaseParser(object):
         logger.debug('got html')
         self._parse(self.html)
 
+
     def _printableurl(self):
         return self.url + self.SUFFIX
 
@@ -165,7 +166,7 @@ class BaseParser(object):
             urls = [url if '://' in url else concat(domain, url) for url in urls]
 
             all_urls = all_urls + [url for url in urls if
-                                   re.search(cls.feeder_pat, url) and "#" not in url] 
+                                   re.search(cls.feeder_pat, url) and '#' not in url]
         return set(all_urls)
 
         #removes all non-content
@@ -189,3 +190,8 @@ class BaseParser(object):
                         matched_category = [k for k, v in self.categories.iteritems() if v == cats][0]
                         break
         return str(matched_category)
+    # clean byline tag, replaces "und" with a comma, strips "Von"
+    def _cleanByline(self):
+        if self.byline.startswith('Von ') or self.byline.startswith('von '):
+            self.byline = self.byline[4:]
+        self.byline = self.byline.replace(' und ', ',')

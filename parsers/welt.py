@@ -25,6 +25,7 @@ class WeltParser(BaseParser):
         # byline / author
         authorids = soup.find('span', {'itemprop': 'author'})
         self.byline = authorids.getText() if authorids else ''
+        self._cleanByline()
         # article date
         self.date = soup.find('meta', {'name': 'date'})['content']
         #article content
