@@ -29,6 +29,10 @@ class BildParser(BaseParser):
             self.real_article = False
             return
 
+        # tags from meta-keywords and title
+        meta_keywords = soup.find('meta', {'name': 'news_keywords'})['content'] if soup.find('meta', {'name': 'news_keywords'}) else ""
+        self.tags = self.extract_keywords(meta_keywords)
+        self.tags += self.extract_keywords(self.title)
         # byline / author
         author = soup.find('div', {'itemprop':'author'})
         self.byline = author.getText() if author else ''
@@ -45,6 +49,6 @@ class BildParser(BaseParser):
         text = ''
         p = div.findAll('p')
         for txt in p:
-                text += txt.getText()+'\n'
+            text += txt.getText()+'\n'
         self.body = text
 
