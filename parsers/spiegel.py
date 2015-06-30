@@ -23,6 +23,10 @@ class SpiegelParser(BaseParser):
             self.real_article = False
             return
         self.title = elt.getText()
+        # tags from meta-keywords and title
+        meta_keywords = soup.find('meta', {'name': 'news_keywords'})['content'] if soup.find('meta', {'name': 'news_keywords'}) else ""
+        self.tags = self.extract_keywords(meta_keywords)
+        self.tags += self.extract_keywords(self.title)
         # byline / author
         try:
             author = soup.find('a', {'rel': 'author'}).text
