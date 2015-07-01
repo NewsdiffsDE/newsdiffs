@@ -201,7 +201,7 @@ def old_diffview(request):
     v1tag = request.REQUEST.get('v1')
     v2tag = request.REQUEST.get('v2')
     if url is None or v1tag is None or v2tag is None:
-        return HttpResponseRedirect(reverse(front))
+        return HttpResponseRedirect(reverse(index))
 
     try:
         v1 = Version.objects.get(v=v1tag)
@@ -410,13 +410,31 @@ def json_view(request, vid):
 def about(request):
     return render_to_response('about.html', {})
 
-def examples(request):
-    return render_to_response('examples.html', {})
+def history(request):
+    return render_to_response('article_history.html', {})
 
-def contact(request):
-    return render_to_response('contact.html', {})
+def artikel(request):
+    return render_to_response('diffview.html', {})
 
-def front(request):
-    return render_to_response('front.html', {'sources': SOURCES})
+def entdecken(request):
+    return render_to_response('entdecken.html', {})
+
+def highlights(request):
+    return render_to_response('highlights.html', {})
+
+def kontakt(request):
+    return render_to_response('kontakt.html', {})
+
+def suchergebnisse(request):
+    return render_to_response('suchergebnisse.html', {})
+
+def impressum(request):
+    return render_to_response('impressum.html', {})
+
+def archiv(request):
+    return render_to_response('archive.html', {})
+
+def index(request):
+    return render_to_response('index.html', {'sources': SOURCES})
 
 
