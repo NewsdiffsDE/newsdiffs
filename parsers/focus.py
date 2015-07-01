@@ -34,6 +34,7 @@ class FocusParser(BaseParser):
         except:
             author = ''
         self.byline = author
+        self._cleanByline()
         # article date
         created_at = soup.find('meta', {'name':'date'})
         self.date = created_at['content'] if created_at else ''

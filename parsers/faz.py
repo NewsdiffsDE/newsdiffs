@@ -34,6 +34,7 @@ class FAZParser(BaseParser):
         # byline / author
         author = soup.find('meta', {'name': 'author'})
         self.byline = author['content'] if author else ''
+        self._cleanByline()
         # article date
         created_at = soup.find('meta', {'name': 'DC.date.issued'})
         self.date = created_at['content'] if created_at else ''

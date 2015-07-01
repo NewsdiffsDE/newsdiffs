@@ -138,6 +138,7 @@ class BaseParser(object):
         logger.debug('got html')
         self._parse(self.html)
 
+
     def _printableurl(self):
         return self.url + self.SUFFIX
 
@@ -158,8 +159,8 @@ class BaseParser(object):
         for feeder_url in cls.feeder_pages:
             html = grab_url(feeder_url)
             soup = cls.feeder_bs(html)
-        #if(cls.feed_div):
-         #   soup = soup.find(cls.feed_div)
+            if(cls.feed_div):
+                soup = soup.find(cls.feed_div)
 
             # "or ''" to make None into strgit
             urls = [a.get('href') or '' for a in soup.findAll('a')]
@@ -201,3 +202,9 @@ class BaseParser(object):
         map(lambda x : (results.append(x) if x and x[0].isupper() else None), words)
         return ', '.join(results)
 
+
+        # clean byline tag, replaces "und" with a comma, strips "Von"
+    def _cleanByline(self):
+        if self.byline.startswith('Von ') or self.byline.startswith('von '):
+            self.byline = self.byline[4:]
+        self.byline = self.byline.replace(' und ', ',')

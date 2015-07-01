@@ -31,6 +31,7 @@ class ZeitParser(BaseParser):
         # byline / author
         author = soup.find('span', {'class': 'header_author'})
         self.byline = author.getText() if author else ''
+        self._cleanByline()
         # article date
         created_at = soup.find('span', 'articlemeta-datetime')
         self.date = created_at.getText() if created_at else ''

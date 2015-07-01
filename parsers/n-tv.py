@@ -36,6 +36,7 @@ class NTVParser(BaseParser):
         # byline / author
         author = soup.find('p', {'class': 'author'})
         self.byline = author.getText() if author else ''
+        self._cleanByline()
         # article date
         created_at = soup.find('div', {'itemprop': 'datePublished'})
         self.date = created_at['content'] if created_at else ''

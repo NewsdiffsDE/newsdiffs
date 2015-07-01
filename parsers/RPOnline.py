@@ -27,8 +27,8 @@ class RPOParser(BaseParser):
         self.tags = self.extract_keywords(meta_keywords)
         self.tags += self.extract_keywords(self.title)
         # byline / author
-        author = soup.find('meta', {'itemprop': 'author'})
-        self.byline = author['content'] if author else ''
+        self.byline = ''
+        self._cleanByline()
         # article date
         created_at = soup.find('meta', {'property': 'vr:published_time'})
         self.date = created_at['content'] if created_at else ''

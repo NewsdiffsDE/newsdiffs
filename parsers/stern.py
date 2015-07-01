@@ -35,6 +35,7 @@ class SternParser(BaseParser):
         # byline / author
         author = soup.find('div', {'class': 'guest-authors'})
         self.byline = author.getText() if author else ''
+        self._cleanByline()
         # article date
         created_at = soup.find('meta', {'name': 'date'})
         self.date = created_at['content'] if created_at else ''
