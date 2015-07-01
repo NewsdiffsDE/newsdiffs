@@ -159,6 +159,7 @@ def browse(request, source=''):
     num_pages = (datetime.datetime.now() - first_update).days + 1
     page_list=range(1, 1+num_pages)
 
+    # browse = entdecken = suche *
     articles = get_articles(source=source, distance=page-1)
     return render_to_response('browse.html', {
             'source': source, 'articles': articles,
@@ -349,6 +350,7 @@ def article_history(request, urlarg=''):
     if len(urlarg) == 0:
         return HttpResponseRedirect(reverse(article_history, args=[article.filename()]))
 
+    # was article-history
     rowinfo = get_rowinfo(article)
     return render_to_response('article_history.html', {'article':article,
                                                        'versions':rowinfo,

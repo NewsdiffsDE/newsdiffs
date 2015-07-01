@@ -49,4 +49,3 @@ class NTVParser(BaseParser):
         map(lambda x: x.extract(), div.findAll('p', {'class': 'author'}))
         self.body = '\n' + '\n\n'.join([x.getText() for x in div.childGenerator()
                                         if isinstance(x, Tag) and x.name == 'p'])
-

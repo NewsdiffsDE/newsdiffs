@@ -170,6 +170,7 @@ class BaseParser(object):
             urls = [url if '://' in url else concat(domain, url) for url in urls]
 
             all_urls = all_urls + [url for url in urls if
+
                                    re.search(cls.feeder_pat, url) and "#" not in url]
         return set(all_urls)
 
@@ -208,3 +209,4 @@ class BaseParser(object):
         if self.byline.startswith('Von ') or self.byline.startswith('von '):
             self.byline = self.byline[4:]
         self.byline = self.byline.replace(' und ', ',')
+

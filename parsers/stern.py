@@ -50,3 +50,4 @@ class SternParser(BaseParser):
         for txt in p:
                 text += txt.getText()+'\n'
         self.body = text
+
