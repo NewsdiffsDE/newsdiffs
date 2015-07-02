@@ -349,6 +349,10 @@ def update_article(article):
         if not boring:
             article.last_update = t
             article.save()
+        article.category = parsed_article.category
+        article.keywords = parsed_article.keywords
+        article.source = parsed_article.source
+        article.save()
 
 def update_articles(todays_git_dir):
     logger.info('Starting scraper; looking for new URLs')

@@ -12,6 +12,7 @@ class NTVParser(BaseParser):
         soup = BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES,
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
+        self.source = ', '.join(self.domains)
         # category
         keywords = self.url.strip('http://www.n-tv.de').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')
@@ -28,6 +29,10 @@ class NTVParser(BaseParser):
             self.real_article = False
             return
         self.title = elt.getText()
+        # tags from meta-keywords and title
+        meta_keywords = soup.find('meta', {'name': 'news_keywords'})['content'] if soup.find('meta', {'name': 'news_keywords'}) else ""
+        self.tags = self.extract_keywords(meta_keywords)
+        self.tags += self.extract_keywords(self.title)
         # byline / author
         author = soup.find('p', {'class': 'author'})
         self.byline = author.getText() if author else ''
@@ -44,4 +49,3 @@ class NTVParser(BaseParser):
         map(lambda x: x.extract(), div.findAll('p', {'class': 'author'}))
         self.body = '\n' + '\n\n'.join([x.getText() for x in div.childGenerator()
                                         if isinstance(x, Tag) and x.name == 'p'])
-

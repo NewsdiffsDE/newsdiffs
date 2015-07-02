@@ -12,6 +12,7 @@ class RPOParser(BaseParser):
         soup = BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES,
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
+        self.source = ', '.join(self.domains)
         # category
         keywords = soup.find('meta', {'property': 'vr:category'})
         self.category = self.compute_category(keywords['content'] if keywords else '')
@@ -21,6 +22,10 @@ class RPOParser(BaseParser):
             self.real_article = False
             return
         self.title = elt['content']
+        # tags from meta-keywords and title
+        meta_keywords = soup.find('meta', {'name': 'news_keywords'})['content'] if soup.find('meta', {'name': 'news_keywords'}) else ""
+        self.tags = self.extract_keywords(meta_keywords)
+        self.tags += self.extract_keywords(self.title)
         # byline / author
         self.byline = ''
         self._cleanByline()

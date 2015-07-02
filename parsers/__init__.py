@@ -6,6 +6,7 @@
 # Test with test_parser.py
 # List of parsers to import and use based on parser.domains
 
+
 """
 sueddeutsche.SDParser
 stern.SternParser
@@ -22,6 +23,7 @@ taz.TAZParser
 
 parsers = """
 sueddeutsche.SDParser
+stern.SternParser
 bild.BildParser
 focus.FocusParser
 spiegel.SpiegelParser
@@ -32,6 +34,7 @@ n-tv.NTVParser
 welt.WeltParser
 taz.TAZParser
 """.split()
+
 
 parser_dict = {}
 

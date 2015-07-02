@@ -51,6 +51,41 @@ def get_last_update(source):
         return updates[0].last_update
     except IndexError:
         return datetime.datetime.now()
+def get_articles_by_keyword(keyword):
+    articles = []
+    query = '''SELECT
+    version.id, version.article_id, version.v, version.title,
+      version.byline, version.date, version.boring, version.diff_json,
+      T.age as age,
+      Articles.url as a_url, Articles.initial_date as a_initial_date,
+      Articles.last_update as a_last_update, Articles.last_check as a_last_check
+    FROM version,
+     (SELECT Articles.id as article_id, MAX(T3.date) AS age, COUNT(T3.id) AS num_vs
+      FROM Articles LEFT OUTER JOIN version T3 ON (Articles.id = T3.article_id)
+      WHERE (T3.boring=0) and
+            (Articles.keywords LIKE '%'''+keyword+'''%')
+      GROUP BY Articles.id
+      HAVING (age > %s  AND age < %s  AND num_vs > 1 )) T, Articles
+    WHERE (version.article_id = Articles.id) and
+          (version.article_id = T.article_id) and
+          NOT version.boring
+    ORDER BY date'''
+    all_versions = models.Version.objects.raw(query)
+    article_dict = {}
+    for v in all_versions:
+        a=models.Article(id=v.article_id,
+                        url=v.a_url, initial_date=v.a_initial_date,
+                        last_update=v.a_last_update, last_check=v.a_last_check)
+        v.article = a
+        article_dict.setdefault(v.article, []).append(v)
+        for article, versions in article_dict.items():
+            if len(versions) < 2:
+                continue
+        rowinfo = get_rowinfo(article, versions)
+        articles.append((article, versions[-1], rowinfo))
+    print 'Queries:', len(django.db.connection.queries), django.db.connection.queries
+    articles.sort(key = lambda x: x[-1][0][1].date, reverse=True)
+    return articles
 
 def get_articles(source=None, distance=0):
     articles = []
@@ -124,6 +159,7 @@ def browse(request, source=''):
     num_pages = (datetime.datetime.now() - first_update).days + 1
     page_list=range(1, 1+num_pages)
 
+    # browse = entdecken = suche *
     articles = get_articles(source=source, distance=page-1)
     return render_to_response('browse.html', {
             'source': source, 'articles': articles,
@@ -166,7 +202,7 @@ def old_diffview(request):
     v1tag = request.REQUEST.get('v1')
     v2tag = request.REQUEST.get('v2')
     if url is None or v1tag is None or v2tag is None:
-        return HttpResponseRedirect(reverse(front))
+        return HttpResponseRedirect(reverse(index))
 
     try:
         v1 = Version.objects.get(v=v1tag)
@@ -284,8 +320,8 @@ def article_history(request, urlarg=''):
     url = request.REQUEST.get('url') # this is the deprecated interface.
     if url is None:
         url = urlarg
-    if len(url) == 0:
-        return HttpResponseRedirect(reverse(front))
+    #if len(url) == 0:
+     #   return HttpResponseRedirect(reverse(front))
 
     url = url.split('?')[0]  #For if user copy-pastes from news site
 
@@ -299,14 +335,14 @@ def article_history(request, urlarg=''):
     # database.  These queries are usually spam.
     domain = url.split('/')[2]
     if not is_valid_domain(domain):
-        return render_to_response('article_history_missing.html', {'url': url})
+        return render_to_response('article_history_missing.html', {'searchword': url})
 
 
     try:
         article = Article.objects.get(url=url)
     except Article.DoesNotExist:
         try:
-            return render_to_response('article_history_missing.html', {'url': url})
+            return render_to_response('article_history_missing.html', {'searchword': url})
         except (TypeError, ValueError):
             # bug in django + mod_rewrite can cause this. =/
             return HttpResponse('Bug!')
@@ -314,10 +350,41 @@ def article_history(request, urlarg=''):
     if len(urlarg) == 0:
         return HttpResponseRedirect(reverse(article_history, args=[article.filename()]))
 
+    # was article-history
     rowinfo = get_rowinfo(article)
     return render_to_response('article_history.html', {'article':article,
                                                        'versions':rowinfo,
             'display_search_banner': came_from_search_engine(request),
+                                                       })
+
+def article_author(request, authorarg=''):
+    author = request.REQUEST.get('author') # this is the deprecated interface.
+    if author is None:
+        author = authorarg
+
+
+    # Otherwise gives an error, since our table character set is latin1.
+    author = author.encode('ascii', 'ignore')
+
+    if author is None:
+        return render_to_response('article_history_missing.html', {'searchword':'query ist leer'})
+
+    try:
+        article = Version.objects.filter(byline=author).ForeignKey(Article)
+    except Article.DoesNotExist:
+        try:
+            return render_to_response('article_history_missing.html', {'searchword': author})
+        except (TypeError, ValueError):
+            # bug in django + mod_rewrite can cause this. =/
+            return HttpResponse('Bug!')
+
+    if len(authorarg) == 0:
+        return HttpResponseRedirect(reverse(article_history, args=[article.filename()]))
+
+    rowinfo = get_rowinfo(article)
+    return render_to_response('article_history.html', {'article':article,
+                                                       'versions':rowinfo,
+                                                        'display_search_banner': came_from_search_engine(request),
                                                        })
 def article_history_feed(request, url=''):
     url = prepend_http(url)
@@ -334,7 +401,7 @@ def article_history_feed(request, url=''):
 def json_view(request, vid):
     version = get_object_or_404(Version, id=int(vid))
     data = dict(
-        category=version.category,
+        #category=version.category,
         title=version.title,
         byline = version.byline,
         date = version.date.isoformat(),
@@ -345,13 +412,31 @@ def json_view(request, vid):
 def about(request):
     return render_to_response('about.html', {})
 
-def examples(request):
-    return render_to_response('examples.html', {})
+def history(request):
+    return render_to_response('article_history.html', {})
 
-def contact(request):
-    return render_to_response('contact.html', {})
+def artikel(request):
+    return render_to_response('diffview.html', {})
 
-def front(request):
-    return render_to_response('front.html', {'sources': SOURCES})
+def entdecken(request):
+    return render_to_response('entdecken.html', {})
+
+def highlights(request):
+    return render_to_response('highlights.html', {})
+
+def kontakt(request):
+    return render_to_response('kontakt.html', {})
+
+def suchergebnisse(request):
+    return render_to_response('suchergebnisse.html', {})
+
+def impressum(request):
+    return render_to_response('impressum.html', {})
+
+def archiv(request):
+    return render_to_response('archive.html', {})
+
+def index(request):
+    return render_to_response('index.html', {'sources': SOURCES})
 
 

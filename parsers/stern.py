@@ -18,6 +18,7 @@ class SternParser(BaseParser):
                              fromEncoding='utf-8')
 
         self.meta = soup.findAll('meta')
+        self.source = ', '.join(self.domains)
         # category
         keywords = self.url.strip('http://www.stern.de/').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')
@@ -27,6 +28,10 @@ class SternParser(BaseParser):
             self.real_article = False
             return
         self.title = elt.getText()
+        # tags from meta-keywords and title
+        meta_keywords = soup.find('meta', {'name': 'news_keywords'})['content'] if soup.find('meta', {'name': 'news_keywords'}) else ""
+        self.tags = self.extract_keywords(meta_keywords)
+        self.tags += self.extract_keywords(self.title)
         # byline / author
         author = soup.find('div', {'class': 'guest-authors'})
         self.byline = author.getText() if author else ''
@@ -45,3 +50,4 @@ class SternParser(BaseParser):
         for txt in p:
                 text += txt.getText()+'\n'
         self.body = text
+
