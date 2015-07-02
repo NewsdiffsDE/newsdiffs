@@ -14,10 +14,7 @@ class TAZParser(BaseParser):
         soup = BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES,
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
-        # tags from meta-keywords and title
-        meta_keywords = soup.find('meta', {'name': 'keywords'})['content'] if soup.find('meta', {'name': 'keywords'}) else ""
-        self.tags = self.extract_keywords(meta_keywords)
-        self.tags += self.extract_keywords(self.title)
+        self.source = ', '.join(self.domains)
         #article headline
         elt = soup.find('meta', {'property': 'og:title'})
         if elt is None:
@@ -25,28 +22,32 @@ class TAZParser(BaseParser):
             return
         else:
             self.title = elt['content']
+        # tags from meta-keywords and title
+        meta_keywords = soup.find('meta', {'name': 'keywords'})['content'] if soup.find('meta', {'name': 'keywords'}) else ""
+        self.tags = self.extract_keywords(meta_keywords)
+        self.tags += self.extract_keywords(self.title)
         # byline / author
         author = soup.find('meta', {'name': 'author'})
-        self.byline = author['content'] if author else ''
+        self.byline = author['content'] if (author and (author != 'taz. die tageszeitung')) else ''
         self._cleanByline()
         # article date
         created_at = soup.find('span', {'class': 'date'})
         if created_at is None:
             self.real_article = False
             return
-        self.date = created_at.getText() if created_at else ''
-         # category
+        self.date = ''.join(created_at.getText().replace("\n", "").split()) if created_at else ''
+        # category
         self.category = self.compute_category(meta_keywords if meta_keywords else '')
         #article content
-        div = soup.find('div', {'class': 'odd sect sect_article news report'}).find('div', {'class': 'sectbody'})
+        div = soup.find('div', {'class': 'odd sect sect_article news report'})
+        if div is None:
+            self.real_article = False
+            return
+        div = div.find('div', {'class': 'sectbody'})
         if div is None:
             self.real_article = False
             return
         div = self.remove_non_content(div)
         map(lambda x: x.extract(), div.findAll('p', {'class':'caption'}))
-
-        if div is None:
-            self.real_article = False
-            return
         self.body = '\n'+'\n\n'.join([x.getText() for x in div.childGenerator()
                                       if isinstance(x, Tag) and x.name == 'p'])
