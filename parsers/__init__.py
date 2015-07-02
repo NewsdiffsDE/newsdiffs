@@ -7,19 +7,31 @@
 # List of parsers to import and use based on parser.domains
 
 
-#sueddeutsche.SDParser
-#stern.SternParser
-#bild.BildParser
-#focus.FocusParser
-#spiegel.SpiegelParser
-#zeit.ZeitParser
-#RPOnline.RPOParser
-#faz.FAZParser
-#welt.WeltParser
-#n-tv.NTVParser
-#taz.TAZParser
+"""
+sueddeutsche.SDParser
+stern.SternParser
+bild.BildParser
+focus.FocusParser
+spiegel.SpiegelParser
+zeit.ZeitParser
+RPOnline.RPOParser
+faz.FAZParser
+n-tv.NTVParser
+welt.WeltParser
+taz.TAZParser
+"""
 
 parsers = """
+sueddeutsche.SDParser
+stern.SternParser
+bild.BildParser
+focus.FocusParser
+spiegel.SpiegelParser
+zeit.ZeitParser
+RPOnline.RPOParser
+faz.FAZParser
+n-tv.NTVParser
+welt.WeltParser
 taz.TAZParser
 """.split()
 
