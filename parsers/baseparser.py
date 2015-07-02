@@ -101,6 +101,8 @@ class BaseParser(object):
     title = None
     byline = None
     body = None
+    keywords = "Maus, Tod, Baum"
+    source = None
 
     real_article = True # If set to False, ignore this article
     SUFFIX = ''         # append suffix, like '?fullpage=yes', to urls
@@ -114,6 +116,8 @@ class BaseParser(object):
                   u'Technik': [u'Digital', u'Internet', u'Technik', u'Netzwelt'],
                   u'Wissenschaft': [u'Wissen', u'Gesundheit', u'Bildung'],
                   u'Gesellschaft': [u'Gesellschaft']}
+
+    tags = []   # list of tags/keywords
 
     # Used when finding articles to parse
     feeder_pat   = None # Look for links matching this regular expression
@@ -166,7 +170,8 @@ class BaseParser(object):
             urls = [url if '://' in url else concat(domain, url) for url in urls]
 
             all_urls = all_urls + [url for url in urls if
-                                   re.search(cls.feeder_pat, url) and '#' not in url]
+
+                                   re.search(cls.feeder_pat, url) and "#" not in url]
         return set(all_urls)
 
         #removes all non-content
@@ -179,7 +184,6 @@ class BaseParser(object):
         return html
 
         #extracts the first matching category from keywords
-        # TODO save category in Database
     def compute_category(self, keywords):
         matched_category = str("Allgemein")
         keywords = keywords.lower().split(',')
@@ -190,7 +194,17 @@ class BaseParser(object):
                         matched_category = [k for k, v in self.categories.iteritems() if v == cats][0]
                         break
         return str(matched_category)
-    # clean byline tag, replaces "und" with a comma, strips "Von"
+
+        #extracts keywords from text
+    def extract_keywords(self, text):
+        text.encode('utf-8')
+        words = text.replace(',', ' ').split(' ')
+        results = []
+        map(lambda x : (results.append(x) if x and x[0].isupper() else None), words)
+        return ', '.join(results)
+
+
+        # clean byline tag, replaces "und" with a comma, strips "Von"
     def _cleanByline(self):
         if self.byline.startswith('Von ') or self.byline.startswith('von '):
             self.byline = self.byline[4:]

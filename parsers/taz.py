@@ -14,6 +14,10 @@ class TAZParser(BaseParser):
         soup = BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES,
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
+        # tags from meta-keywords and title
+        meta_keywords = soup.find('meta', {'name': 'keywords'})['content'] if soup.find('meta', {'name': 'keywords'}) else ""
+        self.tags = self.extract_keywords(meta_keywords)
+        self.tags += self.extract_keywords(self.title)
         #article headline
         elt = soup.find('meta', {'property': 'og:title'})
         if elt is None:
@@ -31,9 +35,8 @@ class TAZParser(BaseParser):
             self.real_article = False
             return
         self.date = created_at.getText() if created_at else ''
-        #category
-        self.category = ""
-        #self.date = created_at['datetime']
+         # category
+        self.category = self.compute_category(meta_keywords if meta_keywords else '')
         #article content
         div = soup.find('div', {'class': 'odd sect sect_article news report'}).find('div', {'class': 'sectbody'})
         if div is None:
