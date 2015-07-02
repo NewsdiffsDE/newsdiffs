@@ -104,7 +104,7 @@ def get_articles(source=None, distance=0):
     return articles
 
 
-SOURCES = '''zeit.de bild.de focus.de spiegel.de stern.de welt.de faz.de n-tv.de rp-online.de sueddeutsche.de'''.split()
+SOURCES = '''zeit.de bild.de focus.de spiegel.de stern.de welt.de faz.de n-tv.de rp-online.de sueddeutsche.de taz.de'''.split()
 
 def is_valid_domain(domain):
     """Cheap method to tell whether a domain is being tracked."""

@@ -28,6 +28,7 @@ PublicationDict = {
                    'www.n-tv.de': 'N-TV',
                    'www.welt.de': 'Die Welt',
                    'www.rp-online.de': 'RP-Online',
+                   'www.taz.de': 'TAZ',
                    }
 
 ancient = datetime(1901, 1, 1)

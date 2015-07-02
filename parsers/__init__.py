@@ -17,6 +17,7 @@ RPOnline.RPOParser
 faz.FAZParser
 n-tv.NTVParser
 welt.WeltParser
+taz.TAZParser
 """
 
 parsers = """
@@ -29,6 +30,7 @@ RPOnline.RPOParser
 faz.FAZParser
 n-tv.NTVParser
 welt.WeltParser
+taz.TAZParser
 """.split()
 
 parser_dict = {}
