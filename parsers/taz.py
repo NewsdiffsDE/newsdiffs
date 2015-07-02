@@ -29,7 +29,8 @@ class TAZParser(BaseParser):
         # byline / author
         try:
             author = soup.find('meta', {'name': 'author'})['content']
-        except: author = ''
+        except:
+            author = ''
         self.byline = author if not ('taz' in author) else ''
         self._cleanByline()
         # article date
