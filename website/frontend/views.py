@@ -53,17 +53,17 @@ def get_last_update(source):
         return datetime.datetime.now()
 def get_articles_by_keyword(keyword, distance=0):
     articles = []
-    
+
     #pagelength = datetime.timedelta(days=1)
     #end_date = datetime.datetime.now() - distance * pagelength
     #start_date = end_date - pagelength
     query = '''SELECT id, url, initial_date, last_update, last_check FROM Articles WHERE keywords LIKE %s;'''
     all_articles = models.Article.objects.raw(query, (keyword))
-    for a in all_articles:
-        articles=models.Article(id=a.id, url=a.url, initial_date=a.initial_date,
-                        last_update=a.last_update, last_check=a.last_check)
+    #for a in all_articles:
+     #   articles=models.Article(id=a.id, url=a.url, initial_date=a.initial_date,
+      #                  last_update=a.last_update, last_check=a.last_check)
     #articles.sort(key = lambda x: x[-1][0][1].date, reverse=True)
-    return articles
+    return all_articles
 
 def get_articles(source=None, distance=0):
     articles = []

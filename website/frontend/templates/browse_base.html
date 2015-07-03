@@ -23,7 +23,7 @@
 
         <table class="table table-condensed"  style="width:100%">
           <thead><tr><th text-align="left";>Artikel</th><th>Version</th><th>Diff</th></tr></thead>
-          {% for article, last_version, versions in articles %}
+          {% for article in articles %}
           <tr><td rowspan="{{versions|length}}" valign="top"><a href="{% url 'article_history' article.filename %}">{{last_version.title}}</a> (<a href="{{article.url}}">{{article.publication}}</a>)<br>{{last_version.byline}}</td>
             {% for difflink, version in versions %}
             <td>{{version.date}}</td>
