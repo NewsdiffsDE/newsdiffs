@@ -58,7 +58,8 @@ def get_articles_by_keyword(keyword, distance=0):
     #end_date = datetime.datetime.now() - distance * pagelength
     #start_date = end_date - pagelength
     query = '''SELECT id, url, initial_date, last_update, source last_check FROM Articles WHERE keywords LIKE %s;'''
-    all_articles = models.Article.objects.raw(query, (keyword))
+    #all_articles = models.Article.objects.raw(query, (keyword))
+    all_articles = Article.objects.filter(keywords__contains = keyword)
     #for a in all_articles:
      #   articles=models.Article(id=a.id, url=a.url, initial_date=a.initial_date,
       #                  last_update=a.last_update, last_check=a.last_check)
