@@ -8,7 +8,13 @@
     <div class="col-md-6 col-md-offset-3">
         <div id="search-element">
             <div id="search-input">
-                <input type="text" placeholder="Suche" id="search-input-line"><button type="button" id="search-input-btn" onclick="location.href='article-list-page.html'"><span class="glyphicon glyphicon-search" ></span></button>
+                <form method="get" action="{% url 'browse' %}">
+                <input type="text" name="keyword" placeholder="Suche" id="search-input-line">
+                    <a href="#">
+                        <button type="submit" id="search-input-btn" ><span class="glyphicon glyphicon-search" ></span></button>
+                    </a>
+                </form>
+
             </div>
 
             <div id="search-foldout">

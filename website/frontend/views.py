@@ -51,26 +51,14 @@ def get_last_update(source):
         return updates[0].last_update
     except IndexError:
         return datetime.datetime.now()
-def get_articles_by_keyword(keyword):
+def get_articles_by_keyword(keyword, distance=0):
     articles = []
-    query = '''SELECT
-    version.id, version.article_id, version.v, version.title,
-      version.byline, version.date, version.boring, version.diff_json,
-      T.age as age,
-      Articles.url as a_url, Articles.initial_date as a_initial_date,
-      Articles.last_update as a_last_update, Articles.last_check as a_last_check
-    FROM version,
-     (SELECT Articles.id as article_id, MAX(T3.date) AS age, COUNT(T3.id) AS num_vs
-      FROM Articles LEFT OUTER JOIN version T3 ON (Articles.id = T3.article_id)
-      WHERE (T3.boring=0) and
-            (Articles.keywords LIKE '%'''+keyword+'''%')
-      GROUP BY Articles.id
-      HAVING (age > %s  AND age < %s  AND num_vs > 1 )) T, Articles
-    WHERE (version.article_id = Articles.id) and
-          (version.article_id = T.article_id) and
-          NOT version.boring
-    ORDER BY date'''
+    pagelength = datetime.timedelta(days=1)
+    end_date = datetime.datetime.now() - distance * pagelength
+    start_date = end_date - pagelength
+    query = '''SELECT id, url FROM Articles WHERE keywords LIKE '%Maus%';'''
     all_versions = models.Version.objects.raw(query)
+    print(type(all_versions))
     article_dict = {}
     for v in all_versions:
         a=models.Article(id=v.article_id,
@@ -150,6 +138,7 @@ def browse(request, source=''):
     if source not in SOURCES + ['']:
         raise Http404
     pagestr=request.REQUEST.get('page', '1')
+    keyword=request.REQUEST.get('keyword')
     try:
         page = int(pagestr)
     except ValueError:
@@ -160,14 +149,24 @@ def browse(request, source=''):
     page_list=range(1, 1+num_pages)
 
     # browse = entdecken = suche *
-    articles = get_articles(source=source, distance=page-1)
-    return render_to_response('browse.html', {
-            'source': source, 'articles': articles,
-            'page':page,
-            'page_list': page_list,
-            'first_update': first_update,
-            'sources': SOURCES
-            })
+    if keyword is not '':
+        articles = get_articles_by_keyword(keyword, distance=page-1)
+        return render_to_response('browse.html', {
+                'articles': articles,
+                'page':page,
+                'page_list': page_list,
+                'first_update': first_update,
+                'sources': SOURCES
+                })
+    else:
+        articles = get_articles(source=source, distance=page-1)
+        return render_to_response('browse.html', {
+                'source': source, 'articles': articles,
+                'page':page,
+                'page_list': page_list,
+                'first_update': first_update,
+                'sources': SOURCES
+                })
 
 @cache_page(60 * 30)  #30 minute cache
 def feed(request, source=''):
@@ -355,36 +354,6 @@ def article_history(request, urlarg=''):
     return render_to_response('article_history.html', {'article':article,
                                                        'versions':rowinfo,
             'display_search_banner': came_from_search_engine(request),
-                                                       })
-
-def article_author(request, authorarg=''):
-    author = request.REQUEST.get('author') # this is the deprecated interface.
-    if author is None:
-        author = authorarg
-
-
-    # Otherwise gives an error, since our table character set is latin1.
-    author = author.encode('ascii', 'ignore')
-
-    if author is None:
-        return render_to_response('article_history_missing.html', {'searchword':'query ist leer'})
-
-    try:
-        article = Version.objects.filter(byline=author).ForeignKey(Article)
-    except Article.DoesNotExist:
-        try:
-            return render_to_response('article_history_missing.html', {'searchword': author})
-        except (TypeError, ValueError):
-            # bug in django + mod_rewrite can cause this. =/
-            return HttpResponse('Bug!')
-
-    if len(authorarg) == 0:
-        return HttpResponseRedirect(reverse(article_history, args=[article.filename()]))
-
-    rowinfo = get_rowinfo(article)
-    return render_to_response('article_history.html', {'article':article,
-                                                       'versions':rowinfo,
-                                                        'display_search_banner': came_from_search_engine(request),
                                                        })
 def article_history_feed(request, url=''):
     url = prepend_http(url)
