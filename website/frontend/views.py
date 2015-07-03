@@ -53,26 +53,16 @@ def get_last_update(source):
         return datetime.datetime.now()
 def get_articles_by_keyword(keyword, distance=0):
     articles = []
-    pagelength = datetime.timedelta(days=1)
-    end_date = datetime.datetime.now() - distance * pagelength
-    start_date = end_date - pagelength
-    query = '''SELECT id, url FROM Articles WHERE keywords LIKE '%Maus%';'''
-    all_versions = models.Version.objects.raw(query)
-    print(type(all_versions))
-    article_dict = {}
-    for v in all_versions:
-        a=models.Article(id=v.article_id,
-                        url=v.a_url, initial_date=v.a_initial_date,
-                        last_update=v.a_last_update, last_check=v.a_last_check)
-        v.article = a
-        article_dict.setdefault(v.article, []).append(v)
-        for article, versions in article_dict.items():
-            if len(versions) < 2:
-                continue
-        rowinfo = get_rowinfo(article, versions)
-        articles.append((article, versions[-1], rowinfo))
-    print 'Queries:', len(django.db.connection.queries), django.db.connection.queries
-    articles.sort(key = lambda x: x[-1][0][1].date, reverse=True)
+    
+    #pagelength = datetime.timedelta(days=1)
+    #end_date = datetime.datetime.now() - distance * pagelength
+    #start_date = end_date - pagelength
+    query = '''SELECT id, url, initial_date, last_update, last_check FROM Articles WHERE keywords LIKE %s;'''
+    all_articles = models.Article.objects.raw(query, (keyword))
+    for a in all_articles:
+        articles=models.Article(id=a.id, url=a.url, initial_date=a.initial_date,
+                        last_update=a.last_update, last_check=a.last_check)
+    #articles.sort(key = lambda x: x[-1][0][1].date, reverse=True)
     return articles
 
 def get_articles(source=None, distance=0):
@@ -150,7 +140,7 @@ def browse(request, source=''):
 
     # browse = entdecken = suche *
     if keyword is not '':
-        articles = get_articles_by_keyword(keyword, distance=page-1)
+        articles = get_articles_by_keyword(keyword, distance='0')
         return render_to_response('browse.html', {
                 'articles': articles,
                 'page':page,
