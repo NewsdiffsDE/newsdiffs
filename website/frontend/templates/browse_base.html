@@ -17,23 +17,19 @@
                 </li>
               </ul>
 
-          <h1>Pupukacka Artikel{% block browse_fromline %}{% endblock browse_fromline %}</h1>
+          <h1>Pupukaa Artikel{% block browse_fromline %}{% endblock browse_fromline %}</h1>
           <p>Erstmals gespeichert {{first_update|date:"F d, Y"}} (mit vereinzelten Ausfallzeiten)</p>
           <p>
-
+            {% if articles %}
+            <p>articles</p>
+            {% endif%}
         <table class="table table-condensed"  style="width:100%">
-          <thead><tr><th text-align="left";>Artikel</th><th>Version</th><th>Diff</th></tr></thead>
-          {% for article in all_articles %}
-          <tr><td rowspan="{{versions|length}}" valign="top"><a href="{% url 'article_history' article.filename %}">{{last_version.title}}</a> (<a href="{{article.url}}">{{article.publication}}</a>)<br>{{last_version.byline}}</td>
-            {% for difflink, version in versions %}
-            <td>{{version.date}}</td>
-            {% if difflink %}
-            <td><a href="{{difflink}}">(Vergleichen)</a></td></tr><tr>
-            {% else %}
-            <td></td></tr>
-            {% endif %}
+          <thead><tr><th text-align="left";>Artikel</th><th>Zeitung</th></tr></thead>
+            {% for article in articles %}
+            <tr><td>{{ article.url }}</td>
+                <td>{{ article.source }}</td>
+                <td>{{ article.last_update }}</td></tr>
             {% endfor %}
-          {% endfor %}
         </table>
         {% for i in page_list %}
         {% if i == page %}
