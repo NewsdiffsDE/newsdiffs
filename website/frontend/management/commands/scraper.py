@@ -332,9 +332,14 @@ def update_article(article):
     to_store = unicode(parsed_article).encode('utf8')
     t = datetime.now()
     logger.debug('Article parsed; trying to store')
+    article.category = parsed_article.category
+    article.keywords = parsed_article.keywords
+    article.source = parsed_article.source
+    article.save()
     v, boring, diff_info = add_to_git_repo(to_store,
                                            url_to_filename(article.url),
                                            article)
+
     if v:
         logger.info('Modifying! new blob: %s', v)
         v_row = models.Version(v=v,
@@ -349,10 +354,7 @@ def update_article(article):
         if not boring:
             article.last_update = t
             article.save()
-        article.category = parsed_article.category
-        article.keywords = parsed_article.keywords
-        article.source = parsed_article.source
-        article.save()
+
 
 def update_articles(todays_git_dir):
     logger.info('Starting scraper; looking for new URLs')

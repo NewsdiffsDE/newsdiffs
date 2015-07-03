@@ -101,7 +101,7 @@ class BaseParser(object):
     title = None
     byline = None
     body = None
-    keywords = "Maus, Tod, Baum"
+    keywords = None
     source = None
 
     real_article = True # If set to False, ignore this article
@@ -117,9 +117,7 @@ class BaseParser(object):
                   u'Wissenschaft': [u'Wissen', u'Gesundheit', u'Bildung'],
                   u'Gesellschaft': [u'Gesellschaft']}
 
-    tags = []   # list of tags/keywords
-
-    # Used when finding articles to parse
+     # Used when finding articles to parse
     feeder_pat   = None # Look for links matching this regular expression
     feeder_pages = []   # on these pages
     feed_div = None
