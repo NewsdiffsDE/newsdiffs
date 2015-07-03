@@ -74,7 +74,7 @@ def search(request, source=''):
         return render_to_response('suchergebnisse.html', {
                 'articles': articles,
                 'versions': versions,
-                'keyword': keyword,
+                'searchword': keyword,
                 'page':page,
                 'page_list': page_list,
                 'first_update': first_update,
