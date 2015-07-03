@@ -51,20 +51,42 @@ def get_last_update(source):
         return updates[0].last_update
     except IndexError:
         return datetime.datetime.now()
-def get_articles_by_keyword(keyword, distance=0):
-    articles = []
 
-    #pagelength = datetime.timedelta(days=1)
-    #end_date = datetime.datetime.now() - distance * pagelength
-    #start_date = end_date - pagelength
-    query = '''SELECT id, url, initial_date, last_update, source last_check FROM Articles WHERE keywords LIKE %s;'''
-    #all_articles = models.Article.objects.raw(query, (keyword))
-    all_articles = Article.objects.filter(keywords__contains = keyword)
-    #for a in all_articles:
-     #   articles=models.Article(id=a.id, url=a.url, initial_date=a.initial_date,
-      #                  last_update=a.last_update, last_check=a.last_check)
-    #articles.sort(key = lambda x: x[-1][0][1].date, reverse=True)
-    return all_articles
+
+@cache_page(60 * 30)  #30 minute cache
+def search(request, source=''):
+    if source not in SOURCES + ['']:
+        raise Http404
+    pagestr=request.REQUEST.get('page', '1')
+    keyword=request.REQUEST.get('keyword')
+    try:
+        page = int(pagestr)
+    except ValueError:
+        page = 1
+
+    first_update = get_first_update(source)
+    num_pages = (datetime.datetime.now() - first_update).days + 1
+    page_list=range(1, 1+num_pages)
+
+    # browse = entdecken = suche *
+    if keyword is not '':
+        articles, versions = get_articles_by_keyword(keyword, distance='0')
+        return render_to_response('suchergebnisse.html', {
+                'articles': articles,
+                'versions': versions,
+                'keyword': keyword,
+                'page':page,
+                'page_list': page_list,
+                'first_update': first_update,
+                'sources': SOURCES
+                })
+
+def get_articles_by_keyword(keyword, distance=0):
+    articles = Article.objects.filter(keywords__contains = keyword)
+    versions = []
+    for a in articles:
+        versions.append(Version.objects.filter(article_id = a.id).order_by('date')[0])
+    return articles, versions
 
 def get_articles(source=None, distance=0):
     articles = []
@@ -377,33 +399,6 @@ def highlights(request):
 
 def kontakt(request):
     return render_to_response('kontakt.html', {})
-
-
-@cache_page(60 * 30)  #30 minute cache
-def search(request, source=''):
-    if source not in SOURCES + ['']:
-        raise Http404
-    pagestr=request.REQUEST.get('page', '1')
-    keyword=request.REQUEST.get('keyword')
-    try:
-        page = int(pagestr)
-    except ValueError:
-        page = 1
-
-    first_update = get_first_update(source)
-    num_pages = (datetime.datetime.now() - first_update).days + 1
-    page_list=range(1, 1+num_pages)
-
-    # browse = entdecken = suche *
-    if keyword is not '':
-        articles = get_articles_by_keyword(keyword, distance='0')
-        return render_to_response('suchergebnisse.html', {
-                'articles': articles,
-                'page':page,
-                'page_list': page_list,
-                'first_update': first_update,
-                'sources': SOURCES
-                })
 
 def impressum(request):
     return render_to_response('impressum.html', {})
