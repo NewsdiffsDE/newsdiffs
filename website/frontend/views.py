@@ -140,24 +140,15 @@ def browse(request, source=''):
     page_list=range(1, 1+num_pages)
 
     # browse = entdecken = suche *
-    if keyword is not '':
-        articles = get_articles_by_keyword(keyword, distance='0')
-        return render_to_response('browse.html', {
-                'articles': articles,
-                'page':page,
-                'page_list': page_list,
-                'first_update': first_update,
-                'sources': SOURCES
-                })
-    else:
-        articles = get_articles(source=source, distance=page-1)
-        return render_to_response('browse.html', {
-                'source': source, 'articles': articles,
-                'page':page,
-                'page_list': page_list,
-                'first_update': first_update,
-                'sources': SOURCES
-                })
+
+    articles = get_articles(source=source, distance=page-1)
+    return render_to_response('browse.html', {
+            'source': source, 'articles': articles,
+            'page':page,
+            'page_list': page_list,
+            'first_update': first_update,
+            'sources': SOURCES
+            })
 
 @cache_page(60 * 30)  #30 minute cache
 def feed(request, source=''):
@@ -387,8 +378,32 @@ def highlights(request):
 def kontakt(request):
     return render_to_response('kontakt.html', {})
 
-def suchergebnisse(request):
-    return render_to_response('suchergebnisse.html', {})
+
+@cache_page(60 * 30)  #30 minute cache
+def search(request, source=''):
+    if source not in SOURCES + ['']:
+        raise Http404
+    pagestr=request.REQUEST.get('page', '1')
+    keyword=request.REQUEST.get('keyword')
+    try:
+        page = int(pagestr)
+    except ValueError:
+        page = 1
+
+    first_update = get_first_update(source)
+    num_pages = (datetime.datetime.now() - first_update).days + 1
+    page_list=range(1, 1+num_pages)
+
+    # browse = entdecken = suche *
+    if keyword is not '':
+        articles = get_articles_by_keyword(keyword, distance='0')
+        return render_to_response('suchergebnisse.html', {
+                'articles': articles,
+                'page':page,
+                'page_list': page_list,
+                'first_update': first_update,
+                'sources': SOURCES
+                })
 
 def impressum(request):
     return render_to_response('impressum.html', {})
