@@ -9,6 +9,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 import urllib
 import django.db
+from django.db.models import Count
 import time
 from django.template import Context, RequestContext, loader
 from django.views.decorators.cache import cache_page
@@ -59,6 +60,8 @@ def search(request, source=''):
         raise Http404
     pagestr=request.REQUEST.get('page', '1')
     keyword=request.REQUEST.get('keyword')
+    sort=request.REQUEST.get('sort')
+    source=request.REQUEST.get('sort')
     try:
         page = int(pagestr)
     except ValueError:
@@ -70,7 +73,7 @@ def search(request, source=''):
 
     # browse = entdecken = suche *
     if keyword is not '':
-        articles, versions = get_articles_by_keyword(keyword, distance='0')
+        articles, versions = get_articles_by_keyword(keyword, sort, distance='0')
         return render_to_response('suchergebnisse.html', {
                 'articles': articles,
                 'versions': versions,
@@ -81,11 +84,20 @@ def search(request, source=''):
                 'sources': SOURCES
                 })
 
-def get_articles_by_keyword(keyword, distance=0):
-    articles = Article.objects.filter(keywords__contains = keyword)
+def get_articles_by_keyword(keyword, sort, distance=0):
     versions = []
+    # sort by article date
+    if sort is 'sortNew' or sort is None:
+        articles = Article.objects.filter(keywords__contains = keyword).order_by('initial_date')
+    #TODO sort by number of changes
+    else:
+        articles = Article.objects.filter(keywords__contains = keyword)
+        for a in articles:
+            version_objects = Version.objects.filter(article_id = a.id)
+            versions.append(version_objects.annotate(versions=Count('article')).order_by('versions'))
+    # sort versions of article by date
     for a in articles:
-        versions.append(Version.objects.filter(article_id = a.id).order_by('date')[0])
+        versions.append(Version.objects.filter(article_id = a.id).order_by('date'))
     return articles, versions
 
 def get_articles(source=None, distance=0):
@@ -151,7 +163,6 @@ def browse(request, source=''):
     if source not in SOURCES + ['']:
         raise Http404
     pagestr=request.REQUEST.get('page', '1')
-    keyword=request.REQUEST.get('keyword')
     try:
         page = int(pagestr)
     except ValueError:
