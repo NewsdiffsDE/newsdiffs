@@ -6,7 +6,7 @@
 
 {% block content %}
 
-    <div class="container" id="main">
+    <div class="container" id="main"">
 
         <ul id="myTab" class="nav nav-tabs">
                 <li {% if not source  %} class="active" {% endif %} ><a href="{% url 'browse' %}" data-toggle="tab">Alle</a></li>
@@ -17,17 +17,23 @@
                 </li>
               </ul>
 
-          <h1>Keyword-Placeholder{% block browse_fromline %}{% endblock browse_fromline %}</h1>
+          <h1>Pupukacka Artikel{% block browse_fromline %}{% endblock browse_fromline %}</h1>
           <p>Erstmals gespeichert {{first_update|date:"F d, Y"}} (mit vereinzelten Ausfallzeiten)</p>
           <p>
-          
+
         <table class="table table-condensed"  style="width:100%">
-          <thead><tr><th text-align="left";>Artikel</th><th>Zeitung</th><th>last update</th></tr></thead>
-            {% for article in articles %}
-            <tr><td>{{ article.url }}</td>
-                <td>{{ article.source }}</td>
-                <td>{{ article.last_update }}</td></tr>
+          <thead><tr><th text-align:"left";>Artikel</th><th>Version</th><th>Diff</th></tr></thead>
+          {% for article, last_version, versions in articles %}
+          <tr><td rowspan="{{versions|length}}" valign="top"><a href="{% url 'article_history' article.filename %}">{{last_version.title}}</a> (<a href="{{article.url}}">{{article.publication}}</a>)<br>{{last_version.byline}}</td>
+            {% for difflink, version in versions %}
+            <td>{{version.date}}</td>
+            {% if difflink %}
+            <td><a href="{{difflink}}">(Vergleichen)</a></td></tr><tr>
+            {% else %}
+            <td></td></tr>
+            {% endif %}
             {% endfor %}
+          {% endfor %}
         </table>
         {% for i in page_list %}
         {% if i == page %}
