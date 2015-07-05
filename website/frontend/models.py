@@ -28,6 +28,7 @@ PublicationDict = {
                    'www.n-tv.de': 'N-TV',
                    'www.welt.de': 'Die Welt',
                    'www.rp-online.de': 'RP-Online',
+                   'www.taz.de': 'TAZ',
                    }
 
 ancient = datetime(1901, 1, 1)
@@ -39,6 +40,9 @@ class Article(models.Model):
 
     url = models.CharField(max_length=255, blank=False, unique=True,
                            db_index=True)
+    category = models.CharField(max_length=255, blank=False)
+    keywords = models.CharField(max_length=255, blank=False)
+    source = models.CharField(max_length=255, blank=False)
     initial_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(default=ancient)
     last_check = models.DateTimeField(default=ancient)
@@ -78,7 +82,6 @@ class Version(models.Model):
 
     article = models.ForeignKey('Article', null=False)
     v = models.CharField(max_length=255, blank=False, unique=True)
-    category = models.CharField(max_length=255, blank=False)
     title = models.CharField(max_length=255, blank=False)
     byline = models.CharField(max_length=255,blank=False)
     date = models.DateTimeField(blank=False)

@@ -30,13 +30,13 @@
 					<h5>Sortieren nach:</h5>
 					<div class="radio">
 						<label>
-							<input type="radio" name="sortierenOptionsRadios" id="sortierenNeueste" value="neueste" checked>
+							<input type="radio" name="sortOptionsRadios" id="sortNew" value="neueste" checked>
 							Neueste
 						</label>
 					</div>
 					<div class="radio">
 						<label>
-							<input type="radio" name="sortierenOptionsRadios" id="sortierenMeiste" value="meiste">
+							<input type="radio" name="sortOptionsRadios" id="sortCount" value="meiste">
 							Meiste Änderungen
 						</label>
 					</div>
@@ -147,7 +147,7 @@
 			<!-- Suchergebnisse -->
 			<div class="col-md-6">
 
-				<h1>Suchergebnisse für "Merkel"</h1>
+				<h1>Suchergebnisse für "{{ searchword }}"</h1>
 
 				<div class="table">
 					<table class="table table-condensed">
@@ -157,9 +157,10 @@
 							</tr>
 						</thead>
 						<tbody>
+                            {% for article in articles %}
 							<tr>
 								<td>
-									<h3>Fahimi stellt Merkel Ultimatum (<a href="http://www.bild.de/politik/inland/nsa/fahimi-uebt-druck-auf-merkel-aus-41074484.bild.html">Bild.de</a>)</h3>
+									<h3>{{ article.url }} (<a href="{{ article.url }}">{{ article.source }}</a>)</h3>
 									<p>
                                         <a class ="no-link-color" href="article_history.html">
                                             <img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf-Icon">
@@ -169,20 +170,7 @@
 									<p><a href="diffview.html"><img class="ownbtn" src="../static/images/Icon_Vergleichen.png" alt="Vergleichen-Icon">neueste Änderung</a></p>
 								</td>
 							</tr>
-							<tr>
-								<td>
-									<h3>SPD setzt Merkel Frist in BND-Affäre (<a href="http://www.spiegel.de/politik/deutschland/spd-stellt-merkel-frist-in-nsa-affaere-a-1035350.html">Spiegel Online</a>)</h3>
-									<p><a href="article_history.html"><img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf-Icon">Änderungsübersicht</a></p>
-									<p><a href="diffview.html"><img class="ownbtn" src="../static/images/Icon_Vergleichen.png" alt="Vergleichen-Icon">neueste Änderung</a></p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<h3>SPD stellt Merkel ein Ultimatum (<a href="http://www.faz.net/aktuell/politik/inland/bnd-affaere-spd-stellt-merkel-ein-ultimatum-13609669.html">FAZ.net</a>)</h3>
-									<p><a href="article_history.html"><img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf-Icon">Änderungsübersicht</a></p>
-									<p><a href="diffview.html"><img class="ownbtn" src="../static/images/Icon_Vergleichen.png" alt="Vergleichen-Icon">neueste Änderung</a></p>
-								</td>
-							</tr>
+                            {% endfor %}
 						</tbody>
 					</table>
 				</div>

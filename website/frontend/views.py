@@ -9,6 +9,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 import urllib
 import django.db
+from django.db.models import Count
 import time
 from django.template import Context, RequestContext, loader
 from django.views.decorators.cache import cache_page
@@ -51,6 +52,53 @@ def get_last_update(source):
         return updates[0].last_update
     except IndexError:
         return datetime.datetime.now()
+
+
+@cache_page(60 * 30)  #30 minute cache
+def search(request, source=''):
+    if source not in SOURCES + ['']:
+        raise Http404
+    pagestr=request.REQUEST.get('page', '1')
+    keyword=request.REQUEST.get('keyword')
+    sort=request.REQUEST.get('sort')
+    source=request.REQUEST.get('sort')
+    try:
+        page = int(pagestr)
+    except ValueError:
+        page = 1
+
+    first_update = get_first_update(source)
+    num_pages = (datetime.datetime.now() - first_update).days + 1
+    page_list=range(1, 1+num_pages)
+
+    # browse = entdecken = suche *
+    if keyword is not '':
+        articles, versions = get_articles_by_keyword(keyword, sort, distance='0')
+        return render_to_response('suchergebnisse.html', {
+                'articles': articles,
+                'versions': versions,
+                'searchword': keyword,
+                'page':page,
+                'page_list': page_list,
+                'first_update': first_update,
+                'sources': SOURCES
+                })
+
+def get_articles_by_keyword(keyword, sort, distance=0):
+    versions = []
+    # sort by article date
+    if sort is 'sortNew' or sort is None:
+        articles = Article.objects.filter(keywords__contains = keyword).order_by('initial_date')
+    #TODO sort by number of changes
+    else:
+        articles = Article.objects.filter(keywords__contains = keyword)
+        for a in articles:
+            version_objects = Version.objects.filter(article_id = a.id)
+            versions.append(version_objects.annotate(versions=Count('article')).order_by('versions'))
+    # sort versions of article by date
+    for a in articles:
+        versions.append(Version.objects.filter(article_id = a.id).order_by('date'))
+    return articles, versions
 
 def get_articles(source=None, distance=0):
     articles = []
@@ -104,8 +152,7 @@ def get_articles(source=None, distance=0):
     return articles
 
 
-SOURCES = '''nytimes.com cnn.com politico.com washingtonpost.com
-bbc.co.uk'''.split()
+SOURCES = '''zeit.de bild.de focus.de spiegel.de stern.de welt.de faz.de n-tv.de rp-online.de sueddeutsche.de taz.de'''.split()
 
 def is_valid_domain(domain):
     """Cheap method to tell whether a domain is being tracked."""
@@ -126,6 +173,7 @@ def browse(request, source=''):
     page_list=range(1, 1+num_pages)
 
     # browse = entdecken = suche *
+
     articles = get_articles(source=source, distance=page-1)
     return render_to_response('browse.html', {
             'source': source, 'articles': articles,
@@ -168,7 +216,7 @@ def old_diffview(request):
     v1tag = request.REQUEST.get('v1')
     v2tag = request.REQUEST.get('v2')
     if url is None or v1tag is None or v2tag is None:
-        return HttpResponseRedirect(reverse(front))
+        return HttpResponseRedirect(reverse(index))
 
     try:
         v1 = Version.objects.get(v=v1tag)
@@ -286,8 +334,8 @@ def article_history(request, urlarg=''):
     url = request.REQUEST.get('url') # this is the deprecated interface.
     if url is None:
         url = urlarg
-    if len(url) == 0:
-        return HttpResponseRedirect(reverse(front))
+    #if len(url) == 0:
+     #   return HttpResponseRedirect(reverse(front))
 
     url = url.split('?')[0]  #For if user copy-pastes from news site
 
@@ -301,14 +349,14 @@ def article_history(request, urlarg=''):
     # database.  These queries are usually spam.
     domain = url.split('/')[2]
     if not is_valid_domain(domain):
-        return render_to_response('article_history_missing.html', {'url': url})
+        return render_to_response('article_history_missing.html', {'searchword': url})
 
 
     try:
         article = Article.objects.get(url=url)
     except Article.DoesNotExist:
         try:
-            return render_to_response('article_history_missing.html', {'url': url})
+            return render_to_response('article_history_missing.html', {'searchword': url})
         except (TypeError, ValueError):
             # bug in django + mod_rewrite can cause this. =/
             return HttpResponse('Bug!')
@@ -337,6 +385,7 @@ def article_history_feed(request, url=''):
 def json_view(request, vid):
     version = get_object_or_404(Version, id=int(vid))
     data = dict(
+        #category=version.category,
         title=version.title,
         byline = version.byline,
         date = version.date.isoformat(),
@@ -362,9 +411,6 @@ def highlights(request):
 def kontakt(request):
     return render_to_response('kontakt.html', {})
 
-def suchergebnisse(request):
-    return render_to_response('suchergebnisse.html', {})
-
 def impressum(request):
     return render_to_response('impressum.html', {})
 
@@ -373,7 +419,5 @@ def archiv(request):
 
 def index(request):
     return render_to_response('index.html', {'sources': SOURCES})
-
-
 
 

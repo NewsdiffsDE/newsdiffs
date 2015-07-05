@@ -101,6 +101,8 @@ class BaseParser(object):
     title = None
     byline = None
     body = None
+    keywords = None
+    source = None
 
     real_article = True # If set to False, ignore this article
     SUFFIX = ''         # append suffix, like '?fullpage=yes', to urls
@@ -115,7 +117,7 @@ class BaseParser(object):
                   u'Wissenschaft': [u'Wissen', u'Gesundheit', u'Bildung'],
                   u'Gesellschaft': [u'Gesellschaft']}
 
-    # Used when finding articles to parse
+     # Used when finding articles to parse
     feeder_pat   = None # Look for links matching this regular expression
     feeder_pages = []   # on these pages
     feed_div = None
@@ -166,13 +168,9 @@ class BaseParser(object):
             urls = [url if '://' in url else concat(domain, url) for url in urls]
 
             all_urls = all_urls + [url for url in urls if
-<<<<<<< HEAD
-                                   re.search(cls.feeder_pat, url) and '#' not in url]
+
+                                   re.search(cls.feeder_pat, url) and "#" not in url]
         return set(all_urls)
-=======
-                                   re.search(cls.feeder_pat, url)]
-        return all_urls
->>>>>>> DjangoTemplating
 
         #removes all non-content
     def remove_non_content(self, html):
@@ -182,10 +180,8 @@ class BaseParser(object):
         comments = html.findAll(text=lambda text:isinstance(text, Comment))
         [comment.extract() for comment in comments]
         return html
-<<<<<<< HEAD
 
         #extracts the first matching category from keywords
-        # TODO save category in Database
     def compute_category(self, keywords):
         matched_category = str("Allgemein")
         keywords = keywords.lower().split(',')
@@ -196,10 +192,19 @@ class BaseParser(object):
                         matched_category = [k for k, v in self.categories.iteritems() if v == cats][0]
                         break
         return str(matched_category)
-    # clean byline tag, replaces "und" with a comma, strips "Von"
+
+        #extracts keywords from text
+    def extract_keywords(self, text):
+        text.encode('utf-8')
+        words = text.replace(',', ' ').split(' ')
+        results = []
+        map(lambda x : (results.append(x) if x and x[0].isupper() else None), words)
+        return ', '.join(results)
+
+
+        # clean byline tag, replaces "und" with a comma, strips "Von"
     def _cleanByline(self):
         if self.byline.startswith('Von ') or self.byline.startswith('von '):
             self.byline = self.byline[4:]
         self.byline = self.byline.replace(' und ', ',')
-=======
->>>>>>> DjangoTemplating
+

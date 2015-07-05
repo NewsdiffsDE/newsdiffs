@@ -5,23 +5,17 @@ from BeautifulSoup import BeautifulSoup, Tag
 class SDParser(BaseParser):
     domains = ['www.sueddeutsche.de']
 
-<<<<<<< HEAD
     feeder_pat   = '^http://www.sueddeutsche.de/(politik|wirtschaft|panorama|wissen|digital)/'
-=======
-    feeder_pat   = '1\.\d*$'
->>>>>>> DjangoTemplating
     feeder_pages = ['http://www.sueddeutsche.de/']
 
     def _parse(self, html):
         soup = BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES,
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
-<<<<<<< HEAD
+        self.source = ', '.join(self.domains)
         # category
         keywords = self.url.strip('http://www.sueddeutsche.de/').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')
-=======
->>>>>>> DjangoTemplating
         #article headline
         elt = soup.find('meta', {'property': 'og:title'})
         if elt is None:
@@ -29,13 +23,14 @@ class SDParser(BaseParser):
             return
         else:
             self.title = elt['content']
+        # tags from meta-keywords and title
+        meta_keywords = soup.find('meta', {'name': 'news_keywords'})['content'] if soup.find('meta', {'name': 'news_keywords'}) else ""
+        self.keywords = self.extract_keywords(meta_keywords)
+        self.keywords += self.extract_keywords(self.title)
         # byline / author
         author = soup.find('div', {'class': 'authorProfileContainer'})
         self.byline = author.getText() if author else ''
-<<<<<<< HEAD
         self._cleanByline()
-=======
->>>>>>> DjangoTemplating
         # article date
         created_at = soup.find('time', {'class': 'timeformat'})
         if created_at is None:
