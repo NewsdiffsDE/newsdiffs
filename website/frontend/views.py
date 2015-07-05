@@ -104,7 +104,8 @@ def get_articles(source=None, distance=0):
     return articles
 
 
-SOURCES = '''zeit.de bild.de focus.de spiegel.de stern.de welt.de faz.de n-tv.de rp-online.de sueddeutsche.de'''.split()
+SOURCES = '''nytimes.com cnn.com politico.com washingtonpost.com
+bbc.co.uk'''.split()
 
 def is_valid_domain(domain):
     """Cheap method to tell whether a domain is being tracked."""
@@ -124,6 +125,7 @@ def browse(request, source=''):
     num_pages = (datetime.datetime.now() - first_update).days + 1
     page_list=range(1, 1+num_pages)
 
+    # browse = entdecken = suche *
     articles = get_articles(source=source, distance=page-1)
     return render_to_response('browse.html', {
             'source': source, 'articles': articles,
@@ -314,6 +316,7 @@ def article_history(request, urlarg=''):
     if len(urlarg) == 0:
         return HttpResponseRedirect(reverse(article_history, args=[article.filename()]))
 
+    # was article-history
     rowinfo = get_rowinfo(article)
     return render_to_response('article_history.html', {'article':article,
                                                        'versions':rowinfo,
@@ -334,7 +337,6 @@ def article_history_feed(request, url=''):
 def json_view(request, vid):
     version = get_object_or_404(Version, id=int(vid))
     data = dict(
-        category=version.category,
         title=version.title,
         byline = version.byline,
         date = version.date.isoformat(),
@@ -345,13 +347,33 @@ def json_view(request, vid):
 def about(request):
     return render_to_response('about.html', {})
 
-def examples(request):
-    return render_to_response('examples.html', {})
+def history(request):
+    return render_to_response('article_history.html', {})
 
-def contact(request):
-    return render_to_response('contact.html', {})
+def artikel(request):
+    return render_to_response('diffview.html', {})
 
-def front(request):
-    return render_to_response('front.html', {'sources': SOURCES})
+def entdecken(request):
+    return render_to_response('entdecken.html', {})
+
+def highlights(request):
+    return render_to_response('highlights.html', {})
+
+def kontakt(request):
+    return render_to_response('kontakt.html', {})
+
+def suchergebnisse(request):
+    return render_to_response('suchergebnisse.html', {})
+
+def impressum(request):
+    return render_to_response('impressum.html', {})
+
+def archiv(request):
+    return render_to_response('archive.html', {})
+
+def index(request):
+    return render_to_response('index.html', {'sources': SOURCES})
+
+
 
 
