@@ -33,3 +33,5 @@ pip-log.txt
 newsdiffs.db
 newsdiffs.db-journal
 database_settings.py
+
+.DS_Store

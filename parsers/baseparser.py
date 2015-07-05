@@ -166,8 +166,13 @@ class BaseParser(object):
             urls = [url if '://' in url else concat(domain, url) for url in urls]
 
             all_urls = all_urls + [url for url in urls if
+<<<<<<< HEAD
                                    re.search(cls.feeder_pat, url) and '#' not in url]
         return set(all_urls)
+=======
+                                   re.search(cls.feeder_pat, url)]
+        return all_urls
+>>>>>>> DjangoTemplating
 
         #removes all non-content
     def remove_non_content(self, html):
@@ -177,6 +182,7 @@ class BaseParser(object):
         comments = html.findAll(text=lambda text:isinstance(text, Comment))
         [comment.extract() for comment in comments]
         return html
+<<<<<<< HEAD
 
         #extracts the first matching category from keywords
         # TODO save category in Database
@@ -195,3 +201,5 @@ class BaseParser(object):
         if self.byline.startswith('Von ') or self.byline.startswith('von '):
             self.byline = self.byline[4:]
         self.byline = self.byline.replace(' und ', ',')
+=======
+>>>>>>> DjangoTemplating

@@ -6,7 +6,11 @@ class BildParser(BaseParser):
     SUFFIX = ''
     domains = ['www.bild.de']
 
+<<<<<<< HEAD
     feeder_pat   = '^http://www.bild.de/(politik|regional|geld|digital)/(?!(startseite)/)'
+=======
+    feeder_pat   = '^http://www.bild.de/(politik|regional|geld|digital/[a-z])'
+>>>>>>> DjangoTemplating
     feeder_pages = ['http://www.bild.de/politik/startseite',
                     'http://www.bild.de/geld/startseite/',
                     'http://www.bild.de/regional/startseite/',
@@ -17,9 +21,12 @@ class BildParser(BaseParser):
                              fromEncoding='utf-8')
 
         self.meta = soup.findAll('meta')
+<<<<<<< HEAD
         # category
         keywords = self.url.strip('http://www.bild.de').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')
+=======
+>>>>>>> DjangoTemplating
         #article headline
         try:
             elt = soup.find('meta', {'property': 'og:title'})['content']
@@ -31,12 +38,19 @@ class BildParser(BaseParser):
         # byline / author
         author = soup.find('div', {'itemprop':'author'})
         self.byline = author.getText() if author else ''
+<<<<<<< HEAD
         self._cleanByline()
+=======
+>>>>>>> DjangoTemplating
         # article date
         created_at = soup.find('div', {'class': 'date'})
         self.date = created_at.getText() if created_at else ''
         #article content
+<<<<<<< HEAD
         div = soup.find('div', {'itemprop': 'articleBody isFamilyFriendly'})
+=======
+        div = soup.find('div', {'itemprop':'articleBody isFamilyFriendly'})
+>>>>>>> DjangoTemplating
         if div is None:
             self.real_article = False
             return

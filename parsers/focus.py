@@ -6,7 +6,11 @@ class FocusParser(BaseParser):
     SUFFIX = '?drucken=1'
     domains = ['www.focus.de']
 
+<<<<<<< HEAD
     feeder_pat   = '^http://www.focus.de/(politik|finanzen|gesundheit|wissen|panorama|digital)/.*\.html$'
+=======
+    feeder_pat   = '^http://www.focus.de/(politik|finanzen|gesundheit|wissen)'
+>>>>>>> DjangoTemplating
     feeder_pages = ['http://www.focus.de/']
 
     def _parse(self, html):
@@ -14,9 +18,12 @@ class FocusParser(BaseParser):
                              fromEncoding='utf-8')
 
         self.meta = soup.findAll('meta')
+<<<<<<< HEAD
         # category
         keywords = self.url.strip('http://www.focus.de').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')
+=======
+>>>>>>> DjangoTemplating
         #article headline
         elt = soup.find('h1')
         if elt is None:
@@ -29,7 +36,10 @@ class FocusParser(BaseParser):
         except:
             author = ''
         self.byline = author
+<<<<<<< HEAD
         self._cleanByline()
+=======
+>>>>>>> DjangoTemplating
         # article date
         created_at = soup.find('meta', {'name':'date'})
         self.date = created_at['content'] if created_at else ''
@@ -45,4 +55,8 @@ class FocusParser(BaseParser):
         p = div.findAll('p')
         for txt in p:
                 text += txt.getText()+'\n'
+<<<<<<< HEAD
         self.body = text
+=======
+        self.body = text
+>>>>>>> DjangoTemplating

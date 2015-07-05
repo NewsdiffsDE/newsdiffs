@@ -6,6 +6,7 @@
 # Test with test_parser.py
 # List of parsers to import and use based on parser.domains
 
+<<<<<<< HEAD
 """
 sueddeutsche.SDParser
 stern.SternParser
@@ -29,6 +30,22 @@ RPOnline.RPOParser
 faz.FAZParser
 n-tv.NTVParser
 welt.WeltParser
+=======
+#sueddeutsche.SDParser
+#stern.SternParser
+#bild.BildParser
+#focus.FocusParser
+#spiegel.SpiegelParser
+#zeit.ZeitParser
+#RPOnline.RPOParser
+#faz.FAZParser
+#welt.WeltParser
+#n-tv.NTVParser
+#taz.TAZParser
+
+parsers = """
+taz.TAZParser
+>>>>>>> DjangoTemplating
 """.split()
 
 parser_dict = {}

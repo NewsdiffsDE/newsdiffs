@@ -11,15 +11,22 @@ class FAZParser(BaseParser):
                     'http://www.faz.net/aktuell/politik',
                     'http://www.faz.net/aktuell/wirtschaft',
                     'http://www.faz.net/aktuell/wissen',
+<<<<<<< HEAD
+=======
+                    'http://www.faz.net/aktuell/feuilleton',
+>>>>>>> DjangoTemplating
                     ]
 
     def _parse(self, html):
         soup = BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES,
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
+<<<<<<< HEAD
         # category
         keywords = self.url.strip('http://www.faz.net').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')
+=======
+>>>>>>> DjangoTemplating
         #article headline
         elt = soup.find('meta', {'property': 'og:title'})
         if elt is None:
@@ -29,7 +36,10 @@ class FAZParser(BaseParser):
         # byline / author
         author = soup.find('meta', {'name': 'author'})
         self.byline = author['content'] if author else ''
+<<<<<<< HEAD
         self._cleanByline()
+=======
+>>>>>>> DjangoTemplating
         # article date
         created_at = soup.find('meta', {'name': 'DC.date.issued'})
         self.date = created_at['content'] if created_at else ''

@@ -13,9 +13,12 @@ class SpiegelParser(BaseParser):
                              fromEncoding='utf-8')
 
         self.meta = soup.findAll('meta')
+<<<<<<< HEAD
         # category
         keywords = self.url.strip('http://www.spiegel.de/').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')
+=======
+>>>>>>> DjangoTemplating
         #article headline
         elt = soup.find('h2', {'class': 'article-title'})
         if elt is None:
@@ -28,7 +31,10 @@ class SpiegelParser(BaseParser):
         except:
             author = ''
         self.byline = author
+<<<<<<< HEAD
         self._cleanByline()
+=======
+>>>>>>> DjangoTemplating
         # article date
         created_at = soup.find('meta', {'name': 'date'})
         self.date = created_at['content'] if created_at else ''
