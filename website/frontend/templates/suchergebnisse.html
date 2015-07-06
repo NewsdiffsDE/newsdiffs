@@ -26,120 +26,144 @@
 		<div class="row">
 			<!--Filter-->
 			<div class="col-md-2 col-md-offset-2">
-				<div class="sidebar">
-					<h5>Sortieren nach:</h5>
-					<div class="radio">
-						<label>
-							<input type="radio" name="sortOptionsRadios" id="sortNew" value="neueste" checked>
-							Neueste
-						</label>
+				<div class=" containter-fluid sidebar">
+					<div class="row">
+						<h5 class="col-xs-offset-1 col-md-offset-0">Sortieren nach:</h5>
+						<div class="col-xs-5 col-xs-offset-1 col-md-12 col-md-offset-0 radio">
+							<label>
+								<input type="radio" name="sortOptionsRadios" id="sortNew" value="neueste" checked>
+								Neueste
+							</label>
+						</div>
+						<div class="col-xs-5 col-md-12 radio">
+							<label>
+								<input type="radio" name="sortOptionsRadios" id="sortCount" value="meiste">
+								Meiste Änderungen
+							</label>
+						</div>
 					</div>
-					<div class="radio">
-						<label>
-							<input type="radio" name="sortOptionsRadios" id="sortCount" value="meiste">
-							Meiste Änderungen
-						</label>
+					<div class="row">
+						<h5 class="col-xs-offset-1 col-md-offset-0">Filtern nach:</h5>
+						<p class="col-xs-offset-1 col-md-offset-0">Zeitungen</p>
+						<div class="col-xs-5 col-xs-offset-1 col-md-12 col-md-offset-0 checkbox">
+							<label>
+								<input type="checkbox" id="bildCheckbox" value="">
+								Bild.de
+							</label>
+						</div>
+						<div class="col-xs-5 col-md-12 checkbox">
+							<label>
+								<input type="checkbox" id="focusCheckbox" value="">
+								Focus Online
+							</label>
+						</div>
 					</div>
-					<h5>Filtern nach:</h5>
-					<p>Zeitungen</p>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="bildCheckbox" value="">
-							Bild.de
-						</label>
+					<div class="row">
+						<div class="col-xs-5 col-xs-offset-1 col-md-12 col-md-offset-0 checkbox">
+							<label>
+								<input type="checkbox" id="spiegelCheckbox" value="">
+								Spiegel Online
+							</label>
+						</div>
+						<div class="col-xs-5 col-md-12 checkbox">
+							<label>
+								<input type="checkbox" id="weltCheckbox" value="">
+								Die Welt
+							</label>
+						</div>
 					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="focusCheckbox" value="">
-							Focus Online
-						</label>
+					<div class="row">
+						<div class="col-xs-5 col-xs-offset-1 col-md-12 col-md-offset-0 checkbox">
+							<label>
+								<input type="checkbox" id="sternCheckbox" value="">
+								stern.de
+							</label>
+						</div>
+						<div class="col-xs-5 col-md-12 checkbox">
+							<label>
+								<input type="checkbox" id="zeitCheckbox" value="">
+								Zeit Online
+							</label>
+						</div>
 					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="spiegelCheckbox" value="">
-							Spiegel Online
-						</label>
+					<div class="row">
+						<div class="col-xs-5 col-xs-offset-1 col-md-12 col-md-offset-0 checkbox">
+							<label>
+								<input type="checkbox" id="sueddeutscheCheckbox" value="">
+								Süddeutsche.de
+							</label>
+						</div>
+						<div class="col-xs-5 col-md-12 checkbox">
+							<label>
+								<input type="checkbox" id="fazCheckbox" value="">
+								FAZ.net
+							</label>
+						</div>
 					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="weltCheckbox" value="">
-							Die Welt
-						</label>
+					<div class="row">
+						<div class="col-xs-5 col-xs-offset-1 col-md-12 col-md-offset-0 checkbox">
+							<label>
+								<input type="checkbox" id="ntvCheckbox" value="">
+								n-tv.de
+							</label>
+						</div>
+						<div class="col-xs-5 col-md-12 checkbox">
+							<label>
+								<input type="checkbox" id="rpCheckbox" value="">
+								RP Online
+							</label>
+						</div>
 					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="sternCheckbox" value="">
-							stern.de
-						</label>
+					<div class="row">
+						<p class="col-xs-offset-1 col-md-offset-0">Ressorts</p>
+						<div class="col-xs-5 col-xs-offset-1 col-md-12 col-md-offset-0 checkbox">
+							<label>
+								<input type="checkbox" id="allgemeinCheckbox" value="">
+								Allgemein
+							</label>
+						</div>
+						<div class="col-xs-5 col-md-12 checkbox">
+							<label>
+								<input type="checkbox" id="politikCheckbox" value="">
+								Politik
+							</label>
+						</div>
 					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="zeitCheckbox" value="">
-							Zeit Online
-						</label>
+					<div class="row">
+						<div class="col-xs-5 col-xs-offset-1 col-md-12 col-md-offset-0 checkbox">
+							<label>
+								<input type="checkbox" id="wirtschaftCheckbox" value="">
+								Wirtschaft
+							</label>
+						</div>
+						<div class="col-xs-5 col-md-12 checkbox">
+							<label>
+								<input type="checkbox" id="regionalCheckbox" value="">
+								Regional
+							</label>
+						</div>
 					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="sueddeutscheCheckbox" value="">
-							Süddeutsche.de
-						</label>
+					<div class="row">
+						<div class="col-xs-5 col-xs-offset-1 col-md-12 col-md-offset-0 checkbox">
+							<label>
+								<input type="checkbox" id="technikCheckbox" value="">
+								Technik
+							</label>
+						</div>
+						<div class="col-xs-5 col-md-12 checkbox">
+							<label>
+								<input type="checkbox" id="wissenschaftCheckbox" value="">
+								Wissenschaft
+							</label>
+						</div>
 					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="fazCheckbox" value="">
-							FAZ.net
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="ntvCheckbox" value="">
-							n-tv.de
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="rpCheckbox" value="">
-							RP Online
-						</label>
-					</div>
-					<p>Ressorts</p>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="allgemeinCheckbox" value="">
-							Allgemein
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="politikCheckbox" value="">
-							Politik
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="wirtschaftCheckbox" value="">
-							Wirtschaft
-						</label>
-					</div><div class="checkbox">
-						<label>
-							<input type="checkbox" id="regionalCheckbox" value="">
-							Regional
-						</label>
-					</div><div class="checkbox">
-						<label>
-							<input type="checkbox" id="technikCheckbox" value="">
-							Technik
-						</label>
-					</div><div class="checkbox">
-						<label>
-							<input type="checkbox" id="wissenschaftCheckbox" value="">
-							Wissenschaft
-						</label>
-					</div><div class="checkbox">
-						<label>
-							<input type="checkbox" id="gesellschaftCheckbox" value="">
-							Gesellschaft
-						</label>
+					<div class="row">
+						<div class="col-xs-5 col-xs-offset-1 col-md-12 col-md-offset-0 checkbox">
+							<label>
+								<input type="checkbox" id="gesellschaftCheckbox" value="">
+								Gesellschaft
+							</label>
+						</div>
 					</div>
 				</div>
 			</div>
