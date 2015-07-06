@@ -1,5 +1,6 @@
 import datetime
 import re
+import operator
 
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from models import Article, Version
@@ -61,7 +62,7 @@ def search(request, source=''):
     pagestr=request.REQUEST.get('page', '1')
     keyword=request.REQUEST.get('keyword')
     sort=request.REQUEST.get('sort')
-    source=request.REQUEST.get('sort')
+    source=request.REQUEST.get('source')
     try:
         page = int(pagestr)
     except ValueError:
@@ -85,28 +86,21 @@ def search(request, source=''):
 def get_articles_by_keyword(keyword, sort, distance=0):
     articles = {}
     all_articles = Article.objects.filter(keywords__contains = keyword).order_by('initial_date')
-    for a in all_articles:
-        article_title = Version.objects.filter(article_id = a.id).order_by('date')[0].title
-        articles[a.id] = {
-            'id': a.id, 'title': article_title, 'url': a.url, 'source':  a.source, 'date':  a.initial_date
-            }
-    return articles
 
-def get_articles_by_keyword_old(keyword, sort, distance=0):
-    versions = []
-    # sort by article date
-    if sort is 'sortNew' or sort is None:
-        articles = Article.objects.filter(keywords__contains = keyword).order_by('initial_date')
-    #TODO sort by number of changes
-    else:
-        articles = Article.objects.filter(keywords__contains = keyword)
-        for a in articles:
-            version_objects = Version.objects.filter(article_id = a.id)
-            versions.append(version_objects.annotate(versions=Count('article')).order_by('versions'))
-    # sort versions of article by date
-    for a in articles:
-        versions.append(Version.objects.filter(article_id = a.id).order_by('date'))
-    return articles, versions
+    for a in all_articles:
+        version = Version.objects.filter(article_id = a.id)
+        article_title = version.order_by('date')[0].title
+        articles[a.id] = {
+            'id': a.id,
+            'title': article_title,
+            'url': a.url,
+            'source':  a.source,
+            'date':  a.initial_date,
+            'versioncount': version.count() + a.id
+            }
+    if sort is 'sortCount':
+        articles = sorted(articles.items(), reverse=False, key=operator.itemgetter('versioncount'))
+    return articles
 
 def get_articles(source=None, distance=0):
     articles = []

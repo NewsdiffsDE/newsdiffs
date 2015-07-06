@@ -14,7 +14,6 @@ urlpatterns = [
   url(r'^browse/$', 'frontend.views.browse', name='browse'),
   url(r'^artikel/$', 'frontend.views.artikel', name='artikel'),
   url(r'^history/$', 'frontend.views.history', name='history'),
- # url(r'^suchergebnisse/(?P<keyword>.*)/(?P<sort>.*)/(?P<source>.*)$', 'frontend.views.search', name='suchergebnisse'),
   url(r'^suchergebnisse/$', 'frontend.views.search', name='suchergebnisse'),
   url(r'^browse/(.*)$', 'frontend.views.browse', name='browse'),
   url(r'^feed/browse/(.*)$', 'frontend.views.feed', name='feed'),
