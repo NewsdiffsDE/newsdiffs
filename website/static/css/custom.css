@@ -143,4 +143,11 @@ body {
   width: 100%;
 }
 
+/* *****************************************************************************
+ Datepicker Styles
+ **************************************************************************** */
+
+.datepicker table tr td.today, .datepicker table tr td.today:hover {
+    background-image: -webkit-linear-gradient(top,#FCFCFC,#CBCBCB);
+}
 

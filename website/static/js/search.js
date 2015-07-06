@@ -14,6 +14,8 @@
 // 	document.getElementById("search-input-line").placeholder = "Stichwort";
 // });
 
+
+
 var hideElementFunction = function(element) {
 	console.log('Element hidden!');
 	$(element).hide();
@@ -77,13 +79,24 @@ $(window).load(function () {
 
     dateElement.onclick = function(e) {
         console.log('Jo');
+        $.fn.datepicker.dates['de'] = {
+            days: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
+            daysShort: ["Son", "Mon", "Din", "Mit", "Don", "Fre", "Sam"],
+            daysMin: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
+            months: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+            monthsShort: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
+            today: "Heute",
+            clear: "Löschen"
+        };
+
         $('#search-input-line').datepicker({
-            //format: "dd/mm/yyyy", 
+            //format: "dd/mm/yyyy",
             format: "dd.mm.yyyy",
             autoclose: true,
             clearBtn: true,
             endDate: '+0d',
-            todayHighlight: true
+            todayHighlight: true,
+            language: 'de'
         });
 
     };
