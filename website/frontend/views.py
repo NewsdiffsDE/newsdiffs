@@ -81,7 +81,8 @@ def search(request, source=''):
                 'page':page,
                 'page_list': page_list,
                 'first_update': first_update,
-                'sources': SOURCES
+                'sources': SOURCES,
+                'source' : source
                 })
 def get_articles_by_keyword(keyword, sort, distance=0):
     articles = {}
