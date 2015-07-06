@@ -1,8 +1,8 @@
-.radio + .radio, .checkbox + .checkbox {
+.radio + .radio {
 	margin-top: 10px;
 }
 
-.radio, .checkbox {
+.radio, {
 	white-space:nowrap;
 }
 
