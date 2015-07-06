@@ -78,3 +78,8 @@ $(window).load(function () {
 });
 
 
+
+//Date Picker Functionality
+//Source: https://bootstrap-datepicker.readthedocs.org/en/latest/
+
+
