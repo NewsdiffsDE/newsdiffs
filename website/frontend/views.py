@@ -73,18 +73,26 @@ def search(request, source=''):
 
     # browse = entdecken = suche *
     if keyword is not '':
-        articles, versions = get_articles_by_keyword(keyword, sort, distance='0')
+        articles= get_articles_by_keyword(keyword, sort, distance='0')
         return render_to_response('suchergebnisse.html', {
                 'articles': articles,
-                'versions': versions,
                 'searchword': keyword,
                 'page':page,
                 'page_list': page_list,
                 'first_update': first_update,
                 'sources': SOURCES
                 })
-
 def get_articles_by_keyword(keyword, sort, distance=0):
+    articles = {}
+    all_articles = Article.objects.filter(keywords__contains = keyword).order_by('initial_date')
+    for a in all_articles:
+        article_title = Version.objects.filter(article_id = a.id).order_by('date')[0].title
+        articles[a.id] = {
+            'id': a.id, 'title': article_title, 'url': a.url, 'source':  a.source, 'date':  a.initial_date
+            }
+    return articles
+
+def get_articles_by_keyword_old(keyword, sort, distance=0):
     versions = []
     # sort by article date
     if sort is 'sortNew' or sort is None:
