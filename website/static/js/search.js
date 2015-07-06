@@ -57,6 +57,7 @@ $(window).load(function () {
 	var searchFoldOutElement = document.getElementById('search-foldout');
 	var searchElement = document.getElementById('search-element');
 	var body = document.body;
+    var dateElement = document.getElementById('date-row');
 
 
 	searchInputLineElement.onclick = function(e) {
@@ -74,12 +75,21 @@ $(window).load(function () {
 		}
 	});
 
+    dateElement.onclick = function(e) {
+        console.log('Jo');
+        $('#search-input-line').datepicker({
+            //format: "dd/mm/yyyy", 
+            format: "dd.mm.yyyy",
+            autoclose: true,
+            clearBtn: true,
+            endDate: '+0d',
+            todayHighlight: true
+        });
+
+    };
+
+
+
+
 
 });
-
-
-
-//Date Picker Functionality
-//Source: https://bootstrap-datepicker.readthedocs.org/en/latest/
-
-
