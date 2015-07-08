@@ -29,23 +29,11 @@
             <div class=" containter-fluid sidebar">
                 <div class="row">
                     <h5 class="col-xs-offset-1 col-md-offset-0">Sortieren nach:</h5>
-
-                    <div class="col-xs-3 col-xs-offset-1 col-md-12 col-md-offset-0 radio">
-                        <label>
-                            <input type="radio" name="sortOptionsRadios" id="sortNew" value="neueste" checked>
-                            <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort=sortNew&source={{source}}">
-                                Neueste
-                            </a>
-                        </label>
-                    </div>
-                    <div class="col-xs-3 col-md-12 radio">
-                        <label>
-                            <input type="radio" name="sortOptionsRadios" id="sortCount" value="meiste">
-                            <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort=sortCount&source={{source}}">
-                                Meiste Änderungen
-                            </a>
-                        </label>
-                    </div>
+                    {% if sort == 'sortCount' %}
+                    {% include "sortCount.html" %}
+                    {% else %}
+                    {% include "sortNew.html" %}
+                    {% endif %}
                 </div>
                 <div class="row">
                     <h5 class="col-xs-offset-1 col-md-offset-0">Filtern nach:</h5>
@@ -173,7 +161,7 @@
             <h1>Suchergebnisse für "{{ searchword }}" ({{articles|length}})</h1>
 
             <div class="table">
-                <table class="table table-condensed">
+                <table class="table table-condensed table-striped">
                     <thead>
                     <tr>
                         <th>Artikel</th>
@@ -181,21 +169,26 @@
                     </thead>
                     <tbody>
                     {% for id, article in articles.items %}
+
                     <tr>
                         <td>
-                            <h3>{{ article.title }}(<a href="{{ article.url }}" target="_blank">{{ article.source }}</a>)
+                            <em>{{ forloop.counter }}. Ergebnis | Anzahl der Änderungen: {{article.versioncount}} |
+                                Quelle: (<a href="{{ article.url }}" target="_blank">{{ article.source }}</a>)
+                            </em>
+                            <h3>
+                                {{ article.title }} (<a href="{{ article.url }}" target="_blank">{{ article.source}}</a>)
                             </h3>
-
                             <p>
                                 <a class="no-link-color" href="article_history.html">
                                     <img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png"
                                          alt="Artikelverlauf-Icon">
                                 </a>
-                                <a href="article_history.html">Änderungsübersicht ({{article.versioncount}})</a>
+                                <a href="{% url 'article_history' %}">Änderungsübersicht ({{article.versioncount}})</a>
                             </p>
 
-                            <p><a href="diffview.html"><img class="ownbtn" src="../static/images/Icon_Vergleichen.png"
-                                                            alt="Vergleichen-Icon">neueste Änderung</a></p>
+                            <p><a href="{% url 'diffview' %}"><img class="ownbtn"
+                                                                   src="../static/images/Icon_Vergleichen.png"
+                                                                   alt="Vergleichen-Icon">neueste Änderung</a></p>
                         </td>
                     </tr>
                     {% endfor %}
