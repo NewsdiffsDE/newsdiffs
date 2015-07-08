@@ -73,7 +73,7 @@ def search(request, source=''):
     page_list=range(1, 1+num_pages)
 
     if len(keyword) > 1:
-        articles= get_articles_by_keyword(keyword, sort, distance='0')
+        articles= get_articles_by_keyword(keyword, sort, source, distance='0')
         return render_to_response('suchergebnisse.html', {
                 'articles': articles,
                 'searchword': keyword,
@@ -85,8 +85,23 @@ def search(request, source=''):
                 'sort' : sort
                 })
     return render_to_response('suchergebnisse.html', {})
+def get_archive(request, source=''):
+    articles = {}
+    all_articles = Article.objects.order_by('initial_date')
+    for a in all_articles:
+        version = Version.objects.filter(article_id = a.id)
+        article_title = version.order_by('date')[0].title
+        articles[a.id] = {
+            'id': a.id,
+            'title': article_title,
+            'url': a.url,
+            'source':  a.source,
+            'date':  a.initial_date,
+            'versioncount': version.count()
+            }
+    return articles
 
-def get_articles_by_keyword(keyword, sort, distance=0):
+def get_articles_by_keyword(keyword, sort, source, distance=0):
     articles = {}
     all_articles = Article.objects.filter(keywords__contains = keyword).order_by('initial_date')
 
@@ -179,14 +194,15 @@ def browse(request, source=''):
 
     # browse = entdecken = suche *
 
-    articles = get_articles(source=source, distance=page-1)
+    articles = get_archive(source=source)
     return render_to_response('browse.html', {
-            'source': source, 'articles': articles,
-            'page':page,
-            'page_list': page_list,
-            'first_update': first_update,
-            'sources': SOURCES
-            })
+                'articles': articles,
+                'page':page,
+                'page_list': page_list,
+                'first_update': first_update,
+                'sources': SOURCES,
+                'source' : source,
+                })
 
 @cache_page(60 * 30)  #30 minute cache
 def feed(request, source=''):

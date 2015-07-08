@@ -41,7 +41,7 @@ class Article(models.Model):
     url = models.CharField(max_length=255, blank=False, unique=True,
                            db_index=True)
     category = models.CharField(max_length=255, blank=False)
-    keywords = models.CharField(max_length=255, blank=False)
+    keywords = models.CharField(max_length=500, blank=False)
     source = models.CharField(max_length=255, blank=False)
     initial_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(default=ancient)
