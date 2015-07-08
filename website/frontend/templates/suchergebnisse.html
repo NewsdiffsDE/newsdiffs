@@ -1,7 +1,7 @@
 {% extends 'headerfooter.html' %}
 {% load url from future %}
 {% block css_import %}
-    <link href="{% url 'static' 'css/custom-article-list.css' %}" rel="stylesheet" type="text/css">
+<link href="{% url 'static' 'css/custom-article-list.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
 
 {% block title %}Suchergebnisse{% endblock %}
@@ -9,27 +9,28 @@
 
 {% block content %}
 
-    <!-- Begin page content -->
-	<div class="container-fluid maincontent">
-        {% include "searchbar.html" %}
+<!-- Begin page content -->
+<div class="container-fluid maincontent">
+    {% include "searchbar.html" %}
 
-        <!-- Breadcrumbs -->
-		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
-				<ol class="breadcrumb">
-					<li><a href="index.html">Suche</a></li>
-					<li class="active">Suchergebnisse</li>
-				</ol>
-			</div>
-		</div>
+    <!-- Breadcrumbs -->
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <ol class="breadcrumb">
+                <li><a href="index.html">Suche</a></li>
+                <li class="active">Suchergebnisse</li>
+            </ol>
+        </div>
+    </div>
 
-		<div class="row">
-			<!--Filter-->
-			<div class="col-md-2 col-md-offset-2">
-				<div class="sidebar">
-					<h5>Sortieren nach:</h5>
+    <div class="row">
+        <!--Filter-->
+        <div class="col-md-2 col-md-offset-2">
+            <div class=" containter-fluid sidebar">
+                <div class="row">
+                    <h5 class="col-xs-offset-1 col-md-offset-0">Sortieren nach:</h5>
 
-                    <div class="radio">
+                    <div class="col-xs-3 col-xs-offset-1 col-md-12 col-md-offset-0 radio">
                         <label>
                             <input type="radio" name="sortOptionsRadios" id="sortNew" value="neueste" checked>
                             <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort=sortNew&source={{source}}">
@@ -37,188 +38,210 @@
                             </a>
                         </label>
                     </div>
-					<div class="radio">
-						<label>
-							<input type="radio" name="sortOptionsRadios" id="sortCount" value="meiste">
+                    <div class="col-xs-3 col-md-12 radio">
+                        <label>
+                            <input type="radio" name="sortOptionsRadios" id="sortCount" value="meiste">
                             <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort=sortCount&source={{source}}">
                                 Meiste Änderungen
                             </a>
-						</label>
-					</div>
-					<h5>Filtern nach:</h5>
-					<p>Zeitungen</p>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="bildCheckbox" value="">
-							Bild.de
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="focusCheckbox" value="">
-							Focus Online
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="spiegelCheckbox" value="">
-							Spiegel Online
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="weltCheckbox" value="">
-							Die Welt
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="sternCheckbox" value="">
-							stern.de
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="zeitCheckbox" value="">
-							Zeit Online
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="sueddeutscheCheckbox" value="">
-							Süddeutsche.de
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="fazCheckbox" value="">
-							FAZ.net
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="ntvCheckbox" value="">
-							n-tv.de
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="rpCheckbox" value="">
-							RP Online
-						</label>
-					</div>
-					<p>Ressorts</p>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="allgemeinCheckbox" value="">
-							Allgemein
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="politikCheckbox" value="">
-							Politik
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="wirtschaftCheckbox" value="">
-							Wirtschaft
-						</label>
-					</div><div class="checkbox">
-						<label>
-							<input type="checkbox" id="regionalCheckbox" value="">
-							Regional
-						</label>
-					</div><div class="checkbox">
-						<label>
-							<input type="checkbox" id="technikCheckbox" value="">
-							Technik
-						</label>
-					</div><div class="checkbox">
-						<label>
-							<input type="checkbox" id="wissenschaftCheckbox" value="">
-							Wissenschaft
-						</label>
-					</div><div class="checkbox">
-						<label>
-							<input type="checkbox" id="gesellschaftCheckbox" value="">
-							Gesellschaft
-						</label>
-					</div>
-				</div>
-			</div>
-			
-			<!-- Suchergebnisse -->
-			<div class="col-md-6">
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <h5 class="col-xs-offset-1 col-md-offset-0">Filtern nach:</h5>
 
-				<h1>Suchergebnisse für "{{ searchword }}" ({{articles|length}})</h1>
+                    <p class="col-xs-offset-1 col-md-offset-0">Zeitung</p>
 
-				<div class="table">
-					<table class="table table-condensed">
-						<thead>
-							<tr>
-								<th>Artikel</th>
-							</tr>
-						</thead>
-						<tbody>
-                            {% for id, article in articles.items %}
-							<tr>
-								<td>
-									<h3>{{ article.title }}(<a href="{{ article.url }}" target="_blank">{{ article.source }}</a>)</h3>
-									<p>
-                                        <a class ="no-link-color" href="article_history.html">
-                                            <img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf-Icon">
-                                        </a>
-                                        <a href="article_history.html">Änderungsübersicht ({{article.versioncount}})</a>
-                                    </p>
-									<p><a href="diffview.html"><img class="ownbtn" src="../static/images/Icon_Vergleichen.png" alt="Vergleichen-Icon">neueste Änderung</a></p>
-								</td>
-							</tr>
-                            {% endfor %}
-						</tbody>
-					</table>
-				</div>
-				<!-- /.table -->
-			</div>
-			<!-- /.col -->
-		</div>
-		<!-- /.row -->
+                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-md-12 col-md-offset-0 radio">
+                        <label>
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="filterBild" value="bild">
+                            Bild.de
+                        </label>
+                    </div>
+                    <div class="col-xs-5 col-sm-2 col-md-12 radio">
+                        <label>
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioFocus" value="focus">
+                            Focus Online
+                        </label>
+                    </div>
+                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
+                        <label>
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioSpiegel" value="spiegel">
+                            Spiegel Online
+                        </label>
+                    </div>
+                    <div class="col-xs-5 col-sm-2 col-md-12 radio">
+                        <label>
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioWelt" value="welt">
+                            Die Welt
+                        </label>
+                    </div>
+                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
+                        <label>
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioStern" value="stern">
+                            stern.de
+                        </label>
+                    </div>
+                    <div class="col-xs-5 col-sm-2 col-sm-offset-1 col-md-12 col-md-offset-0 radio">
+                        <label>
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioZeit" value="zeit">
+                            Zeit Online
+                        </label>
+                    </div>
+                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
+                        <label>
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioSueddeutsche"
+                                   value="sueddeutsche">
+                            Süddeutsche.de
+                        </label>
+                    </div>
+                    <div class="col-xs-5 col-sm-2 col-md-12 radio">
+                        <label>
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioFaz" value="faz">
+                            FAZ.net
+                        </label>
+                    </div>
+                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
+                        <label>
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioNtv" value="ntv">
+                            n-tv.de
+                        </label>
+                    </div>
+                    <div class="col-xs-5 col-sm-2 col-md-12 radio">
+                        <label>
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioRp" value="rp">
+                            RP Online
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <p class="col-xs-offset-1 col-md-offset-0">Ressort</p>
 
-		<!-- Pagination -->
-		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
-				<nav id="pagination-nav">
-					<ul class="pagination pagination-sm">
-					    <li class="disabled">
-					      <a href="#" aria-label="Previous">
-					        <span aria-hidden="true">&laquo;</span>
-					      </a>
-					    </li>
-					    <li class="active"><a href="#">1</a></li>
-					    <li><a href="#">2</a></li>
-					    <li><a href="#">3</a></li>
-					    <li><a href="#">4</a></li>
-					    <li><a href="#">5</a></li>
-					    <li>
-					    	<a href="#" aria-label="Next">
-					        	<span aria-hidden="true">&raquo;</span>
-					    	</a>
-					    </li>
-					</ul>
-				</nav>
+                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-md-12 col-md-offset-0 radio">
+                        <label>
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioAllgemein"
+                                   value="allgemein">
+                            Allgemein
+                        </label>
+                    </div>
+                    <div class="col-xs-5 col-sm-2 col-md-12 radio">
+                        <label>
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioPolitik" value="politik">
+                            Politik
+                        </label>
+                    </div>
+                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
+                        <label>
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioWirtschaft"
+                                   value="wirtschaft">
+                            Wirtschaft
+                        </label>
+                    </div>
+                    <div class="col-xs-5 col-sm-4 col-md-12 radio">
+                        <label>
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioRegional" value="regional">
+                            Regional
+                        </label>
+                    </div>
+                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-md-12 col-md-offset-0 radio">
+                        <label>
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioTechnik" value="technik">
+                            Technik
+                        </label>
+                    </div>
+                    <div class="col-xs-5 col-sm-2 col-md-12 radio">
+                        <label>
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioWissenschaft"
+                                   value="wissenschaft">
+                            Wissenschaft
+                        </label>
+                    </div>
+                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
+                        <label>
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioGesellschaft"
+                                   value="gesellschaft">
+                            Gesellschaft
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-				<p id="display-options">
-					Suchergebnisse pro Seite: <a>5</a> <a>15</a> <a>alle</a>
-				</p>
+        <!-- Suchergebnisse -->
+        <div class="col-md-6">
+
+            <h1>Suchergebnisse für "{{ searchword }}" ({{articles|length}})</h1>
+
+            <div class="table">
+                <table class="table table-condensed">
+                    <thead>
+                    <tr>
+                        <th>Artikel</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for id, article in articles.items %}
+                    <tr>
+                        <td>
+                            <h3>{{ article.title }}(<a href="{{ article.url }}" target="_blank">{{ article.source }}</a>)
+                            </h3>
+
+                            <p>
+                                <a class="no-link-color" href="article_history.html">
+                                    <img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png"
+                                         alt="Artikelverlauf-Icon">
+                                </a>
+                                <a href="article_history.html">Änderungsübersicht ({{article.versioncount}})</a>
+                            </p>
+
+                            <p><a href="diffview.html"><img class="ownbtn" src="../static/images/Icon_Vergleichen.png"
+                                                            alt="Vergleichen-Icon">neueste Änderung</a></p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.table -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+    <!-- Pagination -->
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <nav id="pagination-nav">
+                <ul class="pagination pagination-sm">
+                    <li class="disabled">
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <p id="display-options">
+                Suchergebnisse pro Seite: <a>5</a> <a>15</a> <a>alle</a>
+            </p>
 
 
-			</div>
-		</div>
-		<!-- ./row -->
+        </div>
+    </div>
+    <!-- ./row -->
 
-	</div>
-	<!-- /.container-fluid -->
+</div>
+<!-- /.container-fluid -->
 
 {% endblock %}
 
