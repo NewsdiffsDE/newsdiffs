@@ -72,8 +72,7 @@ def search(request, source=''):
     num_pages = (datetime.datetime.now() - first_update).days + 1
     page_list=range(1, 1+num_pages)
 
-    # browse = entdecken = suche *
-    if keyword is not '':
+    if len(keyword) > 1:
         articles= get_articles_by_keyword(keyword, sort, distance='0')
         return render_to_response('suchergebnisse.html', {
                 'articles': articles,
@@ -85,6 +84,8 @@ def search(request, source=''):
                 'source' : source,
                 'sort' : sort
                 })
+    return render_to_response('suchergebnisse.html', {})
+
 def get_articles_by_keyword(keyword, sort, distance=0):
     articles = {}
     all_articles = Article.objects.filter(keywords__contains = keyword).order_by('initial_date')
