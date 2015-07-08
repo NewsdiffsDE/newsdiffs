@@ -195,7 +195,7 @@ def browse(request, source=''):
     # browse = entdecken = suche *
 
     articles = get_archive()
-    return render_to_response('archiv.html', {
+    return render_to_response('archive.html', {
                 'articles': articles,
                 'page':page,
                 'page_list': page_list,
