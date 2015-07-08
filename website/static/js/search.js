@@ -71,6 +71,7 @@ $(window).load(function () {
 		hideElementFunction(searchFoldOutElement);
 	};
 
+    //advice from https://css-tricks.com/dangers-stopping-event-propagation/
 	$(document).on('click', function(event) {
 		if (!$(event.target).closest('#search-element').length) {
 			hideElementFunction(searchFoldOutElement);
