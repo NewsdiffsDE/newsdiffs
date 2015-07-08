@@ -87,7 +87,7 @@ def search(request, source=''):
     return render_to_response('suchergebnisse.html', {})
 def get_archive():
     articles = {}
-    all_articles = Article.objects[100]
+    all_articles = Article.objects.filter(source = 'www.bild.de')
     for a in all_articles:
         version = Version.objects.filter(article_id = a.id)
         article_title = version.order_by('date')[0].title
