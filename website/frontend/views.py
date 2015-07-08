@@ -85,9 +85,9 @@ def search(request, source=''):
                 'sort' : sort
                 })
     return render_to_response('suchergebnisse.html', {})
-def get_archive(request, source=''):
+def get_archive():
     articles = {}
-    all_articles = Article.objects.order_by('initial_date')
+    all_articles = Article.objects[100]
     for a in all_articles:
         version = Version.objects.filter(article_id = a.id)
         article_title = version.order_by('date')[0].title
@@ -194,7 +194,7 @@ def browse(request, source=''):
 
     # browse = entdecken = suche *
 
-    articles = get_archive(source=source)
+    articles = get_archive()
     return render_to_response('suchergebnisse.html', {
                 'articles': articles,
                 'page':page,
