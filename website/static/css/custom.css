@@ -23,7 +23,7 @@ code {
  Navbar
  **************************************************************************** */
 
-.navbar-default {
+.navbar-inverse {
 	height: 80px;
 	border: none;
 	border-radius: 0px;
@@ -54,11 +54,11 @@ ul.nav.navbar-nav.navbar-right li > a{
 	margin: 10px 0px;
 }
 
-.navbar-default .navbar-nav > li > a {
+.navbar-inverse .navbar-nav > li > a {
   color: #333333;
 }
 
-.navbar-default .navbar-nav > li > a:hover {
+.navbar-inverse.navbar-nav > li > a:hover {
   color: #000000;
 }
 
