@@ -23,7 +23,7 @@ code {
  Navbar
  **************************************************************************** */
 
-.navbar-inverse {
+.navbar-default {
 	height: 80px;
 	border: none;
 	border-radius: 0px;
@@ -54,18 +54,14 @@ ul.nav.navbar-nav.navbar-right li > a{
 	margin: 10px 0px;
 }
 
-.navbar-inverse .navbar-nav > li > a {
+.navbar-default .navbar-nav > li > a {
   color: #333333;
 }
 
-.navbar-inverse.navbar-nav > li > a:hover {
+.navbar-default.navbar-nav > li > a:hover {
   color: #000000;
 }
 
-.navbar-inverse .navbar-nav > .active > a{
-  color: #000000;
-  background-color: #FFFFFF;
-}
 
 /* *****************************************************************************
  Footer
