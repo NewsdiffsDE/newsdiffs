@@ -62,6 +62,10 @@ ul.nav.navbar-nav.navbar-right li > a{
   color: #000000;
 }
 
+.navbar-inverse .navbar-nav > .active > a{
+  color: #000000;
+  background-color: #FFFFFF;
+}
 
 /* *****************************************************************************
  Footer
