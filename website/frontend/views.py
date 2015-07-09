@@ -410,8 +410,7 @@ def kontakt(request):
 def impressum(request):
     return render_to_response('impressum.html', {})
 
-def archive(request):
-    return render_to_response('archive.html', {})
+
 
 def index(request):
     return render_to_response('index.html', {'sources': SOURCES})
