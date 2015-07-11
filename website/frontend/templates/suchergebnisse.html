@@ -9,6 +9,7 @@
 
 {% block content %}
 
+
     <!-- Begin page content -->
 	<div class="container-fluid maincontent">
         {% include "searchbar.html" %}
@@ -27,123 +28,61 @@
 			<!--Filter-->
 			<div class="col-md-2 col-md-offset-2">
 				<div class="sidebar">
-					<h5>Sortieren nach:</h5>
-					<div class="radio">
-						<label>
-							<input type="radio" name="sortOptionsRadios" id="sortNew" value="neueste" checked>
-							Neueste
-						</label>
-					</div>
-					<div class="radio">
-						<label>
-							<input type="radio" name="sortOptionsRadios" id="sortCount" value="meiste">
-							Meiste Änderungen
-						</label>
-					</div>
-					<h5>Filtern nach:</h5>
-					<p>Zeitungen</p>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="bildCheckbox" value="">
-							Bild.de
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="focusCheckbox" value="">
-							Focus Online
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="spiegelCheckbox" value="">
-							Spiegel Online
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="weltCheckbox" value="">
-							Die Welt
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="sternCheckbox" value="">
-							stern.de
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="zeitCheckbox" value="">
-							Zeit Online
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="sueddeutscheCheckbox" value="">
-							Süddeutsche.de
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="fazCheckbox" value="">
-							FAZ.net
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="ntvCheckbox" value="">
-							n-tv.de
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="rpCheckbox" value="">
-							RP Online
-						</label>
-					</div>
-					<p>Ressorts</p>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="allgemeinCheckbox" value="">
-							Allgemein
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="politikCheckbox" value="">
-							Politik
-						</label>
-					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" id="wirtschaftCheckbox" value="">
-							Wirtschaft
-						</label>
-					</div><div class="checkbox">
-						<label>
-							<input type="checkbox" id="regionalCheckbox" value="">
-							Regional
-						</label>
-					</div><div class="checkbox">
-						<label>
-							<input type="checkbox" id="technikCheckbox" value="">
-							Technik
-						</label>
-					</div><div class="checkbox">
-						<label>
-							<input type="checkbox" id="wissenschaftCheckbox" value="">
-							Wissenschaft
-						</label>
-					</div><div class="checkbox">
-						<label>
-							<input type="checkbox" id="gesellschaftCheckbox" value="">
-							Gesellschaft
-						</label>
-					</div>
+                    <form>
+                    <!-- Sort -->
+                    <h5>Sortieren nach:</h5>
+
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="sortOptionsRadios" id="sortNew" value="neueste" checked>
+                            Neueste
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="sortOptionsRadios" id="sortCount" value="meiste">
+                            Meiste Änderungen
+                        </label>
+                    </div>
+
+
+                    <!-- Filter -->
+                    <h5>Filtern nach:</h5>
+
+                    <!-- zeit.de, bild.de, focus.de, spiegel.de, stern.de, welt.de, faz.de, n-tv.de, rp-online.de,
+                    sueddeutsche.de, taz.de -->
+                    <p>Zeitungen</p>
+
+                    {% for newspaper in sources %}
+                        <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="">
+                            {{ newspaper }}
+                        </label>
+                    </div>
+                    {% endfor %}
+
+
+                    <!-- Allgemein, Politik, Wirtschaft, Regional, Technik, Wissenschaft, Gesellschaft -->
+                    <p>Ressorts</p>
+
+                    {% for ressort in ressort_list %}
+                        <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="">
+                            {{ ressort }}
+                        </label>
+                    </div>
+                    {% endfor %}
+
+                    <p>Datum</p>
+                    <div class="date-wrapper">
+                        <input id="datepicker" name="date-value" placeholder="select a date"/>
+                    </div>
+                    </form>
 				</div>
 			</div>
-			
+
 			<!-- Suchergebnisse -->
 			<div class="col-md-6">
 
