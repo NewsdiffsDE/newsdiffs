@@ -24,6 +24,16 @@ search.yahoo.com
 http://www.bing.com
 """.split()
 
+RESSORT_LIST = ["Allgemein",
+                "Politik",
+                "Wirtschaft",
+                "Regional",
+                "Technik",
+                "Wissenschaft",
+                "Gesellschaft"]
+
+
+
 def came_from_search_engine(request):
     return any(x in request.META.get('HTTP_REFERER', '')
                for x in SEARCH_ENGINES)
@@ -82,7 +92,8 @@ def search(request, source=''):
                 'page':page,
                 'page_list': page_list,
                 'first_update': first_update,
-                'sources': SOURCES
+                'sources': SOURCES,
+                'ressort_list': RESSORT_LIST
                 })
 
 def get_articles_by_keyword(keyword, sort, distance=0):
