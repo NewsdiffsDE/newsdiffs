@@ -47,6 +47,7 @@ var chooseListItemFunction = function(e) {
 
 	//Input Zeile füllen
 	document.getElementById("search-input-line").placeholder = clickedListItem.text();
+    document.getElementById("keyword-type").value = clickedListItem.text();
 
 	//Wieder einklappen und Cursor platzieren
 	$("#search-input-line").focus();
@@ -60,6 +61,7 @@ $(window).load(function () {
 	var searchElement = document.getElementById('search-element');
 	var body = document.body;
     var dateElement = document.getElementById('date-row');
+    var npElement = document.getElementById('np-row');
 
 
 	searchInputLineElement.onclick = function(e) {
@@ -79,7 +81,6 @@ $(window).load(function () {
 	});
 
     dateElement.onclick = function(e) {
-        console.log('Jo');
         $.fn.datepicker.dates['de'] = {
             days: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
             daysShort: ["Son", "Mon", "Din", "Mit", "Don", "Fre", "Sam"],
@@ -98,6 +99,13 @@ $(window).load(function () {
             endDate: '+0d',
             todayHighlight: true,
             language: 'de'
+        });
+
+    };
+
+    npElement.onclick = function(e) {
+        $('#search-input-line').newspaperpicker({
+
         });
 
     };

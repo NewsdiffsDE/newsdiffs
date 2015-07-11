@@ -59,6 +59,7 @@ def search(request, source=''):
     if source not in SOURCES + ['']:
         raise Http404
     pagestr=request.REQUEST.get('page', '1')
+    keyword_type=request.REQUEST.get('keyword-type')
     keyword=request.REQUEST.get('keyword')
     sort=request.REQUEST.get('sort')
     source=request.REQUEST.get('sort')
