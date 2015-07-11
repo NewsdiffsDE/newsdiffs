@@ -23,13 +23,6 @@ code {
  Navbar
  **************************************************************************** */
 
-.navbar-default {
-	height: 80px;
-	border: none;
-	border-radius: 0px;
-	background-color: #FFFFFF;
-	margin-bottom: 0px;
-}
 
 .navbar-brand img{
 	height: 50px;
@@ -54,14 +47,16 @@ ul.nav.navbar-nav.navbar-right li > a{
 	margin: 10px 0px;
 }
 
-.navbar-default .navbar-nav > li > a {
-  color: #333333;
+
+
+.navbar-default {
+    background-color: #FFF;
+    border: none;
 }
 
-.navbar-default .navbar-nav > li > a:hover {
-  color: #000000;
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border: none;
 }
-
 
 /* *****************************************************************************
  Footer

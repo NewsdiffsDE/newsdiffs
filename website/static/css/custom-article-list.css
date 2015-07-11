@@ -1,6 +1,14 @@
+.radio + .radio {
+	margin-top: 10px;
+}
+
+.radio, {
+	white-space:nowrap;
+}
+
 a img:hover {
 	text-decoration: none;
-    border: none;
+	border: none;
 }
 
 .table-condensed {
