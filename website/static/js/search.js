@@ -60,8 +60,7 @@ $(window).load(function () {
 	var searchFoldOutElement = document.getElementById('search-foldout');
 	var searchElement = document.getElementById('search-element');
 	var body = document.body;
-    var dateElement = document.getElementById('date-row');
-    var npElement = document.getElementById('np-row');
+    var dateElement = document.getElementById('datepicker');
 
 
 	searchInputLineElement.onclick = function(e) {
@@ -80,6 +79,15 @@ $(window).load(function () {
 		}
 	});
 
+    $('#datepicker').datepicker({
+            //format: "dd/mm/yyyy",
+            format: "dd.mm.yyyy",
+            clearBtn: true,
+            endDate: '+0d',
+            todayHighlight: true,
+            language: 'de'
+    });
+
     dateElement.onclick = function(e) {
         $.fn.datepicker.dates['de'] = {
             days: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
@@ -90,28 +98,8 @@ $(window).load(function () {
             today: "Heute",
             clear: "Löschen"
         };
-
-        $('#search-input-line').datepicker({
-            //format: "dd/mm/yyyy",
-            format: "dd.mm.yyyy",
-            autoclose: true,
-            clearBtn: true,
-            endDate: '+0d',
-            todayHighlight: true,
-            language: 'de'
-        });
-
     };
-
-    npElement.onclick = function(e) {
-        $('#search-input-line').newspaperpicker({
-
-        });
-
+    dateElement.onChange = function(e) {
+        // submit form
     };
-
-
-
-
-
 });
