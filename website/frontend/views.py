@@ -61,11 +61,11 @@ def get_last_update(source):
 def search(request, source=''):
     if source not in SOURCES + ['']:
         raise Http404
-    pagestr=request.REQUEST.get('page', '1')
-    search_type=request.REQUEST.get('search_type')
-    searchterm=request.REQUEST.get('searchterm')
-    sort=request.REQUEST.get('sort')
-    source=request.REQUEST.get('source')
+    pagestr = request.REQUEST.get('page', '1')
+    search_type = request.REQUEST.get('search_type')
+    searchterm = request.REQUEST.get('searchterm')
+    sort = request.REQUEST.get('sort')
+    source = request.REQUEST.get('source')
     date = request.REQUEST.get('date')
     ressort = request.REQUEST.get('ressort')
 
@@ -77,19 +77,21 @@ def search(request, source=''):
     #first_update = get_first_update(source)
     #num_pages = (datetime.datetime.now() - first_update).days + 1
     #page_list=range(1, 1+num_pages)
-
+    if search_type is None:
+        search_type = u'Stichwort'
 
     if len(searchterm) > 1:
-        if search_type == u'keyword'or search_type == u'':
+        if search_type == u'Stichwort':
             articles= get_articles_by_keyword(searchterm, sort, source, distance='0')
         elif search_type == u'Autor':
             articles= get_articles_by_author(searchterm, sort, source, distance='0')
-        elif search_type == u'url':
+        elif search_type == u'URL':
             articles = None
 
         return render_to_response('suchergebnisse.html', {
                 'articles': articles,
                 'searchterm': searchterm,
+                'search_type': search_type,
                 #'page':page,
                 #'page_list': page_list,
                 #'first_update': first_update,
