@@ -21,7 +21,7 @@
                 <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-md-12 col-md-offset-0 radio">
                     <label>
                         <input type="radio" name="newspaperFilterOptionsRadios" id="filterBild" value="bild">
-                        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort={{sort}}&source=Bild&ressort={{ressort}}">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort={{sort}}&source=Bild&ressort={{ressort}}">
                             BILD
                         </a>
                     </label>
@@ -29,7 +29,7 @@
                 <div class="col-xs-5 col-sm-2 col-md-12 radio">
                     <label>
                         <input type="radio" name="newspaperFilterOptionsRadios" id="radioFocus" value="focus">
-                        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort={{sort}}&source=Focus&ressort={{ressort}}">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort={{sort}}&source=Focus&ressort={{ressort}}">
                             FOCUS
                         </a>
                     </label>
@@ -38,7 +38,7 @@
                     <label>
                         <input type="radio" name="newspaperFilterOptionsRadios" id="radioSpiegel"
                                value="spiegel">
-                        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort={{sort}}&source=Spiegel&ressort={{ressort}}">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort={{sort}}&source=Spiegel&ressort={{ressort}}">
                             SPIEGEL ONLINE
                         </a>
                     </label>
@@ -46,7 +46,7 @@
                 <div class="col-xs-5 col-sm-2 col-md-12 radio">
                     <label>
                         <input type="radio" name="newspaperFilterOptionsRadios" id="radioWelt" value="welt">
-                        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort={{sort}}&source=Welt&ressort={{ressort}}">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort={{sort}}&source=Welt&ressort={{ressort}}">
                             DIE WELT
                         </a>
                     </label>
@@ -54,7 +54,7 @@
                 <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
                     <label>
                         <input type="radio" name="newspaperFilterOptionsRadios" id="radioStern" value="stern">
-                        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort={{sort}}&source=Stern&ressort={{ressort}}">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort={{sort}}&source=Stern&ressort={{ressort}}">
                             stern
                         </a>
                     </label>
@@ -62,7 +62,7 @@
                 <div class="col-xs-5 col-sm-2 col-sm-offset-1 col-md-12 col-md-offset-0 radio">
                     <label>
                         <input type="radio" name="newspaperFilterOptionsRadios" id="radioZeit" value="zeit">
-                        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort={{sort}}&source=Zeit&ressort={{ressort}}">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort={{sort}}&source=Zeit&ressort={{ressort}}">
                             ZEIT ONLINE
                         </a>
                     </label>
@@ -71,7 +71,7 @@
                     <label>
                         <input type="radio" name="newspaperFilterOptionsRadios" id="radioSueddeutsche"
                                value="sueddeutsche">
-                        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort={{sort}}&source=sueddeutsche&ressort={{ressort}}">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort={{sort}}&source=sueddeutsche&ressort={{ressort}}">
                             Süddeutsche Zeitung
                         </a>
                     </label>
@@ -79,7 +79,7 @@
                 <div class="col-xs-5 col-sm-2 col-md-12 radio">
                     <label>
                         <input type="radio" name="newspaperFilterOptionsRadios" id="radioFaz" value="faz">
-                        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort={{sort}}&source=faz&ressort={{ressort}}">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort={{sort}}&source=faz&ressort={{ressort}}">
                             FAZ.NET
                         </a>
                     </label>
@@ -87,7 +87,7 @@
                 <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
                     <label>
                         <input type="radio" name="newspaperFilterOptionsRadios" id="radioNtv" value="ntv">
-                        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort={{sort}}&source=ntv&ressort={{ressort}}">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort={{sort}}&source=ntv&ressort={{ressort}}">
                             n-tv
                         </a>
                     </label>
@@ -95,7 +95,7 @@
                 <div class="col-xs-5 col-sm-2 col-md-12 radio">
                     <label>
                         <input type="radio" name="newspaperFilterOptionsRadios" id="radioRp" value="rp">
-                        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort={{sort}}&source=rp&ressort={{ressort}}">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort={{sort}}&source=rp&ressort={{ressort}}">
                             RP ONLINE
                         </a>
                     </label>
@@ -108,7 +108,7 @@
                     <label>
                         <input type="radio" name="categoryFilterOptionsRadios" id="radioAllgemein"
                                value="allgemein">
-                        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort={{sort}}&source=Stern&ressort=Allgemein">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort={{sort}}&source=Stern&ressort=Allgemein">
                             Allgemein
                         </a>
                     </label>
@@ -117,7 +117,7 @@
                     <label>
                         <input type="radio" name="categoryFilterOptionsRadios" id="radioPolitik"
                                value="politik">
-                        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort={{sort}}&source=Stern&ressort=Politik">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort={{sort}}&source=Stern&ressort=Politik">
                             Politik
                         </a>
                     </label>
@@ -126,7 +126,7 @@
                     <label>
                         <input type="radio" name="categoryFilterOptionsRadios" id="radioWirtschaft"
                                value="wirtschaft">
-                        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort={{sort}}&source=Stern&ressort=Wirtschaft">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort={{sort}}&source=Stern&ressort=Wirtschaft">
                             Wirtschaft
                         </a>
                     </label>
@@ -135,7 +135,7 @@
                     <label>
                         <input type="radio" name="categoryFilterOptionsRadios" id="radioRegional"
                                value="regional">
-                        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort={{sort}}&source=Stern&ressort=Regional">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort={{sort}}&source=Stern&ressort=Regional">
                             Regional
                         </a>
                     </label>
@@ -144,7 +144,7 @@
                     <label>
                         <input type="radio" name="categoryFilterOptionsRadios" id="radioTechnik"
                                value="technik">
-                        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort={{sort}}&source=Stern&ressort=Technik">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort={{sort}}&source=Stern&ressort=Technik">
                             Technik
                         </a>
                     </label>
@@ -153,7 +153,7 @@
                     <label>
                         <input type="radio" name="categoryFilterOptionsRadios" id="radioWissenschaft"
                                value="wissenschaft">
-                        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort={{sort}}&source=Stern&ressort=Wissenschaft">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort={{sort}}&source=Stern&ressort=Wissenschaft">
                             Wissenschaft
                         </a>
                     </label>
@@ -162,7 +162,7 @@
                     <label>
                         <input type="radio" name="categoryFilterOptionsRadios" id="radioGesellschaft"
                                value="gesellschaft">
-                        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort={{sort}}&source=Stern&ressort=Gesellschaft">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort={{sort}}&source=Stern&ressort=Gesellschaft">
                             Gesellschaft
                         </a>
                     </label>

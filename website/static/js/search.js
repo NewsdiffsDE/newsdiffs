@@ -47,7 +47,7 @@ var chooseListItemFunction = function(e) {
 
 	//Input Zeile füllen
 	document.getElementById("search-input-line").placeholder = clickedListItem.text();
-    document.getElementById("keyword-type").value = clickedListItem.text();
+    document.getElementById("search_type").value = clickedListItem.text();
 
 	//Wieder einklappen und Cursor platzieren
 	$("#search-input-line").focus();

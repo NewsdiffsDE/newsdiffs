@@ -15,6 +15,8 @@ import time
 from django.template import Context, RequestContext, loader
 from django.views.decorators.cache import cache_page
 
+from random import randint
+
 OUT_FORMAT = '%B %d, %Y at %l:%M%P EDT'
 
 SEARCH_ENGINES = """
@@ -60,32 +62,44 @@ def search(request, source=''):
     if source not in SOURCES + ['']:
         raise Http404
     pagestr=request.REQUEST.get('page', '1')
-    search_type=request.REQUEST.get('keyword-type')
-    keyword=request.REQUEST.get('keyword')
+    search_type=request.REQUEST.get('search_type')
+    searchterm=request.REQUEST.get('searchterm')
     sort=request.REQUEST.get('sort')
     source=request.REQUEST.get('source')
+    date = request.REQUEST.get('date')
+    ressort = request.REQUEST.get('ressort')
+
     try:
         page = int(pagestr)
     except ValueError:
         page = 1
 
-    first_update = get_first_update(source)
-    num_pages = (datetime.datetime.now() - first_update).days + 1
-    page_list=range(1, 1+num_pages)
+    #first_update = get_first_update(source)
+    #num_pages = (datetime.datetime.now() - first_update).days + 1
+    #page_list=range(1, 1+num_pages)
 
-    if len(keyword) > 1:
-        articles= get_articles_by_keyword(keyword, sort, source, distance='0')
+    search_type=search_type.encode("utf-8")
+
+    if len(searchterm) > 1:
+        if search_type == u'keyword':
+            articles= get_articles_by_keyword(searchterm, sort, source, distance='0')
+        elif search_type == u'Autor':
+            articles= get_articles_by_author(searchterm, sort, source, distance='0')
+        elif search_type == u'url':
+            articles = None
+
         return render_to_response('suchergebnisse.html', {
                 'articles': articles,
-                'searchword': keyword,
-                'page':page,
-                'page_list': page_list,
-                'first_update': first_update,
+                'searchterm': searchterm,
+                #'page':page,
+                #'page_list': page_list,
+                #'first_update': first_update,
                 'sources': SOURCES,
                 'source' : source,
                 'sort' : sort
                 })
-    return render_to_response('suchergebnisse.html', {})
+    else:
+        return render_to_response('suchergebnisse.html', {})
 
 def get_archive():
     articles = {}
@@ -103,12 +117,19 @@ def get_archive():
             }
     return articles
 
-def get_articles_by_keyword(keyword, sort, source, distance=0):
+def get_articles_by_author(searchterm, sort, source, distance=0):
     articles = {}
-    all_articles = Article.objects.filter(keywords__contains = keyword).order_by('initial_date')
+    all_articles = []
+    versions = Version.objects.filter(byline__contains = searchterm)
+
+    for v in versions:
+        all_articles += Article.objects.filter(id = v.article_id).order_by('initial_date')
+
+    #all_articles = set(all_articles)
 
     for a in all_articles:
         version = Version.objects.filter(article_id = a.id)
+        versioncount = Version.objects.filter(article_id = a.id).count()
         article_title = version.order_by('date')[0].title
         articles[a.id] = {
             'id': a.id,
@@ -116,10 +137,32 @@ def get_articles_by_keyword(keyword, sort, source, distance=0):
             'url': a.url,
             'source':  a.source,
             'date':  a.initial_date,
-            'versioncount': version.count()
+            'versioncount': versioncount
             }
+
+    if sort == u'sortCount':
+        articles = sorted(articles.items(), reverse=True, key=operator.itemgetter('versioncount'))
+    return articles
+
+def get_articles_by_keyword(searchterm, sort, source, distance=0):
+    articles = {}
+    all_articles = Article.objects.filter(keywords__contains = searchterm).order_by('initial_date')
+
+    for a in all_articles:
+        version = Version.objects.filter(article_id = a.id)
+        versioncount = Version.objects.filter(article_id = a.id).count()
+        article_title = version.order_by('date')[0].title
+        articles[a.id] = {
+            'id': a.id,
+            'title': article_title,
+            'url': a.url,
+            'source':  a.source,
+            'date':  a.initial_date,
+            'versioncount': versioncount
+            }
+
     if sort is 'sortCount':
-        articles = sorted(articles.items(), reverse=False, key=operator.itemgetter('versioncount'))
+        articles = sorted(articles.items(), reverse=True, key=operator.itemgetter('versioncount'))
     return articles
 
 def get_articles(source=None, distance=0):
