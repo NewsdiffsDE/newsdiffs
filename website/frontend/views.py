@@ -118,19 +118,22 @@ def get_archive():
             }
     return articles
 
-def get_articles_by_author(searchterm, sort, source, distance=0):
+def get_articles_by_author(searchterm, sort, search_source, distance=0):
     articles = {}
     all_articles = []
     versions = Version.objects.filter(byline__contains = searchterm)
 
-    for v in versions:
-        all_articles += Article.objects.filter(id = v.article_id).order_by('initial_date')
+    if search_source is None:
+        for v in versions:
+            all_articles += Article.objects.filter(id = v.article_id).order_by('initial_date')
+    else:
+        for v in versions:
+            all_articles += Article.objects.filter(id = v.article_id, source__contains = search_source).order_by('initial_date')
 
-    #all_articles = set(all_articles)
 
     for a in all_articles:
         version = Version.objects.filter(article_id = a.id)
-        versioncount = Version.objects.filter(article_id = a.id).count()
+        #versioncount = Version.objects.filter(article_id = a.id).count()
         article_title = version.order_by('date')[0].title
         articles[a.id] = {
             'id': a.id,
@@ -138,7 +141,7 @@ def get_articles_by_author(searchterm, sort, source, distance=0):
             'url': a.url,
             'source':  a.source,
             'date':  a.initial_date,
-            'versioncount': versioncount
+            #'versioncount': versioncount
             }
 
     if sort == u'sortCount':
