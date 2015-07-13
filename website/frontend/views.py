@@ -60,6 +60,7 @@ def search(request, source=''):
     if source not in SOURCES + ['']:
         raise Http404
     pagestr=request.REQUEST.get('page', '1')
+    search_type=request.REQUEST.get('keyword-type')
     keyword=request.REQUEST.get('keyword')
     sort=request.REQUEST.get('sort')
     source=request.REQUEST.get('source')
@@ -72,7 +73,7 @@ def search(request, source=''):
     num_pages = (datetime.datetime.now() - first_update).days + 1
     page_list=range(1, 1+num_pages)
 
-    if len(keyword) > 1:
+    if len(keyword) > 1 and search_type == 'keyword':
         articles= get_articles_by_keyword(keyword, sort, source, distance='0')
         return render_to_response('suchergebnisse.html', {
                 'articles': articles,

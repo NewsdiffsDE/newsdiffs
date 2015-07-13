@@ -14,8 +14,10 @@
 // 	document.getElementById("search-input-line").placeholder = "Stichwort";
 // });
 
+
+
 var hideElementFunction = function(element) {
-	console.log('Element hidden!');
+	console.log(element + ' hidden!');
 	$(element).hide();
 };
 
@@ -45,6 +47,7 @@ var chooseListItemFunction = function(e) {
 
 	//Input Zeile füllen
 	document.getElementById("search-input-line").placeholder = clickedListItem.text();
+    document.getElementById("keyword-type").value = clickedListItem.text();
 
 	//Wieder einklappen und Cursor platzieren
 	$("#search-input-line").focus();
@@ -57,6 +60,8 @@ $(window).load(function () {
 	var searchFoldOutElement = document.getElementById('search-foldout');
 	var searchElement = document.getElementById('search-element');
 	var body = document.body;
+    var dateElement = document.getElementById('datepicker');
+    var sortButton = document.getElementById('sortbutton');
 
 
 	searchInputLineElement.onclick = function(e) {
@@ -68,13 +73,43 @@ $(window).load(function () {
 		hideElementFunction(searchFoldOutElement);
 	};
 
+    //advice from https://css-tricks.com/dangers-stopping-event-propagation/
 	$(document).on('click', function(event) {
 		if (!$(event.target).closest('#search-element').length) {
 			hideElementFunction(searchFoldOutElement);
 		}
 	});
 
+    $('#datepicker').datepicker({
+            //format: "dd/mm/yyyy",
+            format: "dd.mm.yyyy",
+            clearBtn: true,
+            endDate: '+0d',
+            todayHighlight: true,
+            language: 'de'
+    });
+
+    dateElement.onclick = function(e) {
+        $.fn.datepicker.dates['de'] = {
+            days: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
+            daysShort: ["Son", "Mon", "Din", "Mit", "Don", "Fre", "Sam"],
+            daysMin: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
+            months: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+            monthsShort: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
+            today: "Heute",
+            clear: "Löschen"
+        };
+    };
+    dateElement.onChange = function(e) {
+        // submit form
+    };
+
+
+    $('button').click(function(){
+        console.log("hellooooooo");
+        $(this).text(function(i,old){
+            return old=='Sortieren & Filtern verbergen' ?  'Sortieren & Filtern anzeigen' : 'Sortieren & Filtern verbergen';
+        });
+    });
 
 });
-
-

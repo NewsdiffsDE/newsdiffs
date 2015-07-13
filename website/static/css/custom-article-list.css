@@ -31,3 +31,14 @@ a img:hover {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+/* Toggle Sortieren und Filtern*/
+
+@media (min-width: 992px) {
+    #sort-btn-row{
+        display: none;
+    }
+    #allfilters{
+        display: block;
+    }
+}

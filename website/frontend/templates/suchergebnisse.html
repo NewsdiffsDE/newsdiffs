@@ -23,137 +23,169 @@
         </div>
     </div>
 
-    <div class="row">
-        <!--Filter-->
+    <div class="row" id="sort-btn-row">
+
         <div class="col-md-2 col-md-offset-2">
-            <div class=" containter-fluid sidebar">
-                <div class="row">
-                    <h5 class="col-xs-offset-1 col-md-offset-0">Sortieren nach:</h5>
-                    {% if sort == 'sortCount' %}
-                    {% include "sortCount.html" %}
-                    {% else %}
-                    {% include "sortNew.html" %}
-                    {% endif %}
-                </div>
-                <div class="row">
-                    <h5 class="col-xs-offset-1 col-md-offset-0">Filtern nach:</h5>
+            <button id="sort-btn" class="btn btn-default" data-toggle="collapse" data-target="#allfilters">
+                Sortieren & Filtern anzeigen
+            </button>
+        </div>
+    </div>
 
-                    <p class="col-xs-offset-1 col-md-offset-0">Zeitung</p>
 
-                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-md-12 col-md-offset-0 radio">
-                        <label>
-                            <input type="radio" name="newspaperFilterOptionsRadios" id="filterBild" value="bild">
-                            Bild.de
-                        </label>
-                    </div>
-                    <div class="col-xs-5 col-sm-2 col-md-12 radio">
-                        <label>
-                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioFocus" value="focus">
-                            Focus Online
-                        </label>
-                    </div>
-                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
-                        <label>
-                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioSpiegel" value="spiegel">
-                            Spiegel Online
-                        </label>
-                    </div>
-                    <div class="col-xs-5 col-sm-2 col-md-12 radio">
-                        <label>
-                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioWelt" value="welt">
-                            Die Welt
-                        </label>
-                    </div>
-                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
-                        <label>
-                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioStern" value="stern">
-                            stern.de
-                        </label>
-                    </div>
-                    <div class="col-xs-5 col-sm-2 col-sm-offset-1 col-md-12 col-md-offset-0 radio">
-                        <label>
-                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioZeit" value="zeit">
-                            Zeit Online
-                        </label>
-                    </div>
-                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
-                        <label>
-                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioSueddeutsche"
-                                   value="sueddeutsche">
-                            Süddeutsche.de
-                        </label>
-                    </div>
-                    <div class="col-xs-5 col-sm-2 col-md-12 radio">
-                        <label>
-                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioFaz" value="faz">
-                            FAZ.net
-                        </label>
-                    </div>
-                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
-                        <label>
-                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioNtv" value="ntv">
-                            n-tv.de
-                        </label>
-                    </div>
-                    <div class="col-xs-5 col-sm-2 col-md-12 radio">
-                        <label>
-                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioRp" value="rp">
-                            RP Online
-                        </label>
-                    </div>
-                </div>
-                <div class="row">
-                    <p class="col-xs-offset-1 col-md-offset-0">Ressort</p>
+    <div class="row">
 
-                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-md-12 col-md-offset-0 radio">
-                        <label>
-                            <input type="radio" name="categoryFilterOptionsRadios" id="radioAllgemein"
-                                   value="allgemein">
-                            Allgemein
-                        </label>
+        <div id="allfilters" class="collapse">
+
+
+            <!--Filter-->
+            <div class="col-md-2 col-md-offset-2">
+
+                <div class=" containter-fluid sidebar">
+                    <div class="row">
+                        <h5 class="col-xs-offset-1 col-md-offset-0">Sortieren nach:</h5>
+                        {% if sort == 'sortCount' %}
+                        {% include "sortCount.html" %}
+                        {% else %}
+                        {% include "sortNew.html" %}
+                        {% endif %}
                     </div>
-                    <div class="col-xs-5 col-sm-2 col-md-12 radio">
-                        <label>
-                            <input type="radio" name="categoryFilterOptionsRadios" id="radioPolitik" value="politik">
-                            Politik
-                        </label>
+                    <div class="row">
+                        <h5 class="col-xs-offset-1 col-md-offset-0">Filtern nach:</h5>
+
+                        <p class="col-xs-offset-1 col-md-offset-0">Zeitung</p>
+
+                        <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-md-12 col-md-offset-0 radio">
+                            <label>
+                                <input type="radio" name="newspaperFilterOptionsRadios" id="filterBild" value="bild">
+                                Bild.de
+                            </label>
+                        </div>
+                        <div class="col-xs-5 col-sm-2 col-md-12 radio">
+                            <label>
+                                <input type="radio" name="newspaperFilterOptionsRadios" id="radioFocus" value="focus">
+                                Focus Online
+                            </label>
+                        </div>
+                        <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
+                            <label>
+                                <input type="radio" name="newspaperFilterOptionsRadios" id="radioSpiegel"
+                                       value="spiegel">
+                                Spiegel Online
+                            </label>
+                        </div>
+                        <div class="col-xs-5 col-sm-2 col-md-12 radio">
+                            <label>
+                                <input type="radio" name="newspaperFilterOptionsRadios" id="radioWelt" value="welt">
+                                Die Welt
+                            </label>
+                        </div>
+                        <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
+                            <label>
+                                <input type="radio" name="newspaperFilterOptionsRadios" id="radioStern" value="stern">
+                                stern.de
+                            </label>
+                        </div>
+                        <div class="col-xs-5 col-sm-2 col-sm-offset-1 col-md-12 col-md-offset-0 radio">
+                            <label>
+                                <input type="radio" name="newspaperFilterOptionsRadios" id="radioZeit" value="zeit">
+                                Zeit Online
+                            </label>
+                        </div>
+                        <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
+                            <label>
+                                <input type="radio" name="newspaperFilterOptionsRadios" id="radioSueddeutsche"
+                                       value="sueddeutsche">
+                                Süddeutsche.de
+                            </label>
+                        </div>
+                        <div class="col-xs-5 col-sm-2 col-md-12 radio">
+                            <label>
+                                <input type="radio" name="newspaperFilterOptionsRadios" id="radioFaz" value="faz">
+                                FAZ.net
+                            </label>
+                        </div>
+                        <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
+                            <label>
+                                <input type="radio" name="newspaperFilterOptionsRadios" id="radioNtv" value="ntv">
+                                n-tv.de
+                            </label>
+                        </div>
+                        <div class="col-xs-5 col-sm-2 col-md-12 radio">
+                            <label>
+                                <input type="radio" name="newspaperFilterOptionsRadios" id="radioRp" value="rp">
+                                RP Online
+                            </label>
+                        </div>
                     </div>
-                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
-                        <label>
-                            <input type="radio" name="categoryFilterOptionsRadios" id="radioWirtschaft"
-                                   value="wirtschaft">
-                            Wirtschaft
-                        </label>
+                    <div class="row">
+                        <p class="col-xs-offset-1 col-md-offset-0">Ressort</p>
+
+                        <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-md-12 col-md-offset-0 radio">
+                            <label>
+                                <input type="radio" name="categoryFilterOptionsRadios" id="radioAllgemein"
+                                       value="allgemein">
+                                Allgemein
+                            </label>
+                        </div>
+                        <div class="col-xs-5 col-sm-2 col-md-12 radio">
+                            <label>
+                                <input type="radio" name="categoryFilterOptionsRadios" id="radioPolitik"
+                                       value="politik">
+                                Politik
+                            </label>
+                        </div>
+                        <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
+                            <label>
+                                <input type="radio" name="categoryFilterOptionsRadios" id="radioWirtschaft"
+                                       value="wirtschaft">
+                                Wirtschaft
+                            </label>
+                        </div>
+                        <div class="col-xs-5 col-sm-4 col-md-12 radio">
+                            <label>
+                                <input type="radio" name="categoryFilterOptionsRadios" id="radioRegional"
+                                       value="regional">
+                                Regional
+                            </label>
+                        </div>
+                        <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-md-12 col-md-offset-0 radio">
+                            <label>
+                                <input type="radio" name="categoryFilterOptionsRadios" id="radioTechnik"
+                                       value="technik">
+                                Technik
+                            </label>
+                        </div>
+                        <div class="col-xs-5 col-sm-2 col-md-12 radio">
+                            <label>
+                                <input type="radio" name="categoryFilterOptionsRadios" id="radioWissenschaft"
+                                       value="wissenschaft">
+                                Wissenschaft
+                            </label>
+                        </div>
+                        <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
+                            <label>
+                                <input type="radio" name="categoryFilterOptionsRadios" id="radioGesellschaft"
+                                       value="gesellschaft">
+                                Gesellschaft
+                            </label>
+                        </div>
                     </div>
-                    <div class="col-xs-5 col-sm-4 col-md-12 radio">
-                        <label>
-                            <input type="radio" name="categoryFilterOptionsRadios" id="radioRegional" value="regional">
-                            Regional
-                        </label>
+
+                    <!-- Datum -->
+                    <div class="row">
+                        <p class="col-xs-offset-1 col-md-offset-0">Datum</p>
+
+                        <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-md-12 col-md-offset-0 date-wrapper">
+                            <input id="datepicker" name="date-value" placeholder="select a date"/>
+                        </div>
                     </div>
-                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-md-12 col-md-offset-0 radio">
-                        <label>
-                            <input type="radio" name="categoryFilterOptionsRadios" id="radioTechnik" value="technik">
-                            Technik
-                        </label>
-                    </div>
-                    <div class="col-xs-5 col-sm-2 col-md-12 radio">
-                        <label>
-                            <input type="radio" name="categoryFilterOptionsRadios" id="radioWissenschaft"
-                                   value="wissenschaft">
-                            Wissenschaft
-                        </label>
-                    </div>
-                    <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
-                        <label>
-                            <input type="radio" name="categoryFilterOptionsRadios" id="radioGesellschaft"
-                                   value="gesellschaft">
-                            Gesellschaft
-                        </label>
-                    </div>
+
                 </div>
             </div>
+
         </div>
+        <!-- /.allfilters -->
 
         <!-- Suchergebnisse -->
         <div class="col-md-6">
@@ -175,9 +207,11 @@
                             <em>{{ forloop.counter }}. Ergebnis | Anzahl der Änderungen: {{article.versioncount}} |
                                 Quelle: (<a href="{{ article.url }}" target="_blank">{{ article.source }}</a>)
                             </em>
+
                             <h3>
                                 {{ article.title }} (<a href="{{ article.url }}" target="_blank">{{ article.source}}</a>)
                             </h3>
+
                             <p>
                                 <a class="no-link-color" href="article_history.html">
                                     <img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png"
@@ -230,6 +264,7 @@
 
 
         </div>
+
     </div>
     <!-- ./row -->
 

@@ -9,6 +9,7 @@
 
     <!-- CSS -->
     <link href="{% url 'static' 'css/bootstrap.css' %}" rel="stylesheet" media ="screen">
+    <link href="{% url 'static' 'css/bootstrap-datepicker.min.css' %}" rel="stylesheet" type="text/css">
     <link href="{% url 'static' 'css/custom.css' %}" rel="stylesheet" media ="screen">
     <!-- for individula styles of the pages: -->
     {% block css_import %} {% endblock %}
@@ -30,7 +31,7 @@
 <body>
     <div class="container-fluid" id="top">
         <div class="row">
-             <nav class="navbar navbar-default">
+             <nav class="navbar navbar-default navbar-static-top">
             <div class="col-md-8 col-md-offset-2">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
@@ -88,6 +89,6 @@
 	<script src="{% url 'static' 'js/jquery.js'%}"></script>
 	<script src="{% url 'static' 'js/bootstrap.js'%}"></script>
 	<script src="{% url 'static' 'js/search.js'%}"></script>
-     {% block js_scripts %} {% endblock %}
+    <script src="{% url 'static' 'js/bootstrap-datepicker.min.js'%}"></script>
 </body>
 </html>

@@ -26,7 +26,7 @@
 #search-input #search-input-btn {
 	/*	custom width, margin and padding important because the glow of the search input
 		would get cut by the button*/
-	width: 9%;
+	width: 8%;
 	height: 26px;
 	padding: 1px 1px 1px;
 	margin-left: 3px;
@@ -37,6 +37,10 @@
 	border-bottom: 1px;
 	background-color: #FFF;
 	border-color: #000;
+}
+
+a#button-wrapper-link{
+    border-bottom: none;
 }
 
 #search-total {
@@ -62,3 +66,4 @@
 #description {
 	margin: 0px;
 }
+
