@@ -73,7 +73,7 @@ def search(request, source=''):
     num_pages = (datetime.datetime.now() - first_update).days + 1
     page_list=range(1, 1+num_pages)
 
-    if len(keyword) > 1 and search_type == 'keyword':
+    if len(keyword) > 1:
         articles= get_articles_by_keyword(keyword, sort, source, distance='0')
         return render_to_response('suchergebnisse.html', {
                 'articles': articles,
@@ -86,6 +86,7 @@ def search(request, source=''):
                 'sort' : sort
                 })
     return render_to_response('suchergebnisse.html', {})
+
 def get_archive():
     articles = {}
     all_articles = Article.objects.filter(source = 'www.taz.de')
