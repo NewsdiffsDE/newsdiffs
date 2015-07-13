@@ -17,7 +17,7 @@
 
 
 var hideElementFunction = function(element) {
-	console.log('Element hidden!');
+	console.log(element + ' hidden!');
 	$(element).hide();
 };
 
@@ -61,6 +61,7 @@ $(window).load(function () {
 	var searchElement = document.getElementById('search-element');
 	var body = document.body;
     var dateElement = document.getElementById('datepicker');
+    var sortButton = document.getElementById('sortbutton');
 
 
 	searchInputLineElement.onclick = function(e) {
@@ -102,4 +103,13 @@ $(window).load(function () {
     dateElement.onChange = function(e) {
         // submit form
     };
+
+
+    $('button').click(function(){
+        console.log("hellooooooo");
+        $(this).text(function(i,old){
+            return old=='Sortieren & Filtern verbergen' ?  'Sortieren & Filtern anzeigen' : 'Sortieren & Filtern verbergen';
+        });
+    });
+
 });
