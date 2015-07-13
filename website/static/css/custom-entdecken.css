@@ -174,7 +174,9 @@ p {
 .categories_list ul li a {
     display: block;
 	font-size: 25px;
+	border-bottom: 0px solid #bcbcbc;
 }
+
 
 .categories_list ul li a:hover{background-color: #efefef; color: white; text-decoration: none; border: 0px solid #bcbcbc}
 
