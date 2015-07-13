@@ -34,13 +34,23 @@
 
 
     <div class="row">
-    {% include "filters.html" %}
+        {% include "filters.html" %}
 
 
         <!-- Suchergebnisse -->
         <div class="col-md-6">
 
-            <h1>Suchergebnisse für "{{ searchterm }}" ({{articles|length}})</h1>
+            <h1>Suchergebnisse für {{search_type}} = "{{ searchterm }}" ({{articles|length}})</h1>
+
+            <p>Filter (
+                {% if source != None and source != 'None'%}
+                Quelle: {{source}}
+                {% endif %}
+                {% if ressort != None and ressort != 'None'%}
+                | Ressort: {{ressort}}
+                {% endif %}
+                )
+            </p>
 
             <div class="table">
                 <table class="table table-condensed table-striped">
@@ -67,7 +77,8 @@
                                     <img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png"
                                          alt="Artikelverlauf-Icon">
                                 </a>
-                                <a href="{% url 'article_history' %}?{{article.id}}">Änderungsübersicht ({{article.versioncount}})</a>
+                                <a href="{% url 'article_history' %}?{{article.id}}">Änderungsübersicht
+                                    ({{article.versioncount}})</a>
                             </p>
 
                             <p><a href="{% url 'diffview' %}"><img class="ownbtn"

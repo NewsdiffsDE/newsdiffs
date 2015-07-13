@@ -61,11 +61,11 @@ def get_last_update(source):
 def search(request, source=''):
     if source not in SOURCES + ['']:
         raise Http404
-    pagestr=request.REQUEST.get('page', '1')
-    search_type=request.REQUEST.get('search_type')
-    searchterm=request.REQUEST.get('searchterm')
-    sort=request.REQUEST.get('sort')
-    source=request.REQUEST.get('source')
+    pagestr = request.REQUEST.get('page', '1')
+    search_type = request.REQUEST.get('search_type')
+    searchterm = request.REQUEST.get('searchterm')
+    sort = request.REQUEST.get('sort')
+    source = request.REQUEST.get('source')
     date = request.REQUEST.get('date')
     ressort = request.REQUEST.get('ressort')
 
@@ -77,25 +77,28 @@ def search(request, source=''):
     #first_update = get_first_update(source)
     #num_pages = (datetime.datetime.now() - first_update).days + 1
     #page_list=range(1, 1+num_pages)
-
+    if search_type is None:
+        search_type = u'Stichwort'
 
     if len(searchterm) > 1:
-        if search_type == u'keyword'or search_type == u'':
-            articles= get_articles_by_keyword(searchterm, sort, source, distance='0')
+        if search_type == u'Stichwort':
+            articles= get_articles_by_keyword(searchterm, sort, source, ressort, distance='0')
         elif search_type == u'Autor':
-            articles= get_articles_by_author(searchterm, sort, source, distance='0')
-        elif search_type == u'url':
+            articles= get_articles_by_author(searchterm, sort, source, ressort, distance='0')
+        elif search_type == u'URL':
             articles = None
 
         return render_to_response('suchergebnisse.html', {
                 'articles': articles,
                 'searchterm': searchterm,
+                'search_type': search_type,
                 #'page':page,
                 #'page_list': page_list,
                 #'first_update': first_update,
                 'sources': SOURCES,
                 'source' : source,
-                'sort' : sort
+                'sort' : sort,
+                'ressort' : ressort
                 })
     else:
         return render_to_response('suchergebnisse.html', {})
@@ -116,15 +119,18 @@ def get_archive():
             }
     return articles
 
-def get_articles_by_author(searchterm, sort, source, distance=0):
+def get_articles_by_author(searchterm, sort, search_source, ressort, distance=0):
     articles = {}
     all_articles = []
     versions = Version.objects.filter(byline__contains = searchterm)
 
     for v in versions:
-        all_articles += Article.objects.filter(id = v.article_id).order_by('initial_date')
-
-    #all_articles = set(all_articles)
+        all_articles = Article.objects.filter(id = v.article_id)
+        if search_source is not None:
+            all_articles = all_articles.filter(source__contains = search_source)
+        if ressort is not None:
+            all_articles = all_articles.filter(category = ressort)
+        all_articles = all_articles.order_by('initial_date')
 
     for a in all_articles:
         version = Version.objects.filter(article_id = a.id)
@@ -136,16 +142,23 @@ def get_articles_by_author(searchterm, sort, source, distance=0):
             'url': a.url,
             'source':  a.source,
             'date':  a.initial_date,
-            'versioncount': versioncount
+            'versioncount': versioncount,
+            'ressort' : ressort,
+            #'searchdate' : searchdate
             }
 
     if sort == u'sortCount':
         articles = sorted(articles.items(), reverse=True, key=operator.itemgetter('versioncount'))
     return articles
 
-def get_articles_by_keyword(searchterm, sort, source, distance=0):
+def get_articles_by_keyword(searchterm, sort, search_source, ressort, distance=0):
     articles = {}
-    all_articles = Article.objects.filter(keywords__contains = searchterm).order_by('initial_date')
+
+
+    if search_source is None:
+        all_articles = Article.objects.filter(keywords__contains = searchterm).order_by('initial_date')
+    else:
+        all_articles = Article.objects.filter(keywords__contains = searchterm, source__contains = search_source).order_by('initial_date')
 
     for a in all_articles:
         version = Version.objects.filter(article_id = a.id)
@@ -157,7 +170,8 @@ def get_articles_by_keyword(searchterm, sort, source, distance=0):
             'url': a.url,
             'source':  a.source,
             'date':  a.initial_date,
-            'versioncount': versioncount
+            'versioncount': versioncount,
+            'ressort' : ressort
             }
 
     if sort is 'sortCount':
