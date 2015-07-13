@@ -78,10 +78,9 @@ def search(request, source=''):
     #num_pages = (datetime.datetime.now() - first_update).days + 1
     #page_list=range(1, 1+num_pages)
 
-    search_type=search_type.encode("utf-8")
 
     if len(searchterm) > 1:
-        if search_type == u'keyword':
+        if search_type == u'keyword'or search_type == u'':
             articles= get_articles_by_keyword(searchterm, sort, source, distance='0')
         elif search_type == u'Autor':
             articles= get_articles_by_author(searchterm, sort, source, distance='0')

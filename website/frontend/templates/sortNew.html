@@ -1,7 +1,7 @@
 <div class="col-xs-3 col-xs-offset-1 col-md-12 col-md-offset-0 radio">
     <label>
         <input type="radio" name="sortOptionsRadios" id="sortNew" value="neueste" checked>
-        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort=sortNew&source={{source}}">
+        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort=sortNew&source={{source}}">
             Neueste
         </a>
     </label>
@@ -9,7 +9,7 @@
 <div class="col-xs-3 col-md-12 radio">
     <label>
         <input type="radio" name="sortOptionsRadios" id="sortCount" value="meiste">
-        <a href="{% url 'suchergebnisse' %}?keyword={{searchword}}&sort=sortCount&source={{source}}">
+        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&sort=sortCount&source={{source}}">
             Meiste Änderungen
         </a>
     </label>
