@@ -43,11 +43,11 @@
             <h1>Suchergebnisse für {{search_type}} = "{{ searchterm }}" ({{articles|length}})</h1>
 
             <p>Filter (
-                {% if source != None and source != 'None'%}
-                Quelle: {{source}}
+                {% if source in all_sources %}
+                Quelle: {{source}} |
                 {% endif %}
-                {% if ressort != None and ressort != 'None'%}
-                | Ressort: {{ressort}}
+                {% if ressort in all_ressorts %}
+                Ressort: {{ressort}}
                 {% endif %}
                 )
             </p>
@@ -65,7 +65,8 @@
                     <tr>
                         <td>
                             <em>{{ forloop.counter }}. Ergebnis | Anzahl der Änderungen: {{article.versioncount}} |
-                                Quelle: (<a href="{{ article.url }}" target="_blank">{{ article.source }}</a>)
+                                Quelle: (<a href="{{ article.url }}" target="_blank">{{ article.source }}</a>) |
+                                Ressort: {{article.ressort}}
                             </em>
 
                             <h3>

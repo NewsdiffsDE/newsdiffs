@@ -27,7 +27,7 @@ search.yahoo.com
 http://www.bing.com
 """.split()
 
-RESSORT_CATEGORIES = """
+RESSORTS = """
 Allgemein
 Politik
 Wirtschaft
@@ -50,6 +50,12 @@ n-tv.de
 rp-online.de
 sueddeutsche.de
 taz.de
+'''.split()
+
+SEARCH_TYPES = '''
+Stichwort
+Autor
+URL
 '''.split()
 
 def came_from_search_engine(request):
@@ -102,7 +108,7 @@ def search(request, source=''):
     #first_update = get_first_update(source)
     #num_pages = (datetime.datetime.now() - first_update).days + 1
     #page_list=range(1, 1+num_pages)
-    if search_type is None:
+    if search_type not in SEARCH_TYPES :
         search_type = u'Stichwort'
 
     if len(searchterm) > 1:
@@ -120,10 +126,11 @@ def search(request, source=''):
                 #'page':page,
                 #'page_list': page_list,
                 #'first_update': first_update,
-                'sources': SOURCES,
                 'source' : source,
                 'sort' : sort,
-                'ressort' : ressort
+                'ressort' : ressort,
+                'all_sources' : SOURCES,
+                'all_ressorts' : RESSORTS
                 })
     else:
         return render_to_response('suchergebnisse.html', {})
@@ -153,7 +160,7 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, distance=0)
         all_articles = Article.objects.filter(id = v.article_id)
         if search_source in SOURCES:
             all_articles = all_articles.filter(source__contains = search_source)
-        if ressort in RESSORT_CATEGORIES :
+        if ressort in RESSORTS :
             all_articles = all_articles.filter(category = ressort)
         all_articles = all_articles.order_by('initial_date')
 
@@ -167,6 +174,7 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, distance=0)
             'url': a.url,
             'source':  a.source,
             'date':  a.initial_date,
+            'category':  a.category,
             'versioncount': versioncount,
             'ressort' : ressort,
             #'searchdate' : searchdate
@@ -179,11 +187,13 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, distance=0)
 def get_articles_by_keyword(searchterm, sort, search_source, ressort, distance=0):
     articles = {}
 
+    all_articles = Article.objects.filter(keywords__contains = searchterm)
 
-    if search_source is None:
-        all_articles = Article.objects.filter(keywords__contains = searchterm).order_by('initial_date')
-    else:
-        all_articles = Article.objects.filter(keywords__contains = searchterm, source__contains = search_source).order_by('initial_date')
+    if search_source in SOURCES:
+        all_articles = all_articles.filter(source__contains = search_source)
+    if ressort in RESSORTS:
+        all_articles = all_articles.filter(category__contains = ressort).order_by('initial_date')
+
 
     for a in all_articles:
         version = Version.objects.filter(article_id = a.id)
@@ -196,7 +206,10 @@ def get_articles_by_keyword(searchterm, sort, search_source, ressort, distance=0
             'source':  a.source,
             'date':  a.initial_date,
             'versioncount': versioncount,
-            'ressort' : ressort
+            'ressort' : a.category,
+            'all_sources' : SOURCES,
+            'all_ressorts' : RESSORTS
+
             }
 
     if sort is 'sortCount':
