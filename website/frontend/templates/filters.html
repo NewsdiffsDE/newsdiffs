@@ -36,6 +36,15 @@
                 </div>
                 <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
                     <label>
+                        <input type="radio" name="newspaperFilterOptionsRadios" id="radioTaz"
+                               value="taz">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=TAZ&ressort={{ressort}}">
+                            TAZ
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
+                    <label>
                         <input type="radio" name="newspaperFilterOptionsRadios" id="radioSpiegel"
                                value="spiegel">
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=Spiegel&ressort={{ressort}}">
