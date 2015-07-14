@@ -42,12 +42,20 @@
 
             <h1>Suchergebnisse für {{search_type}} = "{{ searchterm }}" ({{articles|length}})</h1>
 
-            <p>Filter: 
+            <p>Filter:
                 {% if source in all_sources %}
-                <span class="label label-default">Quelle: {{source}} <a href="#">X</a></span>
+                <span class="label label-default">Quelle: {{source}}
+                    <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&ressort={{ressort}}">
+                        X
+                    </a>
+                </span>
                 {% endif %}
                 {% if ressort in all_ressorts %}
-                <span class="label label-default">Ressort: {{ressort}} <a href="#">X</a></span>
+                <span class="label label-default">Ressort: {{ressort}}
+                    <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&source={{source}}&sort={{sort}}">
+                        X
+                    </a>
+                </span>
                 {% endif %}
 
             </p>
