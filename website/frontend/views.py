@@ -39,17 +39,17 @@ Gesellschaft
 
 
 SOURCES = '''
-zeit.de
-bild.de
-focus.de
-spiegel.de
-stern.de
-welt.de
-faz.de
-n-tv.de
-rp-online.de
-sueddeutsche.de
-taz.de
+Zeit
+Bild
+Focus
+Spiegel
+Stern
+Welt
+FAZ
+n-tv
+RP-ONLINE
+Sueddeutsche
+TAZ
 '''.split()
 
 SEARCH_TYPES = '''
@@ -105,9 +105,6 @@ def search(request, source=''):
     except ValueError:
         page = 1
 
-    #first_update = get_first_update(source)
-    #num_pages = (datetime.datetime.now() - first_update).days + 1
-    #page_list=range(1, 1+num_pages)
     if search_type not in SEARCH_TYPES :
         search_type = u'Stichwort'
 
@@ -123,9 +120,6 @@ def search(request, source=''):
                 'articles': articles,
                 'searchterm': searchterm,
                 'search_type': search_type,
-                #'page':page,
-                #'page_list': page_list,
-                #'first_update': first_update,
                 'source' : source,
                 'sort' : sort,
                 'ressort' : ressort,
@@ -174,9 +168,8 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, distance=0)
             'url': a.url,
             'source':  a.source,
             'date':  a.initial_date,
-            'category':  a.category,
+            'ressort':  a.category,
             'versioncount': versioncount,
-            'ressort' : ressort,
             #'searchdate' : searchdate
             }
 
@@ -192,8 +185,8 @@ def get_articles_by_keyword(searchterm, sort, search_source, ressort, distance=0
     if search_source in SOURCES:
         all_articles = all_articles.filter(source__contains = search_source)
     if ressort in RESSORTS:
-        all_articles = all_articles.filter(category__contains = ressort).order_by('initial_date')
-
+        all_articles = all_articles.filter(category__contains = ressort)
+    all_articles.order_by('initial_date')
 
     for a in all_articles:
         version = Version.objects.filter(article_id = a.id)
@@ -206,10 +199,7 @@ def get_articles_by_keyword(searchterm, sort, search_source, ressort, distance=0
             'source':  a.source,
             'date':  a.initial_date,
             'versioncount': versioncount,
-            'ressort' : a.category,
-            'all_sources' : SOURCES,
-            'all_ressorts' : RESSORTS
-
+            'ressort' : a.category
             }
 
     if sort is 'sortCount':

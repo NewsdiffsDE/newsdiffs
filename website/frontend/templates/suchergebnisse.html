@@ -42,14 +42,14 @@
 
             <h1>Suchergebnisse für {{search_type}} = "{{ searchterm }}" ({{articles|length}})</h1>
 
-            <p>Filter (
+            <p>Filter: 
                 {% if source in all_sources %}
-                Quelle: {{source}} |
+                <span class="label label-default">Quelle: {{source}} <a href="#">X</a></span>
                 {% endif %}
                 {% if ressort in all_ressorts %}
-                Ressort: {{ressort}}
+                <span class="label label-default">Ressort: {{ressort}} <a href="#">X</a></span>
                 {% endif %}
-                )
+
             </p>
 
             <div class="table">
