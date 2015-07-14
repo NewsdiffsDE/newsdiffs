@@ -22,6 +22,16 @@ taz.TAZParser
 """
 
 parsers = """
+sueddeutsche.SDParser
+stern.SternParser
+bild.BildParser
+focus.FocusParser
+spiegel.SpiegelParser
+zeit.ZeitParser
+RPOnline.RPOParser
+faz.FAZParser
+n-tv.NTVParser
+welt.WeltParser
 taz.TAZParser
 """.split()
 
