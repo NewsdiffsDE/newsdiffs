@@ -27,6 +27,31 @@ search.yahoo.com
 http://www.bing.com
 """.split()
 
+RESSORT_CATEGORIES = """
+Allgemein
+Politik
+Wirtschaft
+Regional
+Technik
+Wissenschaft
+Gesellschaft
+""".split()
+
+
+SOURCES = '''
+zeit.de
+bild.de
+focus.de
+spiegel.de
+stern.de
+welt.de
+faz.de
+n-tv.de
+rp-online.de
+sueddeutsche.de
+taz.de
+'''.split()
+
 def came_from_search_engine(request):
     return any(x in request.META.get('HTTP_REFERER', '')
                for x in SEARCH_ENGINES)
@@ -126,9 +151,9 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, distance=0)
 
     for v in versions:
         all_articles = Article.objects.filter(id = v.article_id)
-        if search_source is not None:
+        if search_source in SOURCES:
             all_articles = all_articles.filter(source__contains = search_source)
-        if ressort is not None:
+        if ressort in RESSORT_CATEGORIES :
             all_articles = all_articles.filter(category = ressort)
         all_articles = all_articles.order_by('initial_date')
 
@@ -228,9 +253,6 @@ def get_articles(source=None, distance=0):
     print 'Queries:', len(django.db.connection.queries), django.db.connection.queries
     articles.sort(key = lambda x: x[-1][0][1].date, reverse=True)
     return articles
-
-
-SOURCES = '''zeit.de bild.de focus.de spiegel.de stern.de welt.de faz.de n-tv.de rp-online.de sueddeutsche.de taz.de'''.split()
 
 def is_valid_domain(domain):
     """Cheap method to tell whether a domain is being tracked."""
