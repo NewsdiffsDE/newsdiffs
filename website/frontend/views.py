@@ -110,11 +110,11 @@ def search(request, source=''):
 
     if len(searchterm) > 1:
         if search_type == u'Stichwort':
-            articles= get_articles_by_keyword(searchterm, sort, source, ressort, distance='0')
+            articles= get_articles_by_keyword(searchterm, sort, source, ressort)
         elif search_type == u'Autor':
-            articles= get_articles_by_author(searchterm, sort, source, ressort, distance='0')
+            articles= get_articles_by_author(searchterm, sort, source, ressort)
         elif search_type == u'URL':
-            articles = None
+            articles = get_articles_by_url(searchterm, sort, source, ressort)
 
         return render_to_response('suchergebnisse.html', {
                 'articles': articles,
@@ -144,6 +144,32 @@ def get_archive():
             'versioncount': version.count()
             }
     return articles
+
+def get_articles_by_url(url, sort, ressort, distance=0):
+        articles = {}
+        all_articles = Article.objects.filter(url__contains = url)
+
+        if ressort in RESSORTS:
+            all_articles = all_articles.filter(category__contains = ressort)
+        all_articles.order_by('initial_date')
+
+        for a in all_articles:
+            version = Version.objects.filter(article_id = a.id)
+            versioncount = Version.objects.filter(article_id = a.id).count()
+            article_title = version.order_by('date')[0].title
+            articles[a.id] = {
+                'id': a.id,
+                'title': article_title,
+                'url': a.url,
+                'source':  a.source,
+                'date':  a.initial_date,
+                'versioncount': versioncount,
+                'ressort' : a.category
+                }
+
+        if sort is 'sortCount':
+            articles = sorted(articles.items(), reverse=True, key=operator.itemgetter('versioncount'))
+        return articles
 
 def get_articles_by_author(searchterm, sort, search_source, ressort, distance=0):
     articles = {}

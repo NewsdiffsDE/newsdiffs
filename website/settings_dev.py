@@ -86,6 +86,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'south',
     'frontend',
+    'debug_toolbar',
 
 )
 
