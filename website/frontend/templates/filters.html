@@ -20,83 +20,92 @@
 
                 <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-md-12 col-md-offset-0 radio">
                     <label>
-                        <input type="radio" name="newspaperFilterOptionsRadios" id="filterBild" value="bild">
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=Bild&ressort={{ressort}}">
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="filterBild" value="bild">
                             BILD
                         </a>
                     </label>
                 </div>
                 <div class="col-xs-5 col-sm-2 col-md-12 radio">
                     <label>
-                        <input type="radio" name="newspaperFilterOptionsRadios" id="radioFocus" value="focus">
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=Focus&ressort={{ressort}}">
-                            FOCUS
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioFocus" value="focus">
+                            Focus
                         </a>
                     </label>
                 </div>
                 <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
                     <label>
-                        <input type="radio" name="newspaperFilterOptionsRadios" id="radioSpiegel"
-                               value="spiegel">
+                        <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=TAZ&ressort={{ressort}}">
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioTaz"
+                                   value="taz">
+                            taz
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
+                    <label>
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=Spiegel&ressort={{ressort}}">
-                            SPIEGEL ONLINE
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioSpiegel"
+                                   value="spiegel">
+                            Spiegel Online
                         </a>
                     </label>
                 </div>
                 <div class="col-xs-5 col-sm-2 col-md-12 radio">
                     <label>
-                        <input type="radio" name="newspaperFilterOptionsRadios" id="radioWelt" value="welt">
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=Welt&ressort={{ressort}}">
-                            DIE WELT
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioWelt" value="welt">
+                            Die Welt
                         </a>
                     </label>
                 </div>
                 <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
                     <label>
-                        <input type="radio" name="newspaperFilterOptionsRadios" id="radioStern" value="stern">
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=Stern&ressort={{ressort}}">
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioStern" value="stern">
                             stern
                         </a>
                     </label>
                 </div>
                 <div class="col-xs-5 col-sm-2 col-sm-offset-1 col-md-12 col-md-offset-0 radio">
                     <label>
-                        <input type="radio" name="newspaperFilterOptionsRadios" id="radioZeit" value="zeit">
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=Zeit&ressort={{ressort}}">
-                            ZEIT ONLINE
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioZeit" value="zeit">
+                            Zeit Online
                         </a>
                     </label>
                 </div>
                 <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
                     <label>
-                        <input type="radio" name="newspaperFilterOptionsRadios" id="radioSueddeutsche"
-                               value="sueddeutsche">
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=Sueddeutsche&ressort={{ressort}}">
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioSueddeutsche"
+                                   value="sueddeutsche">
                             Süddeutsche Zeitung
                         </a>
                     </label>
                 </div>
                 <div class="col-xs-5 col-sm-2 col-md-12 radio">
                     <label>
-                        <input type="radio" name="newspaperFilterOptionsRadios" id="radioFaz" value="faz">
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=FAZ&ressort={{ressort}}">
-                            FAZ.NET
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioFaz" value="faz">
+                            FAZ
                         </a>
                     </label>
                 </div>
                 <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
                     <label>
-                        <input type="radio" name="newspaperFilterOptionsRadios" id="radioNtv" value="ntv">
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=n-tv&ressort={{ressort}}">
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioNtv" value="ntv">
                             n-tv
                         </a>
                     </label>
                 </div>
                 <div class="col-xs-5 col-sm-2 col-md-12 radio">
                     <label>
-                        <input type="radio" name="newspaperFilterOptionsRadios" id="radioRp" value="rp">
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=RP-ONLINE&ressort={{ressort}}">
-                            RP ONLINE
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioRp" value="rp">
+                            RP Online
                         </a>
                     </label>
                 </div>
@@ -106,63 +115,63 @@
 
                 <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-md-12 col-md-offset-0 radio">
                     <label>
-                        <input type="radio" name="categoryFilterOptionsRadios" id="radioAllgemein"
-                               value="allgemein">
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source={{source}}&ressort=Allgemein">
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioAllgemein"
+                                   value="allgemein">
                             Allgemein
                         </a>
                     </label>
                 </div>
                 <div class="col-xs-5 col-sm-2 col-md-12 radio">
                     <label>
-                        <input type="radio" name="categoryFilterOptionsRadios" id="radioPolitik"
-                               value="politik">
+
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source={{source}}&ressort=Politik">
-                            Politik
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioPolitik"
+                               value="politik">Politik
                         </a>
                     </label>
                 </div>
                 <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
                     <label>
-                        <input type="radio" name="categoryFilterOptionsRadios" id="radioWirtschaft"
-                               value="wirtschaft">
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source={{source}}&ressort=Wirtschaft">
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioWirtschaft"
+                                   value="wirtschaft">
                             Wirtschaft
                         </a>
                     </label>
                 </div>
                 <div class="col-xs-5 col-sm-4 col-md-12 radio">
                     <label>
-                        <input type="radio" name="categoryFilterOptionsRadios" id="radioRegional"
-                               value="regional">
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source={{source}}&ressort=Regional">
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioRegional"
+                                   value="regional">
                             Regional
                         </a>
                     </label>
                 </div>
                 <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-md-12 col-md-offset-0 radio">
                     <label>
-                        <input type="radio" name="categoryFilterOptionsRadios" id="radioTechnik"
-                               value="technik">
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source={{source}}&ressort=Technik">
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioTechnik"
+                                   value="technik">
                             Technik
                         </a>
                     </label>
                 </div>
                 <div class="col-xs-5 col-sm-2 col-md-12 radio">
                     <label>
-                        <input type="radio" name="categoryFilterOptionsRadios" id="radioWissenschaft"
-                               value="wissenschaft">
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source={{source}}&ressort=Wissenschaft">
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioWissenschaft"
+                                   value="wissenschaft">
                             Wissenschaft
                         </a>
                     </label>
                 </div>
                 <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-0 col-md-12 radio">
                     <label>
-                        <input type="radio" name="categoryFilterOptionsRadios" id="radioGesellschaft"
-                               value="gesellschaft">
                         <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source={{source}}&ressort=Gesellschaft">
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioGesellschaft"
+                                   value="gesellschaft">
                             Gesellschaft
                         </a>
                     </label>

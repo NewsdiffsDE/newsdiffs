@@ -42,7 +42,7 @@ def grab_url(url, max_depth=5, opener=None):
     if retry:
         if max_depth == 0:
             raise Exception('Too many attempts to download %s' % url)
-        time.sleep(0.5)
+        time.sleep(1)
         return grab_url(url, max_depth-1, opener)
     return text
 
