@@ -149,7 +149,6 @@ def get_archive():
 
 def get_articles_by_url(url, sort, ressort, distance=0):
         articles = {}
-        url = re.compile(r'^https?://(?:[^/]*\.)%s/' % url if url else '')
         all_articles = Article.objects.filter(url = url)
 
         if ressort in RESSORTS:
