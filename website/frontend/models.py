@@ -44,7 +44,6 @@ class Article(models.Model):
     keywords = models.CharField(max_length=500, blank=False)
     source = models.CharField(max_length=255, blank=False)
     initial_date = models.DateTimeField(auto_now_add=True)
-    date =  models.DateTimeField(blank=False)
     last_update = models.DateTimeField(default=ancient)
     last_check = models.DateTimeField(default=ancient)
     git_dir = models.CharField(max_length=255, blank=False, default='old')
