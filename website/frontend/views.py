@@ -426,9 +426,9 @@ def article_history(request):
                                                        'versions':rowinfo,
             'display_search_banner': came_from_search_engine(request),
                                                        })
-def article_history_feed(request, url=''):
-    url = prepend_http(url)
-    article = get_object_or_404(Article, url=url)
+def article_history_feed(request):
+    id = request.REQUEST.get('id')
+    article = get_object_or_404(Article, id=id)
     rowinfo = get_rowinfo(article)
     return render_to_response('article_history.xml',
                               { 'article': article,

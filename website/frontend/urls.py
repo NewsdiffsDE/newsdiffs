@@ -12,7 +12,7 @@ urlpatterns = [
   url(r'^archive/$', 'frontend.views.browse', name='archive'),
   url(r'^feed/browse/(.*)$', 'frontend.views.feed', name='feed'),
   url(r'^highlights/$', 'frontend.views.highlights', name='highlights'),
-  url(r'^feed/article-history/(.*)$', 'frontend.views.article_history_feed', name='article_history_feed'),
+  url(r'^feed/article-history/$', 'frontend.views.article_history_feed', name='article_history_feed'),
   url(r'^article-history/$', 'frontend.views.article_history', name='article_history'),
   url(r'^json/view/(?P<vid>\d+)/?$', 'frontend.views.json_view'),
   url(r'^$', 'frontend.views.index', name='root'),
