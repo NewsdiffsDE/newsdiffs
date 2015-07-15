@@ -151,12 +151,13 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, distance=0)
     versions = Version.objects.filter(byline__contains = searchterm)
 
     for v in versions:
-        all_articles = Article.objects.filter(id = v.article_id)
+        article_objects = Article.objects.filter(id = v.article_id)
         if search_source in SOURCES:
-            all_articles = all_articles.filter(source__contains = search_source)
+            article_objects = article_objects.filter(source__contains = search_source)
         if ressort in RESSORTS :
-            all_articles = all_articles.filter(category = ressort)
-        all_articles = all_articles.order_by('initial_date')
+            article_objects = article_objects.filter(category = ressort)
+
+        all_articles += article_objects.order_by('initial_date')
 
     for a in all_articles:
         version = Version.objects.filter(article_id = a.id)
@@ -169,8 +170,7 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, distance=0)
             'source':  a.source,
             'date':  a.initial_date,
             'ressort':  a.category,
-            'versioncount': versioncount,
-            #'searchdate' : searchdate
+            'versioncount': versioncount
             }
 
     if sort == u'sortCount':
