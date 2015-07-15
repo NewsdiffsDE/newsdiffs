@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 import re
 import operator
 
@@ -71,7 +71,7 @@ def Http400():
 def get_first_update(source):
     if source is None:
         source = ''
-    updates = models.Article.objects.order_by('last_update').filter(last_update__gt=datetime.datetime(1990, 1, 1, 0, 0),
+    updates = models.Article.objects.order_by('last_update').filter(last_update__gt=datetime(1990, 1, 1, 0, 0),
                                                                     url__contains=source)
     try:
         return updates[0].last_update
@@ -131,12 +131,15 @@ def search(request, source=''):
     else:
         return render_to_response('suchergebnisse.html', {})
 
-def get_archive():
+def get_archive(page):
     articles = {}
-    all_articles = Article.objects.filter(source = 'www.taz.de')
+
+    lookingfor = datetime.today() - timedelta(days= (page-1))
+    all_articles = Article.objects.filter(initial_date__year=lookingfor.year, initial_date__month=lookingfor.month, initial_date__day=lookingfor.day)
+
     for a in all_articles:
         version = Version.objects.filter(article_id = a.id)
-        article_title = version.order_by('date')[0].title
+        article_title = version.order_by('date')[0].title if version.order_by('date') else "to much data XD"
         articles[a.id] = {
             'id': a.id,
             'title': article_title,
@@ -300,12 +303,12 @@ def browse(request, source=''):
         page = 1
 
     first_update = get_first_update(source)
-    num_pages = (datetime.datetime.now() - first_update).days + 1
+    num_pages = (datetime.now() - first_update).days + 1
     page_list=range(1, 1+num_pages)
 
     # browse = entdecken = suche *
 
-    articles = get_archive()
+    articles = get_archive(page)
     return render_to_response('archive.html', {
                 'articles': articles,
                 'page':page,
