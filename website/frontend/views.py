@@ -107,6 +107,8 @@ def search(request, source=''):
 
     if search_type not in SEARCH_TYPES :
         search_type = u'Stichwort'
+    if searchterm[:4] == 'http':
+        search_type = u'URL'
 
     if len(searchterm) > 1:
         if search_type == u'Stichwort':
@@ -147,7 +149,8 @@ def get_archive():
 
 def get_articles_by_url(url, sort, ressort, distance=0):
         articles = {}
-        all_articles = Article.objects.filter(url__contains = url)
+        url = re.compile(r'^https?://(?:[^/]*\.)%s/' % url if url else '')
+        all_articles = Article.objects.filter(url = url)
 
         if ressort in RESSORTS:
             all_articles = all_articles.filter(category__contains = ressort)

@@ -40,8 +40,12 @@
         <!-- Suchergebnisse -->
         <div class="col-md-6">
 
+            {% if search_type = "URL"%}
+            <h1>Suchergebnis für {{search_type}}</h1>
+            <p>"{{ searchterm }}"</p>
+            {% else %}
             <h1>Suchergebnisse für {{search_type}} = "{{ searchterm }}" ({{articles|length}})</h1>
-
+            {% endif %}
             <p>Filter:
                 {% if source in all_sources %}
                 <span class="label label-default">Quelle: {{source}}
