@@ -14,8 +14,7 @@ from django.db.models import Count
 import time
 from django.template import Context, RequestContext, loader
 from django.views.decorators.cache import cache_page
-
-from random import randint
+from dateutil import parser
 
 OUT_FORMAT = '%B %d, %Y at %l:%M%P EDT'
 
@@ -110,9 +109,9 @@ def search(request, source=''):
 
     if len(searchterm) > 1:
         if search_type == u'Stichwort':
-            articles= get_articles_by_keyword(searchterm, sort, source, ressort, distance='0')
+            articles= get_articles_by_keyword(searchterm, sort, source, ressort, date, distance='0')
         elif search_type == u'Autor':
-            articles= get_articles_by_author(searchterm, sort, source, ressort, distance='0')
+            articles= get_articles_by_author(searchterm, sort, source, ressort, date, distance='0')
         elif search_type == u'URL':
             articles = None
 
@@ -123,6 +122,7 @@ def search(request, source=''):
                 'source' : source,
                 'sort' : sort,
                 'ressort' : ressort,
+                'searchdate' : date,
                 'all_sources' : SOURCES,
                 'all_ressorts' : RESSORTS
                 })
@@ -145,18 +145,27 @@ def get_archive():
             }
     return articles
 
-def get_articles_by_author(searchterm, sort, search_source, ressort, distance=0):
+def get_articles_by_author(searchterm, sort, search_source, ressort, date, distance=0):
     articles = {}
     all_articles = []
+    article_objects = {}
     versions = Version.objects.filter(byline__contains = searchterm)
 
+    if date != 'None' and date is not None and date != '' and date != u'None':
+        date = parser.parse(date)
+    else:
+        date = None
+
     for v in versions:
-        all_articles = Article.objects.filter(id = v.article_id)
+        article_objects = Article.objects.filter(id = v.article_id)
+        if date:
+            article_objects= article_objects.filter(initial_date = date)
         if search_source in SOURCES:
-            all_articles = all_articles.filter(source__contains = search_source)
+            article_objects = article_objects.filter(source__contains = search_source)
         if ressort in RESSORTS :
-            all_articles = all_articles.filter(category = ressort)
-        all_articles = all_articles.order_by('initial_date')
+            article_objects = article_objects.filter(category = ressort)
+
+    all_articles += article_objects.order_by('initial_date')
 
     for a in all_articles:
         version = Version.objects.filter(article_id = a.id)
@@ -169,19 +178,23 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, distance=0)
             'source':  a.source,
             'date':  a.initial_date,
             'ressort':  a.category,
-            'versioncount': versioncount,
-            #'searchdate' : searchdate
+            'versioncount': versioncount
             }
 
     if sort == u'sortCount':
         articles = sorted(articles.items(), reverse=True, key=operator.itemgetter('versioncount'))
     return articles
 
-def get_articles_by_keyword(searchterm, sort, search_source, ressort, distance=0):
+def get_articles_by_keyword(searchterm, sort, search_source, ressort, date, distance=0):
     articles = {}
-
+    if date != 'None' and date is not None and date != '' and date != u'None':
+        date = parser.parse(date)
+    else:
+        date = None
     all_articles = Article.objects.filter(keywords__contains = searchterm)
 
+    if date:
+        all_articles = all_articles.filter(initial_date = date)
     if search_source in SOURCES:
         all_articles = all_articles.filter(source__contains = search_source)
     if ressort in RESSORTS:
