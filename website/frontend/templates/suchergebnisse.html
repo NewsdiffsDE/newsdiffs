@@ -45,14 +45,21 @@
             <p>Filter:
                 {% if source in all_sources %}
                 <span class="label label-default">Quelle: {{source}}
-                    <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&ressort={{ressort}}">
+                    <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&ressort={{ressort}}&date={{serachdate}}">
                         X
                     </a>
                 </span>
                 {% endif %}
                 {% if ressort in all_ressorts %}
                 <span class="label label-default">Ressort: {{ressort}}
-                    <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&source={{source}}&sort={{sort}}">
+                    <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&source={{source}}&sort={{sort}}&date={{searchdate}}">
+                        X
+                    </a>
+                </span>
+                {% endif %}
+                {% if date %}
+                <span class="label label-default">Datum: {{searchdate}}
+                    <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&source={{source}}&sort={{sort}}&ressort={{ressort}}">
                         X
                     </a>
                 </span>

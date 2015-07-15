@@ -152,20 +152,20 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, date, dista
     versions = Version.objects.filter(byline__contains = searchterm)
 
     if date != 'None' and date is not None and date != '' and date != u'None':
-        date = parser.parse(date)
+        date = datetime.datetime.strptime(date, "%d.%m.%Y")
     else:
         date = None
 
     for v in versions:
         article_objects = Article.objects.filter(id = v.article_id)
-        if date:
+        if date is not None:
             article_objects= article_objects.filter(initial_date = date)
         if search_source in SOURCES:
             article_objects = article_objects.filter(source__contains = search_source)
         if ressort in RESSORTS :
             article_objects = article_objects.filter(category = ressort)
 
-    all_articles += article_objects.order_by('initial_date')
+        all_articles += article_objects.order_by('initial_date')
 
     for a in all_articles:
         version = Version.objects.filter(article_id = a.id)
@@ -188,12 +188,12 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, date, dista
 def get_articles_by_keyword(searchterm, sort, search_source, ressort, date, distance=0):
     articles = {}
     if date != 'None' and date is not None and date != '' and date != u'None':
-        date = parser.parse(date)
+        date = datetime.datetime.strptime(date, "%d.%m.%Y")
     else:
         date = None
     all_articles = Article.objects.filter(keywords__contains = searchterm)
 
-    if date:
+    if date is not None:
         all_articles = all_articles.filter(initial_date = date)
     if search_source in SOURCES:
         all_articles = all_articles.filter(source__contains = search_source)
