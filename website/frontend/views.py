@@ -148,7 +148,6 @@ def get_archive():
 def get_articles_by_author(searchterm, sort, search_source, ressort, date, distance=0):
     articles = {}
     all_articles = []
-    article_objects = {}
     versions = Version.objects.filter(byline__contains = searchterm)
 
     if date != 'None' and date is not None and date != '' and date != u'None':
