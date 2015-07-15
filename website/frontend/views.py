@@ -151,12 +151,13 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, distance=0)
     versions = Version.objects.filter(byline__contains = searchterm)
 
     for v in versions:
-        all_articles = Article.objects.filter(id = v.article_id)
+        article_objects = Article.objects.filter(id = v.article_id)
         if search_source in SOURCES:
-            all_articles = all_articles.filter(source__contains = search_source)
+            article_objects = article_objects.filter(source__contains = search_source)
         if ressort in RESSORTS :
-            all_articles = all_articles.filter(category = ressort)
-        all_articles = all_articles.order_by('initial_date')
+            article_objects = article_objects.filter(category = ressort)
+
+        all_articles += article_objects.order_by('initial_date')
 
     for a in all_articles:
         version = Version.objects.filter(article_id = a.id)
@@ -169,8 +170,7 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, distance=0)
             'source':  a.source,
             'date':  a.initial_date,
             'ressort':  a.category,
-            'versioncount': versioncount,
-            #'searchdate' : searchdate
+            'versioncount': versioncount
             }
 
     if sort == u'sortCount':
@@ -409,39 +409,16 @@ def prepend_http(url):
     return '/'.join(components)
 
 
-def article_history(request, urlarg=''):
-    url = request.REQUEST.get('url') # this is the deprecated interface.
-    if url is None:
-        url = urlarg
-    #if len(url) == 0:
-     #   return HttpResponseRedirect(reverse(front))
-
-    url = url.split('?')[0]  #For if user copy-pastes from news site
-
-    url = prepend_http(url)
-
-    # This is a hack to deal with unicode passed in the URL.
-    # Otherwise gives an error, since our table character set is latin1.
-    url = url.encode('ascii', 'ignore')
-
-    # Give an error on urls with the wrong hostname without hitting the
-    # database.  These queries are usually spam.
-    domain = url.split('/')[2]
-    if not is_valid_domain(domain):
-        return render_to_response('article_history_missing.html', {'searchword': url})
-
-
+def article_history(request):
+    id = request.REQUEST.get('id') # this is the deprecated interface.
     try:
-        article = Article.objects.get(url=url)
+        article = Article.objects.get(id=id)
     except Article.DoesNotExist:
         try:
-            return render_to_response('article_history_missing.html', {'searchword': url})
+            return render_to_response('article_history_missing.html', {'id': id})
         except (TypeError, ValueError):
             # bug in django + mod_rewrite can cause this. =/
             return HttpResponse('Bug!')
-
-    if len(urlarg) == 0:
-        return HttpResponseRedirect(reverse(article_history, args=[article.filename()]))
 
     # was article-history
     rowinfo = get_rowinfo(article)
@@ -449,9 +426,9 @@ def article_history(request, urlarg=''):
                                                        'versions':rowinfo,
             'display_search_banner': came_from_search_engine(request),
                                                        })
-def article_history_feed(request, url=''):
-    url = prepend_http(url)
-    article = get_object_or_404(Article, url=url)
+def article_history_feed(request):
+    id = request.REQUEST.get('id')
+    article = get_object_or_404(Article, id=id)
     rowinfo = get_rowinfo(article)
     return render_to_response('article_history.xml',
                               { 'article': article,
