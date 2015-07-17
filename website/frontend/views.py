@@ -105,6 +105,10 @@ def search(request, source=''):
     except ValueError:
         page = 1
 
+    #lookingfor = datetime.today() - timedelta(days= (page-1))
+    #articles = get_archive(lookingfor)
+    #archive_date = lookingfor.date().strftime('%d.%m.%Y')
+
     if search_type not in SEARCH_TYPES :
         search_type = u'Stichwort'
     if searchterm[:4] == 'http':
@@ -131,23 +135,24 @@ def search(request, source=''):
     else:
         return render_to_response('suchergebnisse.html', {})
 
-def get_archive(page):
+def get_archive(date):
     articles = {}
 
-    lookingfor = datetime.today() - timedelta(days= (page-1))
-    all_articles = Article.objects.filter(initial_date__year=lookingfor.year, initial_date__month=lookingfor.month, initial_date__day=lookingfor.day)
-
+    all_articles = Article.objects.filter(initial_date__year=date[6:10], initial_date__month=date[3:5], initial_date__day=date[0:2])
+    #archive_date = datetime.date().__setattr__(day = )
+    #all_articles = Article.objects.filter()
     for a in all_articles:
         version = Version.objects.filter(article_id = a.id)
-        article_title = version.order_by('date')[0].title if version.order_by('date') else "to much data XD"
-        articles[a.id] = {
-            'id': a.id,
-            'title': article_title,
-            'url': a.url,
-            'source':  a.source,
-            'date':  a.initial_date,
-            'versioncount': version.count()
-            }
+        if version:
+            article_title = version.order_by('date')[0].title
+            articles[a.id] = {
+                'id': a.id,
+                'title': article_title,
+                'url': a.url,
+                'source':  a.source,
+                'date':  a.initial_date,
+                'versioncount': version.count()
+                }
     return articles
 
 def get_articles_by_url(url, sort, ressort, distance=0):
@@ -296,24 +301,14 @@ def is_valid_domain(domain):
 def browse(request, source=''):
     if source not in SOURCES + ['']:
         raise Http404
-    pagestr=request.REQUEST.get('page', '1')
-    try:
-        page = int(pagestr)
-    except ValueError:
-        page = 1
+    archive_date=request.REQUEST.get('date')
+    if archive_date is None:
+        archive_date = datetime.today().strftime('%d.%m.%Y')
 
-    first_update = get_first_update(source)
-    num_pages = (datetime.now() - first_update).days + 1
-    page_list=range(1, 1+num_pages)
-
-    # browse = entdecken = suche *
-
-    articles = get_archive(page)
-    return render_to_response('archive.html', {
+    articles = get_archive(archive_date)
+    return render_to_response('archiv.html', {
                 'articles': articles,
-                'page':page,
-                'page_list': page_list,
-                'first_update': first_update,
+                'archive_date': archive_date,
                 'sources': SOURCES,
                 'source' : source,
                 })

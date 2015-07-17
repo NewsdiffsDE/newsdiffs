@@ -1,0 +1,142 @@
+{% extends 'headerfooter.html' %}
+{% load url from future %}
+{% block css_import %}
+<link href="{% url 'static' 'css/custom-article-list.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block title %}Suchergebnisse{% endblock %}
+{% block active_entdecken %}class="active"{% endblock %}
+
+{% block content %}
+
+<!-- Begin page content -->
+<div class="container-fluid maincontent">
+    {% include "searchbar.html" %}
+
+    <!-- Breadcrumbs -->
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <ol class="breadcrumb">
+                <li><a href="index.html">Suche</a></li>
+                <li class="active">Archiv</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="row" id="sort-btn-row">
+
+        <div class="col-md-2 col-md-offset-2">
+            <button id="sort-btn" class="btn btn-default" data-toggle="collapse" data-target="#allfilters">
+                Sortieren & Filtern anzeigen
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row">
+        {% include "filters.html" %}
+
+
+        <!-- Suchergebnisse -->
+        <div class="col-md-6">
+
+            <h1>Archiv vom {{archive_date}} ({{articles|length}})</h1>
+            <p>Filter:
+                {% if source in all_sources %}
+                <span class="label label-default">Quelle: {{source}}
+                    <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&ressort={{ressort}}">
+                        X
+                    </a>
+                </span>
+                {% endif %}
+                {% if ressort in all_ressorts %}
+                <span class="label label-default">Ressort: {{ressort}}
+                    <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&source={{source}}&sort={{sort}}">
+                        X
+                    </a>
+                </span>
+                {% endif %}
+            </p>
+            <div class="table">
+                <table class="table table-condensed table-striped">
+                    <thead>
+                    <tr>
+                        <th>Artikel</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for id, article in articles.items %}
+
+                    <tr>
+                        <td>
+                            <em>{{ forloop.counter }}. Ergebnis | Anzahl der Änderungen: {{article.versioncount}} |
+                                Quelle: (<a href="{{ article.url }}" target="_blank">{{ article.source }}</a>) |
+                                Ressort: {{article.ressort}}
+                            </em>
+
+                            <h3>
+                                {{ article.title }} (<a href="{{ article.url }}" target="_blank">{{ article.source}}</a>)
+                            </h3>
+
+                            <p>
+                                <a class="no-link-color" href="article_history.html">
+                                    <img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png"
+                                         alt="Artikelverlauf-Icon">
+                                </a>
+                                <a href="{% url 'article_history' %}?id={{article.id}}">Änderungsübersicht
+                                    ({{article.versioncount}})</a>
+                            </p>
+
+                            <p><a href="{% url 'diffview' %}"><img class="ownbtn"
+                                                                   src="../static/images/Icon_Vergleichen.png"
+                                                                   alt="Vergleichen-Icon">neueste Änderung</a></p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.table -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+    <!-- Pagination -->
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <nav id="pagination-nav">
+                <ul class="pagination pagination-sm">
+                    <li class="disabled">
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <p id="display-options">
+                Suchergebnisse pro Seite: <a>5</a> <a>15</a> <a>alle</a>
+            </p>
+
+
+        </div>
+
+    </div>
+    <!-- ./row -->
+
+</div>
+<!-- /.container-fluid -->
+
+{% endblock %}
+
