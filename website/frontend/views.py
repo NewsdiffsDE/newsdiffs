@@ -135,17 +135,24 @@ def search(request, source=''):
     else:
         return render_to_response('suchergebnisse.html', {})
 
-def get_archive(date):
+def get_archive(date, ressort, search_source, begin_at, end_at):
     articles = {}
 
-    all_articles = Article.objects.filter(initial_date__year=date[6:10], initial_date__month=date[3:5], initial_date__day=date[0:2])
-    #archive_date = datetime.date().__setattr__(day = )
-    #all_articles = Article.objects.filter()
+    all_articles = Article.objects.filter(initial_date__year=date[6:10],
+                                            initial_date__month=date[3:5],
+                                            initial_date__day=date[0:2]).exclude(source='')
+
+    if search_source in SOURCES:
+        all_articles = all_articles.filter(source__contains = search_source)
+    if ressort in RESSORTS:
+        all_articles = all_articles.filter(category__contains = ressort)
+
+    all_articles = all_articles[begin_at : end_at]
+
     for a in all_articles:
         version = Version.objects.filter(article_id = a.id)
-        if version:
-            article_title = version.order_by('date')[0].title
-            articles[a.id] = {
+        article_title = version.order_by('date')[0].title
+        articles[a.id] = {
                 'id': a.id,
                 'title': article_title,
                 'url': a.url,
@@ -302,15 +309,32 @@ def browse(request, source=''):
     if source not in SOURCES + ['']:
         raise Http404
     archive_date=request.REQUEST.get('date')
+    ressort=request.REQUEST.get('ressort')
+    source=request.REQUEST.get('source')
+    pagestr=request.REQUEST.get('page', '1')
+    try:
+        page = int(pagestr)
+    except ValueError:
+        page = 1
+
+    count = page -1
+    begin_at = count*10
+    end_at = page*10
+
     if archive_date is None:
         archive_date = datetime.today().strftime('%d.%m.%Y')
 
-    articles = get_archive(archive_date)
+    articles = get_archive(archive_date, ressort, source, begin_at, end_at)
     return render_to_response('archiv.html', {
                 'articles': articles,
                 'archive_date': archive_date,
-                'sources': SOURCES,
+                'all_sources': SOURCES,
                 'source' : source,
+                'ressort' : ressort,
+                'all_ressorts' : RESSORTS,
+                'page':page,
+                'begin_at' : begin_at,
+                'end_at' : end_at
                 })
 
 @cache_page(60 * 30)  #30 minute cache

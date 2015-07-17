@@ -40,18 +40,25 @@
         <!-- Suchergebnisse -->
         <div class="col-md-6">
 
-            <h1>Archiv vom {{archive_date}} ({{articles|length}})</h1>
+            <h1>Archiv vom {{archive_date}}</h1>
+            <p>Seite {{page}}: Ergebniss {{begin_at}} bis {{end_at}}</p>
+            <p>
+                <a href="{% url 'archive' %}?date=13.07.2015">13.07.2015</a>
+            </p>
+            <p>
+                <a href="{% url 'archive' %}?date=12.07.2015">12.07.2015</a>
+            </p>
             <p>Filter:
                 {% if source in all_sources %}
                 <span class="label label-default">Quelle: {{source}}
-                    <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&ressort={{ressort}}">
+                    <a href="{% url 'archive' %}?sort={{sort}}&ressort={{ressort}}?date={{archive_date}}">
                         X
                     </a>
                 </span>
                 {% endif %}
                 {% if ressort in all_ressorts %}
                 <span class="label label-default">Ressort: {{ressort}}
-                    <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&source={{source}}&sort={{sort}}">
+                    <a href="{% url 'archive' %}?source={{source}}&sort={{sort}}?date={{archive_date}}">
                         X
                     </a>
                 </span>
