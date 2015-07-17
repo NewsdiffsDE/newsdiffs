@@ -24,6 +24,9 @@ class TAZParser(BaseParser):
             self.title = elt['content']
         # tags from meta-keywords and title
         meta_keywords = soup.find('meta', {'name': 'keywords'})['content'] if soup.find('meta', {'name': 'keywords'}) else ""
+        if('auf Englisch' in meta_keywords):
+            self.real_article = False
+            return
         self.keywords = self.extract_keywords(meta_keywords)
         self.keywords += self.extract_keywords(self.title)
         # byline / author
@@ -40,7 +43,7 @@ class TAZParser(BaseParser):
             return
         self.date = ''.join(created_at.getText().replace("\n", "").split()) if created_at else ''
         # category
-        self.category = self.compute_category(meta_keywords if meta_keywords else '')
+        self.category = self.compute_category(meta_keywords)
         #article content
         div = soup.find('div', {'class': 'odd sect sect_article news report'})
         if div is None:
