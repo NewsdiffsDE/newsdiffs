@@ -1,4 +1,4 @@
-<p>Seite {{page}}: Ergebnis {{begin_at|add:1}} bis {{begin_at|add:articles_count}}</p>
+<p>Seite {{page}}: Ergebnis {{begin_at}} bis {{end_at}}</p>
 <nav>
     <ul class="pager">
         {% if page > 1 %}
@@ -8,7 +8,7 @@
         {% else %}
         <li class="previous disabled"><a><span aria-hidden="true">&larr;</span> Aktueller</a></li>
         {%endif%}
-        {% if articles|length < 10 %}
+        {% if articles_count < 10 %}
         <li class="next disabled"><a>Älter<span aria-hidden="true">&rarr;</span></a></li>
         {% else %}
         <li class="next"><a

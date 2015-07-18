@@ -317,13 +317,12 @@ def browse(request, source=''):
     except ValueError:
         page = 1
 
-    count = page -1
-    begin_at = count*10
-    end_at = page*10
+    begin_at = 1
+    end_at = 10
 
-    if begin_at <= 0:
-        begin_at = 1
-        end_at = 11
+    if page > 1:
+        begin_at = ((page-1)*10)+1  #11
+        end_at = begin_at + 9       # 20
 
     if archive_date is None:
         archive_date = datetime.today().strftime('%d.%m.%Y')
@@ -338,8 +337,8 @@ def browse(request, source=''):
                 'ressort' : ressort,
                 'all_ressorts' : RESSORTS,
                 'page':page,
-                'begin_at' : begin_at-1,
-                'end_at' : end_at-1
+                'begin_at' : begin_at,
+                'end_at' : begin_at + len(articles) -1
                 })
 
 @cache_page(60 * 30)  #30 minute cache
