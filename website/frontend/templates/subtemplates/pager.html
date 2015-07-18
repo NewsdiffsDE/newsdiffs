@@ -1,0 +1,19 @@
+<p>Seite {{page}}: Ergebnis {{begin_at|add:1}} bis {{begin_at|add:articles_count}}</p>
+<nav>
+    <ul class="pager">
+        {% if page > 1 %}
+        <li class="previous"><a
+                href="{% url 'archive' %}?sort={{sort}}&ressort={{ressort}}&date={{archive_date}}&page={{page|add:-1}}"><span
+                aria-hidden="true">&larr;</span> Aktueller</a></li>
+        {% else %}
+        <li class="previous disabled"><a><span aria-hidden="true">&larr;</span> Aktueller</a></li>
+        {%endif%}
+        {% if articles|length < 10 %}
+        <li class="next disabled"><a>Älter<span aria-hidden="true">&rarr;</span></a></li>
+        {% else %}
+        <li class="next"><a
+                href="{% url 'archive' %}?sort={{sort}}&ressort={{ressort}}&date={{archive_date}}&page={{page|add:1}}">Älter
+            <span aria-hidden="true">&rarr;</span></a></li>
+        {%endif%}
+    </ul>
+</nav>

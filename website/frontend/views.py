@@ -321,20 +321,25 @@ def browse(request, source=''):
     begin_at = count*10
     end_at = page*10
 
+    if begin_at <= 0:
+        begin_at = 1
+        end_at = 11
+
     if archive_date is None:
         archive_date = datetime.today().strftime('%d.%m.%Y')
 
-    articles = get_archive(archive_date, ressort, source, begin_at, end_at)
+    articles = get_archive(archive_date, ressort, source, begin_at-1, end_at)
     return render_to_response('archiv.html', {
                 'articles': articles,
+                'articles_count' : len(articles),
                 'archive_date': archive_date,
                 'all_sources': SOURCES,
                 'source' : source,
                 'ressort' : ressort,
                 'all_ressorts' : RESSORTS,
                 'page':page,
-                'begin_at' : begin_at,
-                'end_at' : end_at
+                'begin_at' : begin_at-1,
+                'end_at' : end_at-1
                 })
 
 @cache_page(60 * 30)  #30 minute cache

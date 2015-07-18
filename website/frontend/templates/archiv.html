@@ -34,20 +34,15 @@
 
 
     <div class="row">
-        {% include "filters.html" %}
+        {% include "subtemplates/filters.html" %}
 
 
         <!-- Suchergebnisse -->
         <div class="col-md-6">
 
             <h1>Archiv vom {{archive_date}}</h1>
-            <p>Seite {{page}}: Ergebniss {{begin_at}} bis {{end_at}}</p>
-            <p>
-                <a href="{% url 'archive' %}?date=13.07.2015">13.07.2015</a>
-            </p>
-            <p>
-                <a href="{% url 'archive' %}?date=12.07.2015">12.07.2015</a>
-            </p>
+            {% if articles|length > 0 %}
+            {% include "subtemplates/pager.html" %}
             <p>Filter:
                 {% if source in all_sources %}
                 <span class="label label-default">Quelle: {{source}}
@@ -64,6 +59,7 @@
                 </span>
                 {% endif %}
             </p>
+
             <div class="table">
                 <table class="table table-condensed table-striped">
                     <thead>
@@ -76,7 +72,7 @@
 
                     <tr>
                         <td>
-                            <em>{{ forloop.counter }}. Ergebnis | Anzahl der Änderungen: {{article.versioncount}} |
+                            <em>{{ forloop.counter|add:begin_at }}. Ergebnis | Anzahl der Änderungen: {{article.versioncount}} |
                                 Quelle: (<a href="{{ article.url }}" target="_blank">{{ article.source }}</a>) |
                                 Ressort: {{article.ressort}}
                             </em>
@@ -102,6 +98,12 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                {% include "subtemplates/pager.html" %}
+                 {%else%}
+                <p>Keine Artikel gefunden.</p>
+                {%endif%}
+
+
             </div>
             <!-- /.table -->
         </div>
