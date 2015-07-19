@@ -16,6 +16,10 @@ from django.template import Context, RequestContext, loader
 from django.views.decorators.cache import cache_page
 from dateutil import parser
 
+from django import forms
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+
 OUT_FORMAT = '%B %d, %Y at %l:%M%P EDT'
 
 SEARCH_ENGINES = """
@@ -492,4 +496,23 @@ def impressum(request):
 def index(request):
     return render_to_response('index.html', {'sources': SOURCES})
 
+# trying out form-stuff from https://docs.djangoproject.com/en/1.4/topics/forms/
 
+class DateForm(forms.Form):
+    date = forms.CharField(max_length=100)
+
+def process_date(request):
+    if request.method == 'POST': # If the form has been submitted...
+        form = DateForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            # Process the data in form.cleaned_data
+            # ...
+            final_date = form.cleaned_data['date']
+
+            #return HttpResponseRedirect('/thanks/') # Redirect after POST
+    else:
+        form = DateForm() # An unbound form: If the form has not been submitted, an unbound instance of ContactForm is created and passed to the template.
+
+    return render(request, 'filters.html', {
+        'form': form,
+    })
