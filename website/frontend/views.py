@@ -106,14 +106,18 @@ def search(request, source=''):
 
     if search_type not in SEARCH_TYPES :
         search_type = u'Stichwort'
+    if searchterm[:4] == 'http' or searchterm[:4] == 'www.':
+        search_type = u'URL'
 
     if len(searchterm) > 1:
         if search_type == u'Stichwort':
+
             articles= get_articles_by_keyword(searchterm, sort, source, ressort, date, distance='0')
         elif search_type == u'Autor':
             articles= get_articles_by_author(searchterm, sort, source, ressort, date, distance='0')
+
         elif search_type == u'URL':
-            articles = None
+            articles = get_articles_by_url(searchterm, sort, source, ressort)
 
         return render_to_response('suchergebnisse.html', {
                 'articles': articles,
@@ -145,7 +149,9 @@ def get_archive():
             }
     return articles
 
+
 def get_articles_by_author(searchterm, sort, search_source, ressort, date, distance=0):
+
     articles = {}
     all_articles = []
     versions = Version.objects.filter(byline__contains = searchterm)
