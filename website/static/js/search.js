@@ -81,12 +81,19 @@ $(window).load(function () {
 	});
 
     $('#datepicker').datepicker({
-            //format: "dd/mm/yyyy",
-            format: "dd.mm.yyyy",
-            clearBtn: true,
-            endDate: '+0d',
-            todayHighlight: true,
-            language: 'de'
+        //format: "dd/mm/yyyy",
+        format: "dd.mm.yyyy",
+        clearBtn: true,
+        endDate: '+0d',
+        todayHighlight: true,
+        language: 'de',
+        autoclose: true
+    }).on("changeDate", function(e){
+
+        //console.log($('.datepicker').datepicker('getDate').val());
+        console.log("hi");
+        console.log( $('#datepicker').val());
+
     });
 
     dateElement.onclick = function(e) {
@@ -100,9 +107,7 @@ $(window).load(function () {
             clear: "Löschen"
         };
     };
-    dateElement.onChange = function(e) {
-        // submit form
-    };
+
 
 
     $('button').click(function(){
