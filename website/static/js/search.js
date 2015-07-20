@@ -105,8 +105,7 @@ $(window).load(function () {
     };
 
 
-    $('button').click(function(){
-        console.log("hellooooooo");
+    $('#sort-btn').click(function(){
         $(this).text(function(i,old){
             return old=='Sortieren & Filtern verbergen' ?  'Sortieren & Filtern anzeigen' : 'Sortieren & Filtern verbergen';
         });
