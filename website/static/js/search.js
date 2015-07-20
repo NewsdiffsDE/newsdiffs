@@ -100,21 +100,23 @@ $(window).load(function () {
         autoclose: true
     }).on("changeDate", function(e){
         date_value = $('#datepicker').val();
-        var date_regex = /date=\d{2}([./-])\d{2}\1\d{4}$/
+        var date_regex = /date=\d{2}([./-])\d{2}\1\d{4}$|()/;
         var date_tag = "date=";
         var url = window.location.href;
 
         if(url.indexOf(date_tag) > -1){
+            index = url.indexOf(date_tag);
+            end = url.length;
+            url = url.substring(index, end);
             url = url.replace(date_regex, "date="+date_value);
         }else{
             concat = '?';
             if(url.indexOf(concat) > -1){
                 concat = '&';
             }
-            url = url+'&'+date_tag+date_value;
+            url = url+concat+date_tag+date_value;
         }
         window.location = url;
-
     });
 
     $('button').click(function(){

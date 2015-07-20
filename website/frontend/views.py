@@ -89,9 +89,7 @@ def get_last_update(source):
 
 
 @cache_page(60 * 30)  #30 minute cache
-def search(request, source=''):
-    if source not in SOURCES + ['']:
-        raise Http404
+def search(request):
     search_type = request.REQUEST.get('search_type')
     searchterm = request.REQUEST.get('searchterm')
     sort = request.REQUEST.get('sort')
@@ -99,6 +97,12 @@ def search(request, source=''):
     date = request.REQUEST.get('date')
     ressort = request.REQUEST.get('ressort')
     pagestr=request.REQUEST.get('page', '1')
+
+    if date is None:
+        date = ''
+    if searchterm is None:
+        searchterm = ''
+
     try:
         page = int(pagestr)
     except ValueError:
@@ -111,12 +115,13 @@ def search(request, source=''):
         begin_at = ((page-1)*10)+1
         end_at = begin_at + 9
 
-    if search_type not in SEARCH_TYPES :
-        search_type = u'Stichwort'
-    if searchterm[:4] == 'http':
-        search_type = u'URL'
 
-    if len(searchterm) > 1:
+    if len(searchterm) > 0:
+        if search_type not in SEARCH_TYPES :
+            search_type = u'Stichwort'
+        if searchterm[:4] == 'http' or searchterm[:4] == 'www.':
+            search_type = u'URL'
+
         if search_type == u'Stichwort':
             articles = get_articles_by_keyword(searchterm, sort, source, ressort, date, begin_at-1, end_at)
         elif search_type == u'Autor':
@@ -128,7 +133,7 @@ def search(request, source=''):
                 'articles': articles,
                 'articles_count' : len(articles),
                 'searchterm': searchterm,
-                'search_date' : date,
+                'date' : date,
                 'search_type': search_type,
                 'source' : source,
                 'sort' : sort,
@@ -188,13 +193,17 @@ def get_articles_by_url(url):
                 }
         return articles
 
-def get_articles_by_author(searchterm, sort, search_source, ressort, begin_at, end_at):
+def get_articles_by_author(searchterm, sort, search_source, ressort, date, begin_at, end_at):
     articles = {}
     all_articles = []
     versions = Version.objects.filter(byline__contains = searchterm)
 
     for v in versions:
         article_objects = Article.objects.filter(id = v.article_id).exclude(source='')
+        if len(date) is 10:
+            article_objects = article_objects.filter(initial_date__year=date[6:10],
+                                                        initial_date__month=date[3:5],
+                                                        initial_date__day=date[0:2])
         if search_source in SOURCES:
             article_objects = article_objects.filter(source__contains = search_source)
         if ressort in RESSORTS :
@@ -221,11 +230,15 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, begin_at, e
         articles = sorted(articles.items(), reverse=True, key=operator.itemgetter('versioncount'))
     return articles
 
-def get_articles_by_keyword(searchterm, sort, search_source, ressort, begin_at, end_at):
+def get_articles_by_keyword(searchterm, sort, search_source, ressort, date, begin_at, end_at):
     articles = {}
 
     all_articles = Article.objects.filter(keywords__contains = searchterm).exclude(source='')
 
+    if len(date) is 10:
+        all_articles = all_articles.filter(initial_date__year=date[6:10],
+                                                        initial_date__month=date[3:5],
+                                                        initial_date__day=date[0:2])
     if search_source in SOURCES:
         all_articles = all_articles.filter(source__contains = search_source)
     if ressort in RESSORTS:

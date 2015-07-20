@@ -42,12 +42,11 @@
 
             {% if search_type = "URL"%}
             <h1>Suchergebnis für {{search_type}}</h1>
-
             <p>"{{ searchterm }}"</p>
             {% else %}
             <h1>Suchergebnisse für {{search_type}} "{{ searchterm }}"</h1>
             {% endif %}
-            {% if articles|length >= 1 and search_type != "URL"%}
+            {% if articles|length > 1 %}
             {% include "subtemplates/pager_search.html" %}
             {% endif %}
             {% if articles|length > 0 %}
@@ -67,9 +66,9 @@
                     </a>
                 </span>
                 {% endif %}
-                {% if date %}
-                <span class="label label-default">Datum: {{searchdate}}
-                    <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&source={{source}}&sort={{sort}}&ressort={{ressort}}">
+                {% if date|length = 10 %}
+                <span class="label label-default">Datum: {{date}}
+                    <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&ressort={{ressort}}&source={{source}}&sort={{sort}}">
                         X
                     </a>
                 </span>
