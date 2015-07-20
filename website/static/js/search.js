@@ -99,10 +99,17 @@ $(window).load(function () {
         language: 'de',
         autoclose: true
     }).on("changeDate", function(e){
+        date_value = $('#datepicker').val();
+        var date_regex = /date=\d{2}([./-])\d{2}\1\d{4}$/
+        var date_tag = "date=";
+        var url = window.location.href;
 
-        //console.log($('.datepicker').datepicker('getDate').val());
-        console.log("hi");
-        console.log( $('#datepicker').val());
+        if(url.indexOf(date_tag) > -1){
+            url = url.replace(date_regex, "date="+date_value);
+        }else{
+            url = url+'&'+date_tag+date_value;
+        }
+        window.location = url;
 
     });
 
