@@ -47,7 +47,7 @@
             {% else %}
             <h1>Suchergebnisse für {{search_type}} "{{ searchterm }}"</h1>
             {% endif %}
-            {% if articles|length > 1 %}
+            {% if articles|length >= 1 and search_type != "URL"%}
             {% include "subtemplates/pager_search.html" %}
             {% endif %}
             {% if articles|length > 0 %}
