@@ -108,7 +108,7 @@ $(window).load(function () {
             url = url.replace(date_regex, "date="+date_value);
         }else{
             concat = '?';
-            if(url.indexOf(?) > -1){
+            if(url.indexOf(concat) > -1){
                 concat = '&';
             }
             url = url+'&'+date_tag+date_value;

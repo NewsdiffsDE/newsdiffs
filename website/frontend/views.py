@@ -118,9 +118,9 @@ def search(request, source=''):
 
     if len(searchterm) > 1:
         if search_type == u'Stichwort':
-            articles = get_articles_by_keyword(searchterm, sort, source, ressort, begin_at-1, end_at)
+            articles = get_articles_by_keyword(searchterm, sort, source, ressort, date, begin_at-1, end_at)
         elif search_type == u'Autor':
-            articles = get_articles_by_author(searchterm, sort, source, ressort, begin_at-1, end_at)
+            articles = get_articles_by_author(searchterm, sort, source, ressort, date, begin_at-1, end_at)
         elif search_type == u'URL':
             articles = get_articles_by_url(searchterm)
 
@@ -128,6 +128,7 @@ def search(request, source=''):
                 'articles': articles,
                 'articles_count' : len(articles),
                 'searchterm': searchterm,
+                'search_date' : date,
                 'search_type': search_type,
                 'source' : source,
                 'sort' : sort,
