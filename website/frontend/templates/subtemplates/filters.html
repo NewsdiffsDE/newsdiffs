@@ -5,6 +5,15 @@
     <div class="col-md-2 col-md-offset-2">
 
         <div class=" containter-fluid sidebar">
+            <!-- Datum -->
+            <div class="row">
+                <p class="col-xs-offset-1 col-md-offset-0">Datum</p>
+
+                <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-md-12 col-md-offset-0 date-wrapper">
+                        {{ form.as_p }}
+                        <input id="datepicker" name="date-value" placeholder="Datum wählen"/>
+                </div>
+            </div>
             <div class="row">
                 <h5 class="col-xs-offset-1 col-md-offset-0">Sortieren nach:</h5>
                 {% if sort == 'sortCount' %}
@@ -178,16 +187,6 @@
                     </label>
                 </div>
             </div>
-
-            <!-- Datum -->
-            <div class="row">
-                <p class="col-xs-offset-1 col-md-offset-0">Datum</p>
-
-                <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-md-12 col-md-offset-0 date-wrapper">
-                    <input id="datepicker" name="date-value" placeholder="select a date"/>
-                </div>
-            </div>
-
         </div>
     </div>
 

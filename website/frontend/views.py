@@ -521,9 +521,6 @@ def kontakt(request):
 def impressum(request):
     return render_to_response('impressum.html', {})
 
-
-
 def index(request):
     return render_to_response('index.html', {'sources': SOURCES})
-
 

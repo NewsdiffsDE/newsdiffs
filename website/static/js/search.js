@@ -80,17 +80,7 @@ $(window).load(function () {
 		}
 	});
 
-    $('#datepicker').datepicker({
-            //format: "dd/mm/yyyy",
-            format: "dd.mm.yyyy",
-            clearBtn: true,
-            endDate: '+0d',
-            todayHighlight: true,
-            language: 'de'
-    });
-
-    dateElement.onclick = function(e) {
-        $.fn.datepicker.dates['de'] = {
+    $.fn.datepicker.dates['de'] = {
             days: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
             daysShort: ["Son", "Mon", "Din", "Mit", "Don", "Fre", "Sam"],
             daysMin: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
@@ -98,15 +88,36 @@ $(window).load(function () {
             monthsShort: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
             today: "Heute",
             clear: "Löschen"
-        };
-    };
-    dateElement.onChange = function(e) {
-        // submit form
     };
 
+    $('#datepicker').datepicker({
+        //format: "dd/mm/yyyy",
+        format: "dd.mm.yyyy",
+        clearBtn: true,
+        endDate: '+0d',
+        todayHighlight: true,
+        language: 'de',
+        autoclose: true
+    }).on("changeDate", function(e){
+        date_value = $('#datepicker').val();
+        var date_regex = /date=\d{2}([./-])\d{2}\1\d{4}$/
+        var date_tag = "date=";
+        var url = window.location.href;
+
+        if(url.indexOf(date_tag) > -1){
+            url = url.replace(date_regex, "date="+date_value);
+        }else{
+            concat = '?';
+            if(url.indexOf(?) > -1){
+                concat = '&';
+            }
+            url = url+'&'+date_tag+date_value;
+        }
+        window.location = url;
+
+    });
 
     $('button').click(function(){
-        console.log("hellooooooo");
         $(this).text(function(i,old){
             return old=='Sortieren & Filtern verbergen' ?  'Sortieren & Filtern anzeigen' : 'Sortieren & Filtern verbergen';
         });
