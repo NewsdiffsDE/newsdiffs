@@ -43,23 +43,7 @@
             <h1>Archiv vom {{archive_date}}</h1>
             {% if articles|length > 0 %}
             {% include "subtemplates/pager.html" %}
-            <p>Filter:
-                {% if source in all_sources %}
-                <span class="label label-default">Quelle: {{source}}
-                    <a href="{% url 'archive' %}?sort={{sort}}&ressort={{ressort}}?date={{archive_date}}">
-                        X
-                    </a>
-                </span>
-                {% endif %}
-                {% if ressort in all_ressorts %}
-                <span class="label label-default">Ressort: {{ressort}}
-                    <a href="{% url 'archive' %}?source={{source}}&sort={{sort}}?date={{archive_date}}">
-                        X
-                    </a>
-                </span>
-                {% endif %}
-            </p>
-
+            {% include "subtemplates/filterTags.html" %}
             <div class="table">
                 <table class="table table-condensed table-striped">
                     <thead>
