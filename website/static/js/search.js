@@ -107,8 +107,9 @@ $(window).load(function () {
         if(url.indexOf(date_tag) > -1){
             index = url.indexOf(date_tag);
             end = url.length;
-            url = url.substring(index, end);
-            url = url.replace(date_regex, "date="+date_value);
+            suburl = url.substring(index, end);
+            suburl = suburl.replace(date_regex, "date="+date_value);
+            url = url.substring(0,index)+suburl;
         }else{
             concat = '?';
             if(url.indexOf(concat) > -1){
