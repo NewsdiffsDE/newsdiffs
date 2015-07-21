@@ -18,7 +18,7 @@
         <div class="col-md-8 col-md-offset-2">
             <ol class="breadcrumb">
                 <li><a href="index.html">Suche</a></li>
-                <li class="active">Suchergebnisse</li>
+                <li class="active">Archiv</li>
             </ol>
         </div>
     </div>
@@ -40,20 +40,10 @@
         <!-- Suchergebnisse -->
         <div class="col-md-6">
 
-            {% if search_type = "URL"%}
-            <h1>Suchergebnis für {{search_type}}</h1>
-            <p>"{{ searchterm }}"</p>
-            {% else %}
-            <h1>Suchergebnisse für {{search_type}} "{{ searchterm }}"</h1>
-            {% endif %}
-            {% if articles|length > 1 %}
-            {% include "subtemplates/pager.html" %}
-            {% endif %}
-            {% if search_type != "URL"%}
-            {% include "subtemplates/filterTags.html" %}
-            {% endif %}
-
+            <h1>Archiv vom {{archive_date}}</h1>
             {% if articles|length > 0 %}
+            {% include "subtemplates/pager.html" %}
+            {% include "subtemplates/filterTags.html" %}
             <div class="table">
                 <table class="table table-condensed table-striped">
                     <thead>
@@ -66,8 +56,7 @@
 
                     <tr>
                         <td>
-                            <em>{{ forloop.counter0|add:begin_at }}. Ergebnis | Anzahl der Änderungen:
-                                {{article.versioncount}} |
+                            <em>{{ forloop.counter0|add:begin_at }}. Ergebnis | Anzahl der Änderungen: {{article.versioncount}} |
                                 Quelle: (<a href="{{ article.url }}" target="_blank">{{ article.source }}</a>) |
                                 Ressort: {{article.ressort}}
                             </em>
@@ -93,10 +82,8 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                {% if articles|length > 1 %}
                 {% include "subtemplates/pager.html" %}
-                {% endif %}
-                {%else%}
+                 {%else%}
                 <p>Keine Artikel gefunden für Seite {{page}}</p>
                 {%endif%}
             </div>
