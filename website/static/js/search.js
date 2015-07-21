@@ -100,7 +100,7 @@ $(window).load(function () {
         autoclose: true
     }).on("changeDate", function(e){
         date_value = $('#datepicker').val();
-        var date_regex = /date=\d{2}([./-])\d{2}\1\d{4}$|()/;
+        var date_regex = /date=\d{2}([./-])\d{2}\1\d{4}$/;
         var date_tag = "date=";
         var url = window.location.href;
 
@@ -108,7 +108,12 @@ $(window).load(function () {
             index = url.indexOf(date_tag);
             end = url.length;
             suburl = url.substring(index, end);
-            suburl = suburl.replace(date_regex, "date="+date_value);
+            leer = url.substring(index+5,index+6);
+            if(leer == ''){
+                suburl = suburl.replace("date=", "date="+date_value);
+            }else{
+                suburl = suburl.replace(date_regex, "date="+date_value);
+            }
             url = url.substring(0,index)+suburl;
         }else{
             concat = '?';

@@ -49,25 +49,24 @@
             {% if articles|length > 1 %}
             {% include "subtemplates/pager_search.html" %}
             {% endif %}
-            {% if articles|length > 0 %}
             {% if search_type != "URL"%}
             <p>Filter:
                 {% if source in all_sources %}
                 <span class="label label-default">Quelle: {{source}}
-                    <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&ressort={{ressort}}&date={{searchdate}}">
+                    <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&ressort={{ressort}}&date={{archive_date}}">
                         X
                     </a>
                 </span>
                 {% endif %}
                 {% if ressort in all_ressorts %}
                 <span class="label label-default">Ressort: {{ressort}}
-                    <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&source={{source}}&sort={{sort}}&date={{searchdate}}">
+                    <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&source={{source}}&sort={{sort}}&date={{archive_date}}">
                         X
                     </a>
                 </span>
                 {% endif %}
-                {% if date|length = 10 %}
-                <span class="label label-default">Datum: {{date}}
+                {% if archive_date|length = 10 %}
+                <span class="label label-default">Datum: {{archive_date}}
                     <a href="{% url 'suchergebnisse' %}?searchterm={{searchterm}}&search_type={{search_type}}&ressort={{ressort}}&source={{source}}&sort={{sort}}">
                         X
                     </a>
@@ -75,6 +74,8 @@
                 {% endif %}
             </p>
             {% endif %}
+
+            {% if articles|length > 0 %}
             <div class="table">
                 <table class="table table-condensed table-striped">
                     <thead>

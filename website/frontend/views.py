@@ -133,7 +133,7 @@ def search(request):
                 'articles': articles,
                 'articles_count' : len(articles),
                 'searchterm': searchterm,
-                'date' : date,
+                'archive_date' : date,
                 'search_type': search_type,
                 'source' : source,
                 'sort' : sort,
@@ -142,7 +142,8 @@ def search(request):
                 'all_ressorts' : RESSORTS,
                 'page':page,
                 'begin_at' : begin_at,
-                'end_at' : begin_at + len(articles) -1
+                'end_at' : begin_at + len(articles) -1,
+                'template' : 'suchergebnisse'
                 })
     else:
         return render_to_response('suchergebnisse.html', {})
@@ -336,7 +337,7 @@ def browse(request):
         begin_at = ((page-1)*10)+1
         end_at = begin_at + 9
 
-    if archive_date is None:
+    if archive_date is None or archive_date is u'':
         archive_date = datetime.today().strftime('%d.%m.%Y')
 
     articles = get_archive(archive_date, ressort, source, begin_at-1, end_at)
@@ -350,7 +351,8 @@ def browse(request):
                 'all_ressorts' : RESSORTS,
                 'page':page,
                 'begin_at' : begin_at,
-                'end_at' : begin_at + len(articles) -1
+                'end_at' : begin_at + len(articles) -1,
+                'template' : 'archive'
                 })
 
 @cache_page(60 * 30)  #30 minute cache
