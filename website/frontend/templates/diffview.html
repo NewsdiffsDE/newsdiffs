@@ -1,7 +1,7 @@
-{% extends "template.html" %}
+{% extends 'headerfooter.html' %}
 {% load url from future %}
-
-{% block head %}
+{% block title %}Änderungen im Artikel{% endblock %}
+{% block css_import %}
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
 
@@ -27,11 +27,10 @@
     background-color: #a0ffa0;
   }
   </style>
-
-{% endblock head %}
-
+    <link href="{% url 'static' 'css/custom-diffview.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block active_entdecken %}class="active"{% endblock %}
 {% block content %}
-
 
     <h2>Comparing: {{title}}</h2>
     <h3><a href="{{article_url}}">{{article_url}}</a></h3>
@@ -39,29 +38,7 @@
       <li><del>Pink: Archived {{date1}}</del></li>
       <li><ins>Green: Archived {{date2}}</ins></li>
     </ul>
-    <p>
-      {% if prev %}
-      <a href="{{prev}}"><= Previous revision</a>
-      {% else %}
-      No previous revision
-      {% endif %} |
-      <a href="{% url 'article_history' article_shorturl %}">All changes</a>
-      |
-      {% if next %}
-      <a href="{{next}}">Later revision =></a>
-      {% else %}
-      No later revision
-      {% endif %}
-    </p>
 
-<!--
-Are these changes interesting?   <form action="{% url 'upvote' %}" method=POST>
-      <input type=hidden name=article_url value={{article_url}}>
-      <input type=hidden name=diff_v1 value={{v1}}>
-      <input type=hidden name=diff_v2 value={{v2}}>
-      <input type=submit name=submit value="Yes">
-    </form>
--->
 <hr>
     <div>
       <div id="compare">
