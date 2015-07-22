@@ -454,7 +454,7 @@ def get_rowinfo(article, version_lst=None):
     lastv = None
     urlarg = article.filename()
     for version in version_lst:
-        version.date = version.date.strftime('%d.%m.%Y - %H:%M')
+        version.date = version.date.strftime('%d.%m.%Y - %H:%M Uhr')
         if lastv is None:
             diffl = ''
         else:
