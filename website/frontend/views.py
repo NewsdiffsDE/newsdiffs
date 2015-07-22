@@ -383,7 +383,7 @@ def feed(request, source=''):
             context_instance=RequestContext(request),
             mimetype='application/atom+xml')
 
-def diffview(request, vid1, vid2, urlarg):
+def diffview(request):
     # urlarg is unused, and only for readability
     # Could be strict and enforce urlarg == article.filename()
 
@@ -493,7 +493,7 @@ def article_history(request):
     versions = get_rowinfo(article)
     return render_to_response('article_history.html', {'article':article,
                                                        'versions':versions,
-            'display_search_banner': came_from_search_engine(request),
+                                                        'display_search_banner': came_from_search_engine(request),
                                                        })
 def article_history_feed(request):
     id = request.REQUEST.get('id')
