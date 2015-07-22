@@ -458,7 +458,7 @@ def get_rowinfo(article, version_lst=None):
             diffl = ''
         else:
            # diffl = reverse('diffview', kwargs=dict(vid1=lastv.id, vid2=version.id, urlarg=urlarg))
-            diffl = '/diffview/?vid1='+lastv.id+'&vid2='+version.id
+            diffl = '/diffview/?vid1='+str(lastv.id)+'&vid2='+str(version.id)
         rowinfo.append((diffl, version))
         lastv = version
     rowinfo.reverse()
