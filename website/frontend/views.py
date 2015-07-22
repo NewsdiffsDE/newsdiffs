@@ -410,7 +410,7 @@ def diffview(request, vid1='', vid2=''):
 
     for v in (v1, v2):
         texts.append(v.text())
-        dates.append(v.datestrftime('%d.%m.%Y - %H:%M Uhr'))
+        dates.append(v.date.strftime('%d.%m.%Y - %H:%M Uhr'))
 
         indices = [i for i, x in versions.items() if x == v]
         if not indices:
