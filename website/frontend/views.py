@@ -389,6 +389,7 @@ def diffview(request):
 
     vid1=request.REQUEST.get('vid1')
     vid2=request.REQUEST.get('vid2')
+    urlarg = 'www.stern.de/panorama/mindestens-86-tote-bei-bombenanschlag-auf-markt-nahe-bagdad-6350724'
     try:
         v1 = Version.objects.get(id=int(vid1))
         v2 = Version.objects.get(id=int(vid2))
@@ -425,11 +426,14 @@ def diffview(request):
         return Http400()
 
     links = []
+
+    if urlarg[0:7] is 'http://':
+        urlarg= article.url[len('http://'):].rstrip('/')
     for i in range(2):
         if all(x[i] for x in adjacent_versions):
             diffl = reverse('diffview', kwargs=dict(vid1=adjacent_versions[0][i].id,
                                                     vid2=adjacent_versions[1][i].id,
-                                                    urlarg=article.filename()))
+                                                    urlarg = urlarg))
             links.append(diffl)
         else:
             links.append('')
