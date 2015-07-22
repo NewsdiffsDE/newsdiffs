@@ -42,7 +42,9 @@
         <!-- Suchergebnisse -->
         <div class="col-md-6">
 
-            <h1>Suchergebnisse für {{search_type}} = "{{ searchterm }}" ({{articles|length}})</h1>
+            {% block site-title %}
+                <h1>Suchergebnisse für {{search_type}} = "{{ searchterm }}" ({{articles|length}})</h1>
+            {% endblock %}
 
             <p>Filter:
                 {% if source in all_sources %}
