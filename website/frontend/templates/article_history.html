@@ -43,7 +43,7 @@
                           <td><a href="{{link}}">{{version.title}}</a></td>
                           <td>{{version.date}}</td>
                           {% if version %}
-                            <td><a href="{% url 'diffview'%}vid1=">
+                            <td><a href="{{difflink}}">
                                 <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}" alt="Vergleichen-Icon">Änderung ansehen</a></td>
                           {% else %}
                             <td></td>
