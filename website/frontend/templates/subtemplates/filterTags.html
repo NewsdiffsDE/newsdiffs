@@ -1,0 +1,23 @@
+<p>Filter:
+                {% if source in all_sources %}
+                <span class="label label-default">Quelle: {{source}}
+                    <a href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&ressort={{ressort}}&sort={{sort}}&date={{archive_date}}">
+                        X
+                    </a>
+                </span>
+                {% endif %}
+                {% if ressort in all_ressorts %}
+                <span class="label label-default">Ressort: {{ressort}}
+                    <a href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&source={{source}}&sort={{sort}}&date={{archive_date}}">
+                        X
+                    </a>
+                </span>
+                {% endif %}
+                {% if archive_date|length = 10 %}
+                <span class="label label-default">Datum: {{archive_date}}
+                    <a href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&ressort={{ressort}}&source={{source}}&sort={{sort}}">
+                        X
+                    </a>
+                </span>
+                {% endif %}
+            </p>
