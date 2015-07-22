@@ -383,7 +383,7 @@ def feed(request, source=''):
             context_instance=RequestContext(request),
             mimetype='application/atom+xml')
 
-def diffview(request):
+def diffview(request, vid1='', vid2=''):
     # urlarg is unused, and only for readability
     # Could be strict and enforce urlarg == article.filename()
 
