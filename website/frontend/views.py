@@ -389,7 +389,6 @@ def diffview(request, vid1, vid2, urlarg):
 
     vid1=request.REQUEST.get('vid1')
     vid2=request.REQUEST.get('vid2')
-    
     try:
         v1 = Version.objects.get(id=int(vid1))
         v2 = Version.objects.get(id=int(vid2))

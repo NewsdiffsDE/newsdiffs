@@ -42,8 +42,9 @@
                         <tr>
                           <td><a href="{{link}}">{{version.title}}</a></td>
                           <td>{{version.date}}</td>
-                          {% if difflink %}
-                            <td><a href="{{difflink}}"><img src=".{% url 'static' '../static/images/Icon_Vergleichen16px.png' %}" alt="Vergleichen-Icon">Änderung ansehen</a></td>
+                          {% if version %}
+                            <td><a href="{% url 'diffview'%}vid1=">
+                                <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}" alt="Vergleichen-Icon">Änderung ansehen</a></td>
                           {% else %}
                             <td></td>
                           {% endif %}
@@ -52,7 +53,7 @@
 
 				</table>
 
-				<h3>(<a href="article.url">Original-Artikel bei {{article.publication}} lesen</a>)</h3>
+				<h3>(<a href="{{article.url}}">Original-Artikel bei {{article.publication}} lesen</a>)</h3>
 			</div>
 		</div>
 
