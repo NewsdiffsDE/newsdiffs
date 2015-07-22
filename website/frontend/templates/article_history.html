@@ -25,7 +25,7 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 
-				<h1>{{ article.latest_version.title }}</h1>
+				<h1>{{ article.latest_version.title }} (<a href="{{article.url}}">Originalartikel von {{article.publication}} lesen</a>)</h1>
 				<h5>{{ article.latest_version.title }} | Erste Archivierung: {{ article.initial_date }}</h5>
 				<h5>Änderungsübersicht:</h5>
 
@@ -50,10 +50,9 @@
                           {% endif %}
                         </tr>
                     {% endfor %}
-
 				</table>
 
-				<h3>(<a href="{{article.url}}">Original-Artikel bei {{article.publication}} lesen</a>)</h3>
+
 			</div>
 		</div>
 

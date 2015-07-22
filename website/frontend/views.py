@@ -436,14 +436,15 @@ def diffview(request, vid1='', vid2=''):
       #  else:
       #      links.append('')
 
+    date1 = dates[0].strftime('%d.%m.%Y')
+    date2 = dates[1].strftime('%d.%m.%Y')
+
     return render_to_response('diffview.html', {
             'title': title,
-            'date1':dates[0], 'date2':dates[1],
+            'date1':date1, 'date2':date2,
             'text1':texts[0], 'text2':texts[1],
-            #'prev':links[0], 'next':links[1],
             'article_shorturl': article.filename(),
             'article_url': article.url, 'v1': v1, 'v2': v2,
-            #'display_search_banner': came_from_search_engine(request),
             })
 
 def get_rowinfo(article, version_lst=None):
