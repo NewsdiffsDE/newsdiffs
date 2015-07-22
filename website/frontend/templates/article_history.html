@@ -25,8 +25,8 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 
-				<h1>{{ article.latest_version.title }} (<a href="{{article.url}}">Originalartikel von {{article.publication}} lesen</a>)</h1>
-				<h5>{{ article.latest_version.title }} | Erste Archivierung: {{ article.initial_date }}</h5>
+				<h1>{{ article.latest_version.title }}</h1> <p>(<a href="{{article.url}}">Originalartikel von {{article.publication}} lesen</a>)</p>
+				<h5>{{ article.latest_version.title }} | Erste Archivierung: {{ created_at }}</h5>
 				<h5>Änderungsübersicht:</h5>
 
 				<table class="table table-condensed">

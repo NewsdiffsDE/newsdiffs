@@ -454,7 +454,7 @@ def get_rowinfo(article, version_lst=None):
     lastv = None
     urlarg = article.filename()
     for version in version_lst:
-        date = version.date
+        version.date = version.date.strftime('%d.%m.%Y')
         if lastv is None:
             diffl = ''
         else:
@@ -496,6 +496,7 @@ def article_history(request):
     return render_to_response('article_history.html', {'article':article,
                                                        'versions':versions,
                                                         'display_search_banner': came_from_search_engine(request),
+                                                       'created_at': article.initial_date
                                                        })
 def article_history_feed(request):
     id = request.REQUEST.get('id')
