@@ -443,7 +443,7 @@ def diffview(request, vid1='', vid2=''):
             #'prev':links[0], 'next':links[1],
             'article_shorturl': article.filename(),
             'article_url': article.url, 'v1': v1, 'v2': v2,
-            'display_search_banner': came_from_search_engine(request),
+            #'display_search_banner': came_from_search_engine(request),
             })
 
 def get_rowinfo(article, version_lst=None):
