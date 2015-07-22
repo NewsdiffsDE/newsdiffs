@@ -427,13 +427,12 @@ def diffview(request):
 
     links = []
 
-    if urlarg[0:7] is 'http://':
-        urlarg= article.url[len('http://'):].rstrip('/')
+    #if urlarg[0:7] is 'http://':
+     #   urlarg= article.url[len('http://'):].rstrip('/')
     for i in range(2):
         if all(x[i] for x in adjacent_versions):
             diffl = reverse('diffview', kwargs=dict(vid1=adjacent_versions[0][i].id,
-                                                    vid2=adjacent_versions[1][i].id,
-                                                    urlarg = urlarg))
+                                                    vid2=adjacent_versions[1][i].id))
             links.append(diffl)
         else:
             links.append('')
