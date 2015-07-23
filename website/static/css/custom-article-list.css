@@ -11,6 +11,10 @@ a img:hover {
 	border: none;
 }
 
+#original{
+    border-bottom: 1px #666 dotted;
+}
+
 .table-condensed {
 	clear:both;
 }

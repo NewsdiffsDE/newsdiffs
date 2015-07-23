@@ -76,12 +76,12 @@
                     <tr>
                         <td>
                             <em>{{ forloop.counter }}. Ergebnis | Anzahl der Änderungen: {{article.versioncount}} |
-                                Quelle: (<a href="{{ article.url }}" target="_blank">{{ article.source }}</a>) |
+                                Quelle: <a href="{{ article.source }}" target="_blank">{{ article.source }}</a> (<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
                                 Ressort: {{article.ressort}}
                             </em>
 
                             <h3>
-                                {{ article.title }} (<a href="{{ article.url }}" target="_blank">{{ article.source}}</a>)
+                                {{ article.title }}
                             </h3>
 
                             <p>
