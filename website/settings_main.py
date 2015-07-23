@@ -3,7 +3,7 @@
 ALLOWED_HOSTS = ['.newsdiffs.de', '.newsdiffs.de.',
                  'dev.newsdiffs.de', 'localhost', '127.0.0.1']
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
