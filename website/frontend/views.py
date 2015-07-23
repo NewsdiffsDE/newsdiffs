@@ -524,7 +524,7 @@ def about(request):
 def history(request):
     return render_to_response('article_history.html', {})
 
-def artikel(request):
+def diffview(request):
     return render_to_response('diffview.html', {})
 
 def entdecken(request):

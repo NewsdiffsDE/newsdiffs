@@ -10,6 +10,14 @@ a img {
 	padding-right: 2px;
 }
 
+#original{
+    border-bottom: 1px #666 dotted;
+}
+
+.table-condensed {
+	clear:both;
+}
+
 /* 
 
 From: https://css-tricks.com/responsive-data-tables/
