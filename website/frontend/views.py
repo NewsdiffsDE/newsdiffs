@@ -107,14 +107,16 @@ def search(request, source=''):
 
     if search_type not in SEARCH_TYPES :
         search_type = u'Stichwort'
+    if searchterm[:4] == 'http' or searchterm[:4] == 'www.':
+        search_type = u'URL'
 
     if len(searchterm) > 1:
         if search_type == u'Stichwort':
-            articles= get_articles_by_keyword(searchterm, sort, source, ressort, distance='0')
+            articles= get_articles_by_keyword(searchterm, sort, source, ressort)
         elif search_type == u'Autor':
-            articles= get_articles_by_author(searchterm, sort, source, ressort, distance='0')
+            articles= get_articles_by_author(searchterm, sort, source, ressort)
         elif search_type == u'URL':
-            articles = None
+            articles = get_articles_by_url(searchterm, sort, source, ressort)
 
         return render_to_response('suchergebnisse.html', {
                 'articles': articles,
@@ -144,6 +146,36 @@ def get_archive():
             'versioncount': version.count()
             }
     return articles
+
+def get_articles_by_url(url, sort, ressort, distance=0):
+        articles = {}
+
+        if url[:4] == 'www.':
+            url = 'http://' + url
+
+        all_articles = Article.objects.filter(url = url)
+
+        if ressort in RESSORTS:
+            all_articles = all_articles.filter(category__contains = ressort)
+        all_articles.order_by('initial_date')
+
+        for a in all_articles:
+            version = Version.objects.filter(article_id = a.id)
+            versioncount = Version.objects.filter(article_id = a.id).count()
+            article_title = version.order_by('date')[0].title
+            articles[a.id] = {
+                'id': a.id,
+                'title': article_title,
+                'url': a.url,
+                'source':  a.source,
+                'date':  a.initial_date,
+                'versioncount': versioncount,
+                'ressort' : a.category
+                }
+
+        if sort is 'sortCount':
+            articles = sorted(articles.items(), reverse=True, key=operator.itemgetter('versioncount'))
+        return articles
 
 def get_articles_by_author(searchterm, sort, search_source, ressort, distance=0):
     articles = {}
@@ -394,9 +426,7 @@ def get_rowinfo(article, version_lst=None):
 
 def prepend_http(url):
     """Return a version of the url that starts with the proper scheme.
-
     url may look like
-
     www.nytimes.com
     https:/www.nytimes.com    <- because double slashes get stripped
     http://www.nytimes.com
@@ -473,5 +503,6 @@ def impressum(request):
 
 def index(request):
     return render_to_response('index.html', {'sources': SOURCES})
+
 
 
