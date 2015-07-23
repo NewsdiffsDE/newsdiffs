@@ -10,12 +10,8 @@ a img {
 	padding-right: 2px;
 }
 
-#original{
-    border-bottom: 1px #666 dotted;
-}
-
-.table-condensed {
-	clear:both;
+.title a:hover{
+    color: #666;
 }
 
 /* 
