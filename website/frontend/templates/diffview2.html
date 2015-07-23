@@ -1,0 +1,102 @@
+{% extends 'headerfooter.html' %}
+{% load url from future %}
+{% block title %}Änderungen im Artikel{% endblock %}
+{% block css_import %}
+    <link href="{% url 'static' 'css/custom-diffview.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block active_entdecken %}class="active"{% endblock %}
+{% block content %}
+	
+	
+	<div class="container-fluid maincontent">
+		
+		{% include "searchbar.html" %}
+
+		<div class="row">
+			<div class="col-sm-8 col-sm-offset-2">
+				<h2>"{{ title }}"</h2>
+			</div>
+			 
+			 
+			<div class="col-sm-8 col-sm-offset-2">
+				Aktualisiert: {{ date2 }}
+				<a href=" {{ article_url }}" target="_blank"><button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-link"></span> Quelle</button></a>
+				<button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-question-sign"></span></button>
+				
+			</div>
+				
+		</div>
+		
+		
+		<div class="row">
+			<!--<div class = "col-sm-3 col-sm-offset-1">
+				Entfernt: <span class ="deleted">Text</span>
+				Hinzugefügt: <span class ="added">Text</span>
+			</div>!-->
+		</div>
+		
+
+		<div class="row">
+			<div class = "col-sm-8 col-sm-offset-2">
+                <a href="{{ prev }}" target="_blank"><button type="button" class="btn btn-default btn-sm"><img src="../static/images/Arrow_left.png" alt="Ältere Version"> Ältere Version</button></a>
+                <a href="{{ next }}" target="_blank"><button type="button" class="btn btn-default btn-sm"><img src="../static/images/Arrow_right.png" alt="Neuere Version"> Neuere Version</button></a><a href="#" target="_blank"><button type="button" class="btn btn-default btn-sm"><img src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf"> Artikelverlauf</button></a>
+				
+			</div>
+		</div>
+		
+		
+		<div class="row">
+
+            <!-- Article -->
+			<div class="col-md-6 col-md-offset-2">
+				<p class = "content">
+				In der Nacht auf Freitag ist Großbritannien ein anderes Land geworden. 
+				David Cameron ist der Sieger der Wahl in England und Wales. Er wird Großbritannien regieren. 
+				In Schottland dagegen hat Nicola Sturgeons Scottish Nationalist Party (SNP) einen überwältigenden Sieg errungen – und wird nicht regieren. 
+				Labour und die Liberaldemokraten, die gegen das EU-Referendum hätten stimmen können, sind von den Wählern zu Statisten gemacht worden.
+				In der Nacht auf Freitag ist Großbritannien ein anderes Land geworden. 
+				David Cameron ist der Sieger der Wahl in England und Wales. Er wird Großbritannien regieren. 
+				In Schottland dagegen hat Nicola Sturgeons Scottish Nationalist Party (SNP) einen überwältigenden Sieg errungen – und wird nicht regieren. 
+				Labour und die Liberaldemokraten, die gegen das EU-Referendum hätten stimmen können, sind von den Wählern zu Statisten gemacht worden.  
+				In der Nacht auf Freitag ist Großbritannien ein anderes Land <span class ="deleted">mit diesem Ergebnis </span>geworden. 
+				<span class="added">David Cameron ist der Sieger der Wahl in England und Wales. Er wird Großbritannien regieren.</span>
+				In Schottland dagegen hat Nicola Sturgeons Scottish Nationalist Party (SNP) einen überwältigenden Sieg errungen – und wird nicht regieren. 
+				Labour und die Liberaldemokraten, die gegen das EU-Referendum hätten stimmen können, sind von den Wählern zu Statisten gemacht worden.  
+				In der Nacht auf Freitag ist Großbritannien ein anderes Land geworden. 
+				David Cameron ist der Sieger der Wahl in England und Wales. Er wird Großbritannien regieren. 
+				In Schottland dagegen hat Nicola Sturgeons Scottish Nationalist Party (SNP) einen überwältigenden Sieg errungen – und wird nicht regieren. 
+				Labour und die Liberaldemokraten, die gegen das EU-Referendum hätten stimmen können, sind von den Wählern zu Statisten gemacht worden.  
+				In der Nacht auf Freitag ist Großbritannien ein anderes Land geworden. 
+				David Cameron ist der Sieger der Wahl in England und Wales. Er wird Großbritannien regieren. 
+				In Schottland dagegen hat Nicola Sturgeons Scottish Nationalist Party (SNP) einen überwältigenden Sieg errungen – und wird nicht regieren. 
+				Labour und die Liberaldemokraten, die gegen das EU-Referendum hätten stimmen können, sind von den Wählern zu Statisten gemacht worden.  
+				</p>
+			</div>
+			
+			<!-- Share -->
+            		<div class="col-md-2">
+					<ul class="share">
+						<li><h4><span class="glyphicon glyphicon-share"></span> Teilen</h4></li>
+
+						<li><a href="https://twitter.com/share?url={{ article.url }}&via=newsdiffs_de&text=Neue Änderungen im Artikel '{{ title }}'"
+							onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+							target="_blank" title="Share on Twitter"><img src="/website/static/images/Twitter_logo_blue.png">Twitter</a></li>
+						<li><a href="https://www.facebook.com/sharer/sharer.php?url={{ article.url }}&text='{{ title }}'&"
+							onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+							target="_blank" title="Share on Facebook"><img src="/website/static/images/fb_icon_blue.png">Facebook</a></li>
+						<li><a href="https://plus.google.com/share?url={{ article.url }}&text=Neue Änderungen gefunden im Artikel '{{ title }}' via&url=http://newsdiffs.de"
+							onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=480');return false;"
+							target="_blank" title="Share on Google+">
+							<img src="/website/static/images/gplus_logo_red.png">Google+</a></li>
+						<li><a href="mailto:?subject=NewsDiffsDE - Neue Änderungen!&amp;body=Neue Änderungen gefunden im Artikel '{{ title }}' {{ article.url }}."
+							title="Share by Email">
+							<img src="/website/static/images/mail.png">Email</a></li>
+					</ul>
+			</div>
+			
+			
+			
+		</div>
+	</div>
+
+{% endblock %}

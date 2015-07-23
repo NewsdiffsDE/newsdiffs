@@ -159,3 +159,7 @@ body {
     background-image: -webkit-linear-gradient(top,#FCFCFC,#CBCBCB);
 }
 
+#datepicker{
+  width: 100%;
+}
+

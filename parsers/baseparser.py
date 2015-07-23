@@ -115,7 +115,7 @@ class BaseParser(object):
                   u'Regional': [u'Regional', u'Region', u'Regionales'],
                   u'Technik': [u'Digital', u'Internet', u'Technik', u'Netzwelt'],
                   u'Wissenschaft': [u'Wissen', u'Gesundheit', u'Bildung'],
-                  u'Gesellschaft': [u'Gesellschaft']}
+                  u'Gesellschaft': [u'Gesellschaft', u'Alltag']}
 
      # Used when finding articles to parse
     feeder_pat   = None # Look for links matching this regular expression
@@ -184,7 +184,7 @@ class BaseParser(object):
         #extracts the first matching category from keywords
     def compute_category(self, keywords):
         matched_category = str("Allgemein")
-        keywords = keywords.lower().split(',')
+        keywords = keywords.lower().split(', ')
         for cats in self.categories.itervalues():
             for key in keywords:
                 for cat in cats:
