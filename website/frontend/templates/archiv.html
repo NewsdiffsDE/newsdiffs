@@ -55,14 +55,15 @@
                     {% for id, article in articles.items %}
 
                     <tr>
-                        <td>
-                            <em>{{ forloop.counter0|add:begin_at }}. Ergebnis | Anzahl der Änderungen: {{article.versioncount}} |
-                                Quelle: (<a href="{{ article.url }}" target="_blank">{{ article.source }}</a>) |
+                         <td>
+                            <em>{{ forloop.counter }}. Ergebnis | Anzahl der Änderungen: {{article.versioncount}} |
+                                Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> (<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
+
                                 Ressort: {{article.ressort}}
                             </em>
 
-                            <h3>
-                                {{ article.title }} (<a href="{{ article.url }}" target="_blank">{{ article.source}}</a>)
+                            <h3 class="title">
+                                <a  href="{% url 'article_history' %}?id={{article.id}}">{{ article.title }}</a>
                             </h3>
 
                             <p>
