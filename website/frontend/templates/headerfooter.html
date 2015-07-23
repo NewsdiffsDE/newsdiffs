@@ -19,7 +19,6 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
       <script src="{% url 'static' 'js/respond.min.js'%}"></script>
-      {% block scripts %} {% endblock %}
     <![endif]-->
         <!-- oder src normal via ordnerstruktur verlinken? /../..-->
 
@@ -92,5 +91,7 @@
 	<script src="{% url 'static' 'js/search.js'%}"></script>
     <script src="{% url 'static' 'js/bootstrap-datepicker.min.js'%}"></script>
     <script src="{% url 'static' 'js/about-scroll.js'%}"></script>
+      {% block scripts %} {% endblock %}
+
 </body>
 </html>
