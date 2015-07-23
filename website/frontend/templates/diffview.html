@@ -13,13 +13,15 @@
           var text2 = '{{text2|escapejs}}';
           $(document).ready(function () {
             var dmp = new diff_match_patch();
-            dmp.diff_ShowPara = false;
+            dmp.Diff_ShowPara = false;
             var diff = dmp.diff_main(text1, text2);
             dmp.diff_cleanupSemantic(diff);
             $('#compare')[0].innerHTML = dmp.diff_prettyHtml(diff);
           });
     </script>
 {% endblock %}
+
+
 
 
 
@@ -36,15 +38,17 @@
       <li><ins>Green: Archived {{date2}}</ins></li>
     </ul>
 
-    <hr>
+    <!-- Article -->
+        <div class="col-md-6 col-md-offset-2">
 
-            <!-- Article -->
-			<div class="col-md-6 col-md-offset-2">
+              <div id="compare">
+              </div>
 
-                  <div id="compare">
-                  </div>
+        </div>
 
-			</div>
+    <hr> <!-- Malt einen strich den man vielelicht nicht braucht -->
+
+
 
 
     <!-- Share -->
