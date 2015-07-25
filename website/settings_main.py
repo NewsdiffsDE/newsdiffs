@@ -7,13 +7,11 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-     ('Eric Price', 'ecprice@mit.edu'),
-     ('Jennifer 8. Lee', 'jenny8lee@gmail.com'),
-     ('Gregory Price', 'price@mit.edu'),
+     ('Newsdifds Admin', 'info@newsdiffs.de'),
 )
 
 MANAGERS = ADMINS
-SERVER_EMAIL = "newsdiffs@mit.edu"
+SERVER_EMAIL = "info@newsdiffs.de"
 
 for line in open('/var/www/dev/.passdb.cnf').read().split():
     if line.startswith('password='):
@@ -51,13 +49,13 @@ if False: #django 1.3
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/New_York'
+TIME_ZONE = 'Europe/Berlin'
 
 DATETIME_FORMAT = 'F j, Y, g:i a'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'de-DE'
 
 SITE_ID = 1
 
