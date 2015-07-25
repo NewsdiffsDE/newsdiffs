@@ -18,7 +18,7 @@ class FAZParser(BaseParser):
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
         self.source = ', '.join(self.domains)
-        self.url = soup.find('meta', {'name': 'og\:url'})['content']
+        self.url = soup.find('meta', {'name': 'og\:url'})['content'] if soup.find('meta', {'name': 'og\:url'}) else self.url
         # category
         keywords = self.url.strip('http://www.faz.net').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')
