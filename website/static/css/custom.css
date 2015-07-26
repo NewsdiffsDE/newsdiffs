@@ -44,6 +44,14 @@ code {
 
 }
 
+@media screen and (max-width: 768px){
+	.navbar-brand img{
+		height: 70%;
+		margin-top: 12px;
+	}
+}
+
+
 .navbar-brand {
 	padding: 0px;
 }
