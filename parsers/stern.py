@@ -7,7 +7,7 @@ class SternParser(BaseParser):
     domains = ['www.stern.de']
 
     feeder_pat   = '^http://www.stern.de/(politik|wirtschaft|panorama|wissen|digital)/.*\d*\.html$'
-    feeder_pages = ['http://home.arcor.de/r.piwonski/test.html',
+    feeder_pages = ['http://www.stern.de/news/',
                     'http://www.stern.de/news/?order&month&year&pageNum=1',
                     'http://www.stern.de/news/?order&month&year&pageNum=2',
                     'http://www.stern.de/news/?order&month&year&pageNum=3'
