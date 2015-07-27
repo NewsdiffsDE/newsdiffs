@@ -257,18 +257,19 @@ def get_articles_by_keyword(searchterm, sort, search_source, ressort, date, begi
 
     for a in all_articles:
         version = Version.objects.filter(article_id = a.id)
-        versioncount = Version.objects.filter(article_id = a.id).count()
-        article_title = version.order_by('date')[0].title
-        oldest_newest = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
-        articles[a.id] = {
-            'id': a.id,
-            'title': article_title,
-            'url': a.url,
-            'source':  a.source,
-            'date':  a.initial_date,
-            'versioncount': versioncount,
-            'ressort' : a.category,
-            'all_diffs' : oldest_newest
+        versioncount = version.count()
+        if versioncount > 0:
+            article_title = version.order_by('date')[0].title
+            oldest_newest = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
+            articles[a.id] = {
+                'id': a.id,
+                'title': article_title,
+                'url': a.url,
+                'source':  a.source,
+                'date':  a.initial_date,
+                'versioncount': versioncount,
+                'ressort' : a.category,
+                'all_diffs' : oldest_newest
             }
 
     if sort is 'sortCount':
