@@ -43,13 +43,13 @@
         </ul>
         <div class="row">
 			<div class = "col-sm-8 col-sm-offset-2">
-                {% if prev = '' or prev is None %}
+                {% if not prev %}
                 <button type="button" class="disabled btn btn-default btn-sm"><img src="../static/images/Arrow_left.png" alt="Ältere Version"> Ältere Version</button>
                 {% else %}
                 <a href="{{ prev }}"><button type="button" class="btn btn-default btn-sm"><img src="../static/images/Arrow_left.png" alt="Ältere Version"> Ältere Version</button></a>
                 {% endif %}
 
-                {% if next = '' or next is None %}
+                {% if not next %}
                 <button type="button" class="disabled btn btn-default btn-sm"><img src="../static/images/Arrow_right.png" alt="Neuere Version"> Neuere Version</button>
                 {% else %}
                 <a href="{{ next }}"><button type="button" class="btn btn-default btn-sm"><img src="../static/images/Arrow_right.png" alt="Neuere Version"> Neuere Version</button></a>
