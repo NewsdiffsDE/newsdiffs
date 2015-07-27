@@ -88,8 +88,6 @@ def get_last_update(source):
     except IndexError:
         return datetime.datetime.now()
 
-
-@cache_page(60 * 30)  #30 minute cache
 def search(request):
     search_type = request.REQUEST.get('search_type')
     searchterm = request.REQUEST.get('searchterm')
@@ -333,7 +331,6 @@ def is_valid_domain(domain):
     """Cheap method to tell whether a domain is being tracked."""
     return any(domain.endswith(source) for source in SOURCES)
 
-@cache_page(60 * 30)  #30 minute cache
 def browse(request):
     archive_date=request.REQUEST.get('date')
     ressort=request.REQUEST.get('ressort')
@@ -371,7 +368,6 @@ def browse(request):
                 'template' : 'archive'
                 })
 
-@cache_page(60 * 30)  #30 minute cache
 def feed(request, source=''):
     if source not in SOURCES + ['']:
         raise Http404
