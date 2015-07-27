@@ -34,7 +34,7 @@
     <div class="col-md-6 col-md-offset-2">
         <h2>{{title}}</h2>
 
-        <h3><a href="{{article_url}}">{{article_url}}</a></h3>
+        <p>Quelle: <a href="{{article_url}}">{{article_url}}</a></p>
         <ul>
             <li>
                 <del>Pink: Archived {{date1}}</del>
@@ -49,8 +49,8 @@
                             src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf">Änderungsübersicht
                     </button>
                 </a>
-                <a href="{{all_diffs}}"><img class="ownbtn" src="../static/images/Icon_Vergleichen.png"
-                                                                   alt="Vergleichen-Icon">alle Änderung</a></p>
+                <a href="{{all_diffs}}"><button type="button" class="btn btn-default btn-sm"><img class="ownbtn" src="../static/images/Icon_Vergleichen.png"
+                                                                   alt="Vergleichen-Icon">alle Änderungen</button></a></p>
                 <nav>
                     <ul class="pager">
                         {% if prev %}
