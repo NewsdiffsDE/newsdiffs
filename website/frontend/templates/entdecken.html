@@ -59,21 +59,21 @@
 				 
 				 <div class="categories_list">
 					<ul>
-						<li><a href="#allgemein"><span class="glyphicon glyphicon-globe"></span> <p>Allgemein</p></a></li>
+						<li><a href="{% url 'archive' %}?ressort=Allgemein"><span class="glyphicon glyphicon-globe"></span> <p>Allgemein</p></a></li>
 
-						<li><a href="#politik"><span class="glyphicon glyphicon-object-align-bottom"></span> <p>Politik</p></a></li>
+						<li><a href="{% url 'archive' %}?ressort=Politik"><span class="glyphicon glyphicon-object-align-bottom"></span> <p>Politik</p></a></li>
 
-						<li><a href="#wirtschaft"><span class="glyphicon glyphicon-euro"></span> <p>Wirtschaft</p></a></li>
+						<li><a href="{% url 'archive' %}?ressort=Wirtschaft"><span class="glyphicon glyphicon-euro"></span> <p>Wirtschaft</p></a></li>
 
-						<li><a href="#regional"><span class="glyphicon glyphicon-home"></span> <p>Regional</p></a></li>
-						<hr></hr>
-						<li><a href="#technik"><span class="glyphicon glyphicon-camera"></span> <p>Technik</p></a></li>
+						<li><a href="{% url 'archive' %}?ressort=Regional"><span class="glyphicon glyphicon-home"></span> <p>Regional</p></a></li>
+						<hr>
+						<li><a href="{% url 'archive' %}?ressort=Technik"><span class="glyphicon glyphicon-camera"></span> <p>Technik</p></a></li>
 				
-						<li><a href="#wissenschaft"><span class="glyphicon glyphicon-tree-deciduous"></span> <p>Wissenschaft</p></a></li>
+						<li><a href="{% url 'archive' %}?ressort=Wissenschaft"><span class="glyphicon glyphicon-tree-deciduous"></span> <p>Wissenschaft</p></a></li>
 
-						<li><a href="#gesellschaft"><span class="glyphicon glyphicon-user"></span> <p>Gesellschaft</p></a></li>
+						<li><a href="{% url 'archive' %}?ressort=Gesellschaft"><span class="glyphicon glyphicon-user"></span> <p>Gesellschaft</p></a></li>
 				 
-						<li><a href="#"><span class="glyphicon glyphicon-th-list"></span> <p>Alle Kategorien</p></a></li>
+						<li><a href="{% url 'archive' %}"><span class="glyphicon glyphicon-th-list"></span> <p>Alle Kategorien</p></a></li>
 					</ul>
 				</div>
 					

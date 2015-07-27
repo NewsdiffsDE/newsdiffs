@@ -6,7 +6,6 @@ urlpatterns = [
   url(r'^entdecken/$', 'frontend.views.entdecken', name='entdecken'),
   url(r'^kontakt/$', 'frontend.views.kontakt', name='kontakt'),
   url(r'^impressum/$', 'frontend.views.impressum', name='impressum'),
-  #url(r'^artikel/$', 'frontend.views.artikel', name='artikel'),
   url(r'^history/$', 'frontend.views.history', name='history'),
   url(r'^suchergebnisse/$', 'frontend.views.search', name='suchergebnisse'),
   url(r'^archive/$', 'frontend.views.browse', name='archive'),

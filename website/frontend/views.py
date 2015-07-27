@@ -556,16 +556,17 @@ def entdecken(request):
                 result = result.replace("#", "")
             results.append(result)
 
-    return render_to_response('entdecken.html', {'trend1': results[0],
-						 'trend2': results[1],
-						 'trend3': results[2],
-						 'trend4': results[3],
-						 'trend5': results[4],
-						 'trend6': results[5],
-						 'trend7': results[6],
-						 'trend8': results[7],
-						 'trend9': results[8],
-						 'trend10': results[9],
+    return render_to_response('entdecken.html', {
+                        'trend1': results[0],
+						'trend2': results[1],
+						'trend3': results[2],
+						'trend4': results[3],
+						'trend5': results[4],
+						'trend6': results[5],
+						'trend7': results[6],
+						'trend8': results[7],
+						'trend9': results[8],
+						'trend10': results[9],
 						})
 
 def highlights(request):
