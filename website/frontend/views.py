@@ -425,22 +425,20 @@ def diffview(request, vid1='', vid2=''):
     if any(x is None for x in texts):
         return Http400()
 
-   # links = []
+    links = []
 
-    #if urlarg[0:7] is 'http://':
-     #   urlarg= article.url[len('http://'):].rstrip('/')
-    #for i in range(2):
-     #   if all(x[i] for x in adjacent_versions):
-      #      diffl = reverse('diffview', kwargs=dict(vid1=adjacent_versions[0][i].id,
-                        #                            vid2=adjacent_versions[1][i].id))
-      #      links.append(diffl)
-      #  else:
-      #      links.append('')
+    for i in range(2):
+        if all(x[i] for x in adjacent_versions):
+           diffl = '/diffview/?vid1= '+adjacent_versions[0][i].id +'&vid2='+ adjacent_versions[1][i].id
+           links.append(diffl)
+        else:
+            links.append('')
 
     return render_to_response('diffview.html', {
             'title': title,
             'date1':dates[0], 'date2':dates[1],
             'text1':texts[0], 'text2':texts[1],
+            'prev':links[0], 'next':links[1],
             'article_shorturl': article.filename(),
             'article_id' : article.id,
             'article_url': article.url, 'v1': v1, 'v2': v2,
