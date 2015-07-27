@@ -442,6 +442,7 @@ def diffview(request, vid1='', vid2=''):
             'date1':dates[0], 'date2':dates[1],
             'text1':texts[0], 'text2':texts[1],
             'article_shorturl': article.filename(),
+            'article_id' : article.id,
             'article_url': article.url, 'v1': v1, 'v2': v2,
             })
 
