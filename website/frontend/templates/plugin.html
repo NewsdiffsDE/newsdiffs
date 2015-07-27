@@ -1,0 +1,18 @@
+{% extends 'headerfooter.html' %}
+{% load url from future %}
+{% block title %}NewsDiffs Plugin{% endblock %}
+{% block active_plugin %}class="active"{% endblock %}
+
+{% block content %}
+    <div class="container-fluid maincontent text">
+        {% include "searchbar.html" %}
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h1>Plugin</h1>
+                <p>
+                    Chrome Plugin
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
