@@ -13,6 +13,7 @@ class NTVParser(BaseParser):
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
         self.source = ', '.join(self.domains)
+        self.url = soup.find('meta', {'property': 'og:url'})['content'] if soup.find('meta', {'property': 'og:url'}) else self.url
         # category
         keywords = self.url.strip('http://www.n-tv.de').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')
