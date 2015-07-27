@@ -7,11 +7,12 @@ class SternParser(BaseParser):
     domains = ['www.stern.de']
 
     feeder_pat   = '^http://www.stern.de/(politik|wirtschaft|panorama|wissen|digital)/.*\d*\.html$'
-    feeder_pages = ['http://www.stern.de/news',
+    feeder_pages = ['http://www.stern.de/news/',
                     'http://www.stern.de/news/?order&month&year&pageNum=1',
                     'http://www.stern.de/news/?order&month&year&pageNum=2',
                     'http://www.stern.de/news/?order&month&year&pageNum=3'
                     ]
+
 
     def _parse(self, html):
         soup = BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES,
@@ -19,6 +20,7 @@ class SternParser(BaseParser):
 
         self.meta = soup.findAll('meta')
         self.source = ', '.join(self.domains)
+        self.url = soup.find('meta', {'property': 'og:url'})['content'] if soup.find('meta', {'property': 'og:url'}) else self.url
         # category
         keywords = self.url.strip('http://www.stern.de/').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')

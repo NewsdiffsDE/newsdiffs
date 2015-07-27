@@ -2,83 +2,112 @@
 {% load url from future %}
 {% block title %}Änderungen im Artikel{% endblock %}
 {% block css_import %}
-    <link href="{% url 'static' 'css/custom-diffview.css' %}" rel="stylesheet" type="text/css">
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
+<script src="{% url 'static' 'lib/diff_match_patch_uncompressed.js'%}" type="text/javascript"></script>
+<link href="{% url 'static' 'css/custom-diffview.css' %}" rel="stylesheet" type="text/css">
+
+<script type="text/javascript">
+  var text1 = '{{text1|escapejs}}';
+  var text2 = '{{text2|escapejs}}';
+  $(document).ready(function () {
+    var dmp = new diff_match_patch();
+    dmp.Diff_ShowPara = false;
+    var diff = dmp.diff_main(text1, text2);
+    dmp.diff_cleanupSemantic(diff);
+    $('#compare')[0].innerHTML = dmp.diff_prettyHtml(diff);
+  });
+
+
+
+</script>
+
 {% endblock %}
-{% block active_entdecken %}class="active"{% endblock %}
-{% block scripts %}
-    <script src="{% url 'static' 'lib/diff_match_patch_uncompressed.js'%}" type="text/javascript"></script>
-
-    <script type="text/javascript">
-          var text1 = '{{text1|escapejs}}';
-          var text2 = '{{text2|escapejs}}';
-          $(document).ready(function () {
-            var dmp = new diff_match_patch();
-            dmp.Diff_ShowPara = false;
-            var diff = dmp.diff_main(text1, text2);
-            dmp.diff_cleanupSemantic(diff);
-            $('#compare')[0].innerHTML = dmp.diff_prettyHtml(diff);
-          });
-    </script>
-{% endblock %}
-
-
-
-
 
 {% block content %}
-    <div class="container-fluid maincontent">
-		
-		{% include "searchbar.html" %}
+<div class="container-fluid maincontent">
 
+    {% include "searchbar.html" %}
 
-    <h2>Comparing: {{title}}</h2>
-    <h3><a href="{{article_url}}">{{article_url}}</a></h3>
-    <ul>
-      <li><del>Pink: Archived {{date1}}</del></li>
-      <li><ins>Green: Archived {{date2}}</ins></li>
-    </ul>
 
     <!-- Article -->
-        <div class="col-md-6 col-md-offset-2">
+    <div class="col-md-6 col-md-offset-2">
+        <h2>{{title}}</h2>
 
-              <div id="compare">
-              </div>
-
+        <p>Quelle: <a href="{{article_url}}">{{article_url}}</a></p>
+        <ul>
+            <li>
+                <del>Pink: Archived {{date1}}</del>
+            </li>
+            <li>
+                <ins>Green: Archived {{date2}}</ins>
+            </li>
+        </ul>
+        <div class="row">
+                <a href="{% url 'article_history' %}?id={{article_id}}">
+                    <button type="button" class="btn btn-default btn-sm"><img
+                            src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf">Änderungsübersicht
+                    </button>
+                </a>
+                <a href="{{all_diffs}}"><button type="button" class="btn btn-default btn-sm"><img class="ownbtn" src="../static/images/Icon_Vergleichen.png"
+                                                                   alt="Vergleichen-Icon">alle Änderungen</button></a></p>
+                <nav>
+                    <ul class="pager">
+                        {% if prev %}
+                        <li class="previous"><a
+                                href="{{ prev }}"><span
+                                aria-hidden="true">&larr;</span>ältere Änderung</a></li>
+                        {% else %}
+                        <li class="previous disabled"><a><span aria-hidden="true">&larr;</span>ältere Änderung</a></li>
+                        {%endif%}
+                        {% if next %}
+                        <li class="next"><a
+                                href="{{ next }}">neuere Änderung
+                            <span aria-hidden="true">&rarr;</span></a></li>
+                        {% else %}
+                        <li class="next disabled"><a>neuere Änderung<span aria-hidden="true">&rarr;</span></a></li>
+                        {%endif%}
+                    </ul>
+                </nav>
         </div>
-
-    <hr> <!-- Malt einen strich den man vielelicht nicht braucht -->
-
-
-
+        <div class="row">
+            <p id="compare" class="content">
+            </p>
+        </div>
+    </div>
 
     <!-- Share -->
-        <div class="col-md-2">
-					<ul class="share">
-						<li><h4><span class="glyphicon glyphicon-share"></span> Teilen</h4></li>
+    <div class="col-md-2">
+        <ul class="share">
+            <li><h4><span class="glyphicon glyphicon-share"></span> Teilen</h4></li>
 
-						<li><a href="https://twitter.com/share?url={{ article.url }}&via=newsdiffs_de&text=Neue Änderungen im Artikel '{{ title }}'"
-							onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
-							target="_blank" title="Share on Twitter"><img src="{% url 'static' 'images/Twitter_logo_blue.png' %}">Twitter</a></li>
+            <li>
+                <a href="https://twitter.com/share?url={{ article.url }}&via=newsdiffs_de&text=Neue Änderungen im Artikel '{{ title }}'"
+                   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                   target="_blank" title="Share on Twitter"><img
+                        src="{% url 'static' 'images/Twitter_logo_blue.png' %}">Twitter</a></li>
 
-						<li><a href="https://www.facebook.com/sharer/sharer.php?url={{ article.url }}&text='{{ title }}'&"
-							onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
-							target="_blank" title="Share on Facebook"><img src="{% url 'static' 'images/fb_icon_blue.png' %}">Facebook</a></li>
+            <li><a href="https://www.facebook.com/sharer/sharer.php?url={{ article.url }}&text='{{ title }}'&"
+                   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                   target="_blank" title="Share on Facebook"><img src="{% url 'static' 'images/fb_icon_blue.png' %}">Facebook</a>
+            </li>
 
-						<li><a href="https://plus.google.com/share?url={{ article.url }}&text=Neue Änderungen gefunden im Artikel '{{ title }}' via&url=http://newsdiffs.de"
-							onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=480');return false;"
-							target="_blank" title="Share on Google+"><img src="{% url 'static' 'images/gplus_logo_red.png' %}">Google+</a></li>
+            <li>
+                <a href="https://plus.google.com/share?url={{ article.url }}&text=Neue Änderungen gefunden im Artikel '{{ title }}' via&url=http://newsdiffs.de"
+                   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=480');return false;"
+                   target="_blank" title="Share on Google+"><img src="{% url 'static' 'images/gplus_logo_red.png' %}">Google+</a>
+            </li>
 
-						<li><a href="mailto:?subject=NewsDiffsDE - Neue Änderungen!&amp;body=Neue Änderungen gefunden im Artikel '{{ title }}' {{ article.url }}."
-							title="Share by Email">
-							<img src="{% url 'static' 'images/mail.png' %}">Email</a></li>
-					</ul>
-			</div>
+            <li>
+                <a href="mailto:?subject=NewsDiffsDE - Neue Änderungen!&amp;body=Neue Änderungen gefunden im Artikel '{{ title }}' {{ article.url }}."
+                   title="Share by Email">
+                    <img src="{% url 'static' 'images/mail.png' %}">Email</a></li>
+        </ul>
+    </div>
 
-			
-			
-			
-		</div>
-	</div>
+
+</div>
+</div>
 
 {% endblock %}
 

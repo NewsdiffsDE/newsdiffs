@@ -30,12 +30,12 @@
 	width: 18px;
 }
 
-.deleted{
+del{
 	background-color: #ff8080;
 	text-decoration: line-through;
 }
 
-.added{
+ins{
 	background-color: #a3ffa3;
 	text-decoration: underline;
 }
