@@ -26,10 +26,10 @@
 			<div class="col-md-8 col-md-offset-2">
 
 				<h1 class="hover-color"><a  href="{% url 'diffview' %}?id={{article.id}}">{{ article.latest_version.title }}</a></h1> <p>(<a href="{{article.url}}">Originalartikel von {{article.publication}} lesen</a>)</p>
-				<h5>Erste Archivierung: {{ created_at }}</h5>
-				<h5>Änderungsübersicht:</h5>
+				<p>Erste Archivierung: {{ created_at }}</p>
+				<h3>Änderungsübersicht</h3>
 
-				<table class="table table-condensed">
+				<table class="table table-condensed table-striped">
 					<thead>
 						<tr>
 							<th>Schlagzeile</th>

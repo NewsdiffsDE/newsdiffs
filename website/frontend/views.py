@@ -500,12 +500,12 @@ def article_history(request):
         except (TypeError, ValueError):
             # bug in django + mod_rewrite can cause this. =/
             return HttpResponse('Bug!')
-
+    created_at = article.initial_date.strftime('%d.%m.%Y - %H:%M Uhr')
     versions = get_rowinfo(article)
     return render_to_response('article_history.html', {'article':article,
                                                        'versions':versions,
                                                         'display_search_banner': came_from_search_engine(request),
-                                                       'created_at': article.initial_date
+                                                       'created_at': created_at
                                                        })
 def article_history_feed(request):
     id = request.REQUEST.get('id')
@@ -547,11 +547,11 @@ def entdecken(request):
     results = []
 
     for location in alltrends:
-	for trend in location["trends"]:
-		result = trend["name"].encode("utf-8")
-		if result.startswith('#'):
-			result = result.replace("#", "")
-		results.append(result)
+        for trend in location["trends"]:
+            result = trend["name"].encode("utf-8")
+            if result.startswith('#'):
+                result = result.replace("#", "")
+            results.append(result)
 
     return render_to_response('entdecken.html', {'trend1': results[0],
 						 'trend2': results[1],
