@@ -17,64 +17,69 @@
     dmp.diff_cleanupSemantic(diff);
     $('#compare')[0].innerHTML = dmp.diff_prettyHtml(diff);
   });
+
 </script>
 
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluid maincontent">
-		
-		{% include "searchbar.html" %}
+<div class="container-fluid maincontent">
 
+    {% include "searchbar.html" %}
 
-    <h2>Comparing: {{title}}</h2>
-    <h3><a href="{{article_url}}">{{article_url}}</a></h3>
-    <ul>
-      <li><del>Pink: Archived {{date1}}</del></li>
-      <li><ins>Green: Archived {{date2}}</ins></li>
-    </ul>
 
     <!-- Article -->
-        <div class="col-md-6 col-md-offset-2">
+    <div class="col-md-6 col-md-offset-2">
+        <h2>Comparing: {{title}}</h2>
 
-              <div id="compare">
-              </div>
+        <h3><a href="{{article_url}}">{{article_url}}</a></h3>
+        <ul>
+            <li>
+                <del>Pink: Archived {{date1}}</del>
+            </li>
+            <li>
+                <ins>Green: Archived {{date2}}</ins>
+            </li>
+        </ul>
+        <a href="{% url 'article_history' %}?id={{article_id}}" target="_blank"><button type="button" class="btn btn-default btn-sm"><img src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf"> Artikelverlauf</button></a>
 
-        </div>
+        <p id="compare" class = "content">
+        </p>
 
-    <hr> <!-- Malt einen strich den man vielelicht nicht braucht -->
-
-
-
+    </div>
 
     <!-- Share -->
-        <div class="col-md-2">
-					<ul class="share">
-						<li><h4><span class="glyphicon glyphicon-share"></span> Teilen</h4></li>
+    <div class="col-md-2">
+        <ul class="share">
+            <li><h4><span class="glyphicon glyphicon-share"></span> Teilen</h4></li>
 
-						<li><a href="https://twitter.com/share?url={{ article.url }}&via=newsdiffs_de&text=Neue Änderungen im Artikel '{{ title }}'"
-							onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
-							target="_blank" title="Share on Twitter"><img src="{% url 'static' 'images/Twitter_logo_blue.png' %}">Twitter</a></li>
+            <li>
+                <a href="https://twitter.com/share?url={{ article.url }}&via=newsdiffs_de&text=Neue Änderungen im Artikel '{{ title }}'"
+                   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                   target="_blank" title="Share on Twitter"><img
+                        src="{% url 'static' 'images/Twitter_logo_blue.png' %}">Twitter</a></li>
 
-						<li><a href="https://www.facebook.com/sharer/sharer.php?url={{ article.url }}&text='{{ title }}'&"
-							onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
-							target="_blank" title="Share on Facebook"><img src="{% url 'static' 'images/fb_icon_blue.png' %}">Facebook</a></li>
+            <li><a href="https://www.facebook.com/sharer/sharer.php?url={{ article.url }}&text='{{ title }}'&"
+                   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+                   target="_blank" title="Share on Facebook"><img src="{% url 'static' 'images/fb_icon_blue.png' %}">Facebook</a>
+            </li>
 
-						<li><a href="https://plus.google.com/share?url={{ article.url }}&text=Neue Änderungen gefunden im Artikel '{{ title }}' via&url=http://newsdiffs.de"
-							onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=480');return false;"
-							target="_blank" title="Share on Google+"><img src="{% url 'static' 'images/gplus_logo_red.png' %}">Google+</a></li>
+            <li>
+                <a href="https://plus.google.com/share?url={{ article.url }}&text=Neue Änderungen gefunden im Artikel '{{ title }}' via&url=http://newsdiffs.de"
+                   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=480');return false;"
+                   target="_blank" title="Share on Google+"><img src="{% url 'static' 'images/gplus_logo_red.png' %}">Google+</a>
+            </li>
 
-						<li><a href="mailto:?subject=NewsDiffsDE - Neue Änderungen!&amp;body=Neue Änderungen gefunden im Artikel '{{ title }}' {{ article.url }}."
-							title="Share by Email">
-							<img src="{% url 'static' 'images/mail.png' %}">Email</a></li>
-					</ul>
-			</div>
+            <li>
+                <a href="mailto:?subject=NewsDiffsDE - Neue Änderungen!&amp;body=Neue Änderungen gefunden im Artikel '{{ title }}' {{ article.url }}."
+                   title="Share by Email">
+                    <img src="{% url 'static' 'images/mail.png' %}">Email</a></li>
+        </ul>
+    </div>
 
-			
-			
-			
-		</div>
-	</div>
+
+</div>
+</div>
 
 {% endblock %}
 
