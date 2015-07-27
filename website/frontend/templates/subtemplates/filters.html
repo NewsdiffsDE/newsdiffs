@@ -7,13 +7,13 @@
         <div class=" containter-fluid sidebar">
             <!-- Datum -->
             <div class="row">
-                <p class="col-xs-offset-1 col-md-offset-0">Datum</p>
-                <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-md-12 col-md-offset-0 date-wrapper">
+                <p class="col-xs-offset-1 col-sm-offset-0">Datum</p>
+                <div class="col-xs-5 col-xs-offset-1 col-sm-3 col-sm-offset-0 col-md-12 date-wrapper">
                         <input id="datepicker" name="date-value" placeholder="Datum wählen"/>
                 </div>
             </div>
             <div class="row">
-                <h5 class="col-xs-offset-1 col-md-offset-0">Sortieren nach:</h5>
+                <h5 class="col-xs-offset-1 col-sm-offset-0">Sortieren nach:</h5>
                 {% if sort == 'sortCount' %}
                 {% include "subtemplates/sortCount.html" %}
                 {% else %}
@@ -21,10 +21,10 @@
                 {% endif %}
             </div>
             <div class="row">
-                <h5 class="col-xs-offset-1 col-md-offset-0">Filtern nach:</h5>
+                <h5 class="col-xs-offset-1 col-sm-offset-0">Filtern nach:</h5>
                 {% if search_type != "URL" %}
                 {% endif %}
-                <p class="col-xs-offset-1 col-md-offset-0">Zeitung</p>
+                <p class="col-xs-offset-1 col-sm-offset-0">Zeitung</p>
 
                 <div class="col-xs-5 col-xs-offset-1 col-sm-3 col-sm-offset-0 col-md-12 radio">
                     <label>
@@ -119,7 +119,7 @@
                 </div>
             </div>
             <div class="row">
-                <p class="col-xs-offset-1 col-md-offset-0">Ressort</p>
+                <p class="col-xs-offset-1 col-sm-offset-0">Ressort</p>
 
                 <div class="col-xs-5 col-xs-offset-1 col-sm-3 col-sm-offset-0 col-md-12 radio">
                     <label>
