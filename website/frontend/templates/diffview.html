@@ -43,7 +43,7 @@
         </ul>
         <div class="row">
 			<div class = "col-sm-8 col-sm-offset-2">
-                {{request.get_full_path|urlencod}}
+                {{request.get_full_path|urlencode}}
                 {% if request.get_full_path|urlencode = next %}
                 <a href="#"><button type="button" class="disabled btn btn-default btn-sm"><img src="../static/images/Arrow_left.png" alt="Ältere Version"> Ältere Version</button></a>
                 {% else %}
