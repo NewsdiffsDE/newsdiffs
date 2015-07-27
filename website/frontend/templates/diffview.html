@@ -23,15 +23,13 @@
 {% endblock %}
 
 {% block content %}
+<div class="container-fluid maincontent">
+
+    {% include "searchbar.html" %}
 
 
-<!-- Article -->
-<div class="col-md-6 col-md-offset-2">
-    <div class="container-fluid maincontent">
-
-        {% include "searchbar.html" %}
-
-
+    <!-- Article -->
+    <div class="col-md-6 col-md-offset-2">
         <h2>Comparing: {{title}}</h2>
 
         <h3><a href="{{article_url}}">{{article_url}}</a></h3>
@@ -43,7 +41,6 @@
                 <ins>Green: Archived {{date2}}</ins>
             </li>
         </ul>
-
         <div id="compare">
         </div>
 
