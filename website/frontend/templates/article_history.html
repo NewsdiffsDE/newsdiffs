@@ -25,8 +25,8 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 
-				<h1>{{ article.latest_version.title }}</h1> <p>(<a href="{{article.url}}">Originalartikel von {{article.publication}} lesen</a>)</p>
-				<h5>{{ article.latest_version.title }} | Erste Archivierung: {{ created_at }}</h5>
+				<h1 class="hover-color"><a  href="{% url 'diffview' %}?id={{article.id}}">{{ article.latest_version.title }}</a></h1> <p>(<a href="{{article.url}}">Originalartikel von {{article.publication}} lesen</a>)</p>
+				<h5>Erste Archivierung: {{ created_at }}</h5>
 				<h5>Änderungsübersicht:</h5>
 
 				<table class="table table-condensed">
@@ -40,10 +40,10 @@
 
                     {% for difflink, version in versions %}
                         <tr>
-                          <td><a href="{{link}}">{{version.title}}</a></td>
+                          <td><a class="hover-color" href="{{link}}">{{version.title}}</a></td>
                           <td>{{version.date}}</td>
                           {% if difflink %}
-                            <td><a href="{{difflink}}">
+                            <td><a class="hover-color" href="{{difflink}}">
                                 <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}" alt="Vergleichen-Icon">Änderung ansehen</a></td>
                           {% else %}
                             <td></td>
