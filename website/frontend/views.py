@@ -12,6 +12,7 @@ import urllib
 import django.db
 from django.db.models import Count
 import time
+from twitter import *
 from django.template import Context, RequestContext, loader
 from django.views.decorators.cache import cache_page
 
@@ -528,7 +529,30 @@ def artikel(request):
     return render_to_response('diffview.html', {})
 
 def entdecken(request):
-    return render_to_response('entdecken.html', {})
+    config = {}
+    execfile("/var/www/dev/config.py", config)
+    twitter = Twitter(auth = OAuth(config["access_key"], config["access_secret"], config["consumer_key"], config["consumer_secret"]))
+    alltrends = twitter.trends.place(_id = 23424829)
+    results = []
+
+    for location in alltrends:
+	for trend in location["trends"]:
+		result = trend["name"].encode("utf-8")
+		if result.startswith('#'):
+			result = result.replace("#", "")
+		results.append(result)
+
+    return render_to_response('entdecken.html', {'trend1': results[0],
+						 'trend2': results[1],
+						 'trend3': results[2],
+						 'trend4': results[3],
+						 'trend5': results[4],
+						 'trend6': results[5],
+						 'trend7': results[6],
+						 'trend8': results[7],
+						 'trend9': results[8],
+						 'trend10': results[9],
+						})
 
 def highlights(request):
     return render_to_response('highlights.html', {})

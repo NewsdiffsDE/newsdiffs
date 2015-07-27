@@ -9,15 +9,29 @@ code {
 
 .maincontent a{
 	color: #333333;
-	text-decoration: none;
-	border-bottom: 1px #333333 dotted;
+
 }
+
 
 .maincontent a:hover {
 	color: #333333;
 	text-decoration: none;
 	border-bottom: none;
 }
+
+/* for links in text*/
+.text a{
+	color: #333333;
+	text-decoration: none;
+	border-bottom: 1px #333333 dotted;
+}
+
+.text a:hover {
+	color: #333333;
+	text-decoration: none;
+	border-bottom: none;
+}
+
 
 /* *****************************************************************************
  Navbar
@@ -71,10 +85,9 @@ footer {
 footer img {
 	height: 20px;
 }
-footer a {
+footer p a {
 	color: #fff;
-	text-decoration: underline;
-    border-bottom:none;
+	border-bottom: 1px #fff dotted;
 
 }
 

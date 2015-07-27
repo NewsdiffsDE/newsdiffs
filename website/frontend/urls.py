@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 urlpatterns = [
-  url(r'^diffview/$', 'frontend.views.diffview', name='diffview'),
+  url(r'^diffview/$', 'frontend.views.artikel', name='diffview'),
   url(r'^about/$', 'frontend.views.about', name='about'),
   url(r'^entdecken/$', 'frontend.views.entdecken', name='entdecken'),
   url(r'^kontakt/$', 'frontend.views.kontakt', name='kontakt'),

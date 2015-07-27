@@ -13,15 +13,17 @@
 <div class="container-fluid maincontent">
     {% include "searchbar.html" %}
 
+    {% block breadcrumbs %}
     <!-- Breadcrumbs -->
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <ol class="breadcrumb">
                 <li><a href="index.html">Suche</a></li>
-                <li class="active">Suchergebnisse</li>
+                <li class="active">{{ searchterm }}</li>
             </ol>
         </div>
     </div>
+    {% endblock %}
 
     <div class="row" id="sort-btn-row">
 
@@ -40,6 +42,7 @@
         <!-- Suchergebnisse -->
         <div class="col-md-6">
 
+
             {% if search_type = "URL"%}
             <h1>Suchergebnis für {{search_type}}</h1>
             <p>"{{ searchterm }}"</p>
@@ -54,6 +57,7 @@
             {% endif %}
 
             {% if articles|length > 0 %}
+
             <div class="table">
                 <table class="table table-condensed table-striped">
                     <thead>
@@ -66,14 +70,14 @@
 
                     <tr>
                         <td>
-                            <em>{{ forloop.counter0|add:begin_at }}. Ergebnis | Anzahl der Änderungen:
-                                {{article.versioncount}} |
-                                Quelle: (<a href="{{ article.url }}" target="_blank">{{ article.source }}</a>) |
+                            <em>{{ forloop.counter }}. Ergebnis | Anzahl der Änderungen: {{article.versioncount}} |
+                                Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> (<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
+
                                 Ressort: {{article.ressort}}
                             </em>
 
-                            <h3>
-                                {{ article.title }} (<a href="{{ article.url }}" target="_blank">{{ article.source}}</a>)
+                            <h3 class="title">
+                                <a  href="{% url 'article_history' %}?id={{article.id}}">{{ article.title }}</a>
                             </h3>
 
                             <p>

@@ -11,6 +11,14 @@ a img:hover {
 	border: none;
 }
 
+.title a:hover{
+    color: #666;
+}
+
+#original{
+    border-bottom: 1px #666 dotted;
+}
+
 .table-condensed {
 	clear:both;
 }
