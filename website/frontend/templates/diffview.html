@@ -18,6 +18,8 @@
     $('#compare')[0].innerHTML = dmp.diff_prettyHtml(diff);
   });
 
+
+
 </script>
 
 {% endblock %}
@@ -42,26 +44,37 @@
             </li>
         </ul>
         <div class="row">
-			<div class = "col-sm-8 col-sm-offset-2">
-                {% if not prev %}
-                <button type="button" class="disabled btn btn-default btn-sm"><img src="../static/images/Arrow_left.png" alt="Ältere Version"> Ältere Version</button>
-                {% else %}
-                <a href="{{ prev }}"><button type="button" class="btn btn-default btn-sm"><img src="../static/images/Arrow_left.png" alt="Ältere Version"> Ältere Version</button></a>
-                {% endif %}
+            <div class="col-sm-8 col-sm-offset-2">
+                <a href="{% url 'article_history' %}?id={{article_id}}">
+                    <button type="button" class="btn btn-default btn-sm"><img
+                            src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf">Änderungsübersicht
+                    </button>
+                </a>
+                <nav>
+                    <ul class="pager">
+                        {% if not prev %}
+                        <li class="previous"><a
+                                href="{{ prev }}"><span
+                                aria-hidden="true">&larr;</span>älter</a></li>
+                        {% else %}
+                        <li class="previous disabled"><a><span aria-hidden="true">&larr;</span>älter</a></li>
+                        {%endif%}
+                        {% if not next %}
+                        <li class="next disabled"><a>neuer<span aria-hidden="true">&rarr;</span></a></li>
+                        {% else %}
+                        <li class="next"><a
+                                href="{{ next }}">neuer
+                            <span aria-hidden="true">&rarr;</span></a></li>
+                        {%endif%}
+                    </ul>
+                </nav>
 
-                {% if not next %}
-                <button type="button" class="disabled btn btn-default btn-sm"><img src="../static/images/Arrow_right.png" alt="Neuere Version"> Neuere Version</button>
-                {% else %}
-                <a href="{{ next }}"><button type="button" class="btn btn-default btn-sm"><img src="../static/images/Arrow_right.png" alt="Neuere Version"> Neuere Version</button></a>
-                {% endif %}
 
-                <a href="{% url 'article_history' %}?id={{article_id}}" ><button type="button" class="btn btn-default btn-sm"><img src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf"> Artikelverlauf</button></a>
-
-			</div>
-		</div>
-         <div class="row">
-        <p id="compare" class = "content">
-        </p>
+            </div>
+        </div>
+        <div class="row">
+            <p id="compare" class="content">
+            </p>
         </div>
     </div>
 
