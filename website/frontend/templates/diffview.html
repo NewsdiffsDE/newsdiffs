@@ -30,7 +30,7 @@
 
     <!-- Article -->
     <div class="col-md-6 col-md-offset-2">
-        <h2>Comparing: {{title}}</h2>
+        <h2>{{title}}</h2>
 
         <h3><a href="{{article_url}}">{{article_url}}</a></h3>
         <ul>
@@ -43,9 +43,9 @@
         </ul>
         <div class="row">
 			<div class = "col-sm-8 col-sm-offset-2">
-                <a href="{{ prev }}" target="_blank"><button type="button" class="btn btn-default btn-sm"><img src="../static/images/Arrow_left.png" alt="Ältere Version"> Ältere Version</button></a>
-                <a href="{{ next }}" target="_blank"><button type="button" class="btn btn-default btn-sm"><img src="../static/images/Arrow_right.png" alt="Neuere Version"> Neuere Version</button></a>
-                <a href="{% url 'article_history' %}?id={{article_id}}" target="_blank"><button type="button" class="btn btn-default btn-sm"><img src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf"> Artikelverlauf</button></a>
+                <a href="{{ prev }}"><button type="button" class="btn btn-default btn-sm"><img src="../static/images/Arrow_left.png" alt="Ältere Version"> Ältere Version</button></a>
+                <a href="{{ next }}"><button type="button" class="btn btn-default btn-sm"><img src="../static/images/Arrow_right.png" alt="Neuere Version"> Neuere Version</button></a>
+                <a href="{% url 'article_history' %}?id={{article_id}}" ><button type="button" class="btn btn-default btn-sm"><img src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf"> Artikelverlauf</button></a>
 
 			</div>
 		</div>
