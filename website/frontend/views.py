@@ -429,7 +429,7 @@ def diffview(request, vid1='', vid2=''):
 
     for i in range(2):
         if all(x[i] for x in adjacent_versions):
-           diffl = '/diffview/?vid1= '+adjacent_versions[0][i].id +'&vid2='+ adjacent_versions[1][i].id
+           diffl = '/diffview/?vid1= '+ str(adjacent_versions[0][i].id) +'&vid2='+ str(adjacent_versions[1][i].id)
            links.append(diffl)
         else:
             links.append('')
