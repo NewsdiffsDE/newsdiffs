@@ -44,13 +44,13 @@
         <div class="row">
 			<div class = "col-sm-8 col-sm-offset-2">
                 {{request.path}}
-                {% if request.path = next %}
+                {% if request.get_full_path|urlencode = next %}
                 <a href="#"><button type="button" class="disabled btn btn-default btn-sm"><img src="../static/images/Arrow_left.png" alt="Ältere Version"> Ältere Version</button></a>
                 {% else %}
                 <a href="{{ prev }}"><button type="button" class="btn btn-default btn-sm"><img src="../static/images/Arrow_left.png" alt="Ältere Version"> Ältere Version</button></a>
                 {% endif %}
 
-                {% if request.path = next %}
+                {% if request.get_full_path|urlencode = next %}
                 <a href="#"><button type="button" class="disabled btn btn-default btn-sm"><img src="../static/images/Arrow_right.png" alt="Neuere Version"> Neuere Version</button></a>
                 {% else %}
                 <a href="{{ next }}"><button type="button" class="btn btn-default btn-sm"><img src="../static/images/Arrow_right.png" alt="Neuere Version"> Neuere Version</button></a>
