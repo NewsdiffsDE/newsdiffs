@@ -163,16 +163,18 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
     all_articles = all_articles[begin_at : end_at]
 
     for a in all_articles:
-        version = Version.objects.filter(article_id = a.id)
-        oldest_newest = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
-        article_title = version.order_by('date')[0].title
-        articles[a.id] = {
+        versions = Version.objects.filter(article_id = a.id)
+        version_count = versions.count()
+        if version_count > 1:
+            oldest_newest = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
+            article_title = versions.order_by('date')[0].title
+            articles[a.id] = {
                 'id': a.id,
                 'title': article_title,
                 'url': a.url,
                 'source':  a.source,
                 'date':  a.initial_date,
-                'versioncount': version.count(),
+                'versioncount': version_count,
                 'all_diffs' : oldest_newest
                 }
     return articles
