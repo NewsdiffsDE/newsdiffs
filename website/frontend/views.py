@@ -258,7 +258,7 @@ def get_articles_by_keyword(searchterm, sort, search_source, ressort, date, begi
     for a in all_articles:
         versions = Version.objects.filter(article_id = a.id)
         version_count = versions.count()
-        if version_count > 0:
+        if version_count > 1:
             article_title = versions.order_by('date')[0].title
             oldest_newest = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
             articles[a.id] = {
