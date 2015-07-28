@@ -243,7 +243,8 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, date, begin
 def get_articles_by_keyword(searchterm, sort, search_source, ressort, date, begin_at, end_at):
     articles = {}
 
-    all_articles = Article.objects.filter(keywords__icontains = searchterm).exclude(source='')
+    #all_articles = Article.objects.filter(keywords__icontains = searchterm).exclude(source='')
+    all_articles = Article.objects.filter(keywords__icontains = searchterm)
 
     if len(date) is 10:
         all_articles = all_articles.filter(initial_date__year=date[6:10],
@@ -256,8 +257,8 @@ def get_articles_by_keyword(searchterm, sort, search_source, ressort, date, begi
     all_articles = all_articles.order_by('initial_date')[begin_at : end_at]
 
     for a in all_articles:
-        versions = Version.objects.filter(article_id = a.id)
-        version_count = len(versions)
+        versions = a.versions()
+        version_count = versions.count()
         if version_count > 1:
             article_title = versions.order_by('date')[0].title
             oldest_newest = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
