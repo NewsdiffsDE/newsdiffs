@@ -203,8 +203,7 @@ class BaseParser(object):
         words = newtext.replace('  ', ' ').split(' ')
         results = []
         map(lambda x : (results.append(x) if x and x[0].isupper() else None), words)
-        return ', '.join(results)
-
+        return (', '.join(results)).lower()
 
         # clean byline tag, replaces "und" with a comma, strips "Von"
     def _cleanByline(self):
