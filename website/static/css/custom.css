@@ -46,7 +46,7 @@ code {
 
 @media screen and (max-width: 768px){
 	.navbar-brand img{
-		height: 70%;
+		height: 60%;
 		margin-top: 12px;
 	}
 }
