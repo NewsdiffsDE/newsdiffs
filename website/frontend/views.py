@@ -149,9 +149,9 @@ def search(request):
 def get_archive(date, ressort, search_source, begin_at, end_at):
     articles = {}
 
-    all_articles = Article.objects.filter(initial_date__year=date[6:10],
-                                            initial_date__month=date[3:5],
-                                            initial_date__day=date[0:2]).exclude(source='')
+    all_articles = Article.objects.filter(last_update__year=date[6:10],
+                                            last_update__month=date[3:5],
+                                            last_update__day=date[0:2]).exclude(source='')
 
     if search_source in SOURCES:
         all_articles = all_articles.filter(source__icontains = search_source)
