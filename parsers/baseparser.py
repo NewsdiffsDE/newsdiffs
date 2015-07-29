@@ -110,12 +110,12 @@ class BaseParser(object):
     meta = []  # Currently unused.
 
     categories = {u'Allgemein': [u'Allgemein', u'Sonstiges', u'Vermischtes'],
-                  u'Politik': [u'Politik'],
-                  u'Wirtschaft': [u'Geld', u'Finanzen', u'Wirtschaft', u'Arbeit'],
-                  u'Regional': [u'Regional', u'Region', u'Regionales'],
-                  u'Technik': [u'Digital', u'Internet', u'Technik', u'Netzwelt'],
-                  u'Wissenschaft': [u'Wissen', u'Gesundheit', u'Bildung'],
-                  u'Gesellschaft': [u'Gesellschaft', u'Alltag']}
+                  u'Politik': [u'Politik', u'Gipfel', u'Waffen', u'Terror', u'Konflikt'],
+                  u'Wirtschaft': [u'Geld', u'Finanzen', u'Wirtschaft', u'Arbeit', u'Krise'],
+                  u'Regional': [u'Regional', u'Region', u'Regionales', u'Tote', u'Tatort'],
+                  u'Technik': [u'Digital', u'Internet', u'Technik', u'Netzwelt', u'Handy'],
+                  u'Wissenschaft': [u'Wissen', u'Gesundheit', u'Bildung', u'Planet', u'Sonne'],
+                  u'Gesellschaft': [u'Gesellschaft', u'Alltag', u'Datenschutz', u'Drogen']}
 
      # Used when finding articles to parse
     feeder_pat   = None # Look for links matching this regular expression

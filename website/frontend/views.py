@@ -18,6 +18,10 @@ from django.views.decorators.cache import cache_page
 
 from random import randint
 
+CURRENT_HOUR = 0
+
+TWITTER_RESULTS = []
+
 OUT_FORMAT = '%B %d, %Y at %l:%M%P EDT'
 
 SEARCH_ENGINES = """
@@ -73,7 +77,7 @@ def get_first_update(source):
     if source is None:
         source = ''
     updates = models.Article.objects.order_by('last_update').filter(last_update__gt=datetime(1990, 1, 1, 0, 0),
-                                                                    url__icontains=source)
+                                                                    url__contains=source)
     try:
         return updates[0].last_update
     except IndexError:
@@ -82,7 +86,7 @@ def get_first_update(source):
 def get_last_update(source):
     if source is None:
         source = ''
-    updates = models.Article.objects.order_by('-last_update').filter(last_update__gt=datetime.datetime(1990, 1, 1, 0, 0), url__icontains=source)
+    updates = models.Article.objects.order_by('-last_update').filter(last_update__gt=datetime.datetime(1990, 1, 1, 0, 0), url__contains=source)
     try:
         return updates[0].last_update
     except IndexError:
@@ -154,9 +158,9 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
                                             initial_date__day=date[0:2]).exclude(source='')
 
     if search_source in SOURCES:
-        all_articles = all_articles.filter(source__icontains = search_source)
+        all_articles = all_articles.filter(source__contains = search_source)
     if ressort in RESSORTS:
-        all_articles = all_articles.filter(category__icontains = ressort)
+        all_articles = all_articles.filter(category__contains = ressort)
 
     all_articles = all_articles[begin_at : end_at]
 
@@ -203,7 +207,7 @@ def get_articles_by_url(url):
 def get_articles_by_author(searchterm, sort, search_source, ressort, date, begin_at, end_at):
     articles = {}
     all_articles = []
-    versions = Version.objects.filter(byline__icontains = searchterm)
+    versions = Version.objects.filter(byline__contains = searchterm)
 
     for v in versions:
         article_objects = Article.objects.filter(id = v.article_id).exclude(source='')
@@ -212,7 +216,7 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, date, begin
                                                         initial_date__month=date[3:5],
                                                         initial_date__day=date[0:2])
         if search_source in SOURCES:
-            article_objects = article_objects.filter(source__icontains = search_source)
+            article_objects = article_objects.filter(source__contains = search_source)
         if ressort in RESSORTS :
             article_objects = article_objects.filter(category = ressort)
         all_articles += article_objects.order_by('initial_date')
@@ -243,20 +247,21 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, date, begin
 def get_articles_by_keyword(searchterm, sort, search_source, ressort, date, begin_at, end_at):
     articles = {}
 
-    all_articles = Article.objects.filter(keywords__icontains = searchterm).exclude(source='')
+    #all_articles = Article.objects.filter(keywords__icontains = searchterm).exclude(source='')
+    all_articles = Article.objects.filter(keywords__contains = searchterm)
 
     if len(date) is 10:
         all_articles = all_articles.filter(initial_date__year=date[6:10],
                                                         initial_date__month=date[3:5],
                                                         initial_date__day=date[0:2])
     if search_source in SOURCES:
-        all_articles = all_articles.filter(source__icontains = search_source)
+        all_articles = all_articles.filter(source__contains = search_source)
     if ressort in RESSORTS:
-        all_articles = all_articles.filter(category__icontains = ressort)
+        all_articles = all_articles.filter(category__contains = ressort)
     all_articles = all_articles.order_by('initial_date')[begin_at : end_at]
 
     for a in all_articles:
-        versions = Version.objects.filter(article_id = a.id)
+        versions = a.versions()
         version_count = versions.count()
         if version_count > 0:
             article_title = versions.order_by('date')[0].title
@@ -493,15 +498,20 @@ def prepend_http(url):
 
 
 def article_history(request):
-    id = request.REQUEST.get('id') # this is the deprecated interface.
-    try:
-        article = Article.objects.get(id=id)
-    except Article.DoesNotExist:
+    id = request.REQUEST.get('id')
+    url = request.REQUEST.get('url')
+
+    if url :
+        article = Article.objects.get(url=url)
+    else:
         try:
-            return render_to_response('article_history_missing.html', {'id': id})
-        except (TypeError, ValueError):
-            # bug in django + mod_rewrite can cause this. =/
-            return HttpResponse('Bug!')
+            article = Article.objects.get(id=id)
+        except Article.DoesNotExist:
+            try:
+                return render_to_response('article_history_missing.html', {'id': id})
+            except (TypeError, ValueError):
+                # bug in django + mod_rewrite can cause this. =/
+                return HttpResponse('Bug!')
     created_at = article.initial_date.strftime('%d.%m.%Y - %H:%M Uhr')
     versions = get_rowinfo(article)
     return render_to_response('article_history.html', {'article':article,
@@ -512,7 +522,12 @@ def article_history(request):
                                                        })
 def article_history_feed(request):
     id = request.REQUEST.get('id')
-    article = get_object_or_404(Article, id=id)
+    url = request.REQUEST.get('url')
+
+    if url :
+        article = Article.objects.get(url=url)
+    else:
+        article = get_object_or_404(Article, id=id)
     rowinfo = get_rowinfo(article)
     return render_to_response('article_history.xml',
                               { 'article': article,
@@ -545,29 +560,33 @@ def artikel(request):
 def entdecken(request):
     config = {}
     execfile("/var/www/dev/config.py", config)
-    twitter = Twitter(auth = OAuth(config["access_key"], config["access_secret"], config["consumer_key"], config["consumer_secret"]))
-    alltrends = twitter.trends.place(_id = 23424829)
-    results = []
-
-    for location in alltrends:
-        for trend in location["trends"]:
-            result = trend["name"].encode("utf-8")
-            if result.startswith('#'):
-                result = result.replace("#", "")
-            results.append(result)
+    if datetime.hour != CURRENT_HOUR:
+        CURRENT_HOUR = datetime.hour
+        twitter = Twitter(auth = OAuth(config["access_key"], config["access_secret"], config["consumer_key"], config["consumer_secret"]))
+        alltrends = twitter.trends.place(_id = 23424829)
+        results = []
+        for location in alltrends:
+            for trend in location["trends"]:
+                result = trend["name"].encode("utf-8")
+                if result.startswith('#'):
+                    result = result.replace("#", "")
+                results.append(result)
+        TWITTER_RESULTS = results
 
     return render_to_response('entdecken.html', {
-                        'trend1': results[0],
-						'trend2': results[1],
-						'trend3': results[2],
-						'trend4': results[3],
-						'trend5': results[4],
-						'trend6': results[5],
-						'trend7': results[6],
-						'trend8': results[7],
-						'trend9': results[8],
-						'trend10': results[9],
+                        'trend1': TWITTER_RESULTS[0],
+						'trend2': TWITTER_RESULTS[1],
+						'trend3': TWITTER_RESULTS[2],
+						'trend4': TWITTER_RESULTS[3],
+						'trend5': TWITTER_RESULTS[4],
+						'trend6': TWITTER_RESULTS[5],
+						'trend7': TWITTER_RESULTS[6],
+						'trend8': TWITTER_RESULTS[7],
+						'trend9': TWITTER_RESULTS[8],
+						'trend10': TWITTER_RESULTS[9],
 						})
+
+
 
 def highlights(request):
     return render_to_response('highlights.html', {})

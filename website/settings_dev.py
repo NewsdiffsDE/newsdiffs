@@ -90,5 +90,4 @@ INSTALLED_APPS = (
 
 )
 
-
 STATIC_URL = '/website/static/'
