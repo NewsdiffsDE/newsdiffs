@@ -144,21 +144,20 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
     articles = {}
     article_set = set()
     # get all articles which were updated on s specific date
-    all_versions = Version.objects.filter(date__year=date[6:10],
+    article_ids = Version.objects.filter(date__year=date[6:10],
                                             date__month=date[3:5],
-                                            date__day=date[0:2]).exclude(diff_json__isnull = True)
-    all_articles = []
-    if len(all_versions) > 0:
-        for v in all_versions:
-            article_objects = Article.objects.filter(id = v.article_id)
-            if search_source in SOURCES:
-                article_objects = article_objects.filter(source__icontains = search_source)
-            if ressort in RESSORTS:
-                article_objects = article_objects.filter(category__icontains = ressort)
-            all_articles += article_objects[begin_at : end_at]          # range of results
-        article_set = article_set.union(set(all_articles))
+                                            date__day=date[0:2]).exclude(diff_json__isnull = True).values_list('article_id')
 
-        for a in article_set:
+    all_articles = []
+    if len(article_ids) > 0:
+        article_objects = Article.objects.filter(id__in=article_ids)
+        if search_source in SOURCES:
+            article_objects = article_objects.filter(source__icontains = search_source)
+        if ressort in RESSORTS:
+            article_objects = article_objects.filter(category__icontains = ressort)
+        all_articles += article_objects.order_by('last_update')[begin_at : end_at]          # range of results
+
+        for a in all_articles:
             versions = Version.objects.filter(article_id = a.id)
             version_count = versions.count()
             all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
@@ -503,11 +502,13 @@ def article_history(request):
                 return HttpResponse('Bug!')
     created_at = article.initial_date.strftime('%d.%m.%Y - %H:%M Uhr')
     versions = get_rowinfo(article)
+    all_diffs = '/diffview/?vid1='+str(article.first_version().id)+'&vid2='+str(article.latest_version().id)
     return render_to_response('article_history.html', {'article':article,
                                                        'versions':versions,
                                                         'display_search_banner': came_from_search_engine(request),
                                                        'created_at': created_at,
-                                                       'source' : article.source
+                                                       'source' : article.source,
+                                                       'all_diffs' : all_diffs
                                                        })
 def article_history_feed(request):
     id = request.REQUEST.get('id')
