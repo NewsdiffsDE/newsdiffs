@@ -71,26 +71,18 @@
 
             <h2>{{title}}</h2>
             <p>
+                <span class="glyphicon glyphicon-book"></span>
                 Quelle:
                 <a href="http://{{ article.source }}" target="_blank">
                     {{ article.source }}
-                </a>
-                (
-                <a id="original" href="{{ article.url }}" target="_blank">
-                    zum Original
-                </a>
-                )
-                
+                </a>(<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>)
             </p>
-
-            <ul>
-                <li>
-                    <del>Rot: Archiviert am {{date1}}</del>
-                </li>
-                <li>
-                    <ins>Grün: Archiviert am {{date2}}</ins>
-                </li>
-            </ul>
+            <p>
+                Rot: Archiviert am {{date1}}
+            </p>
+            <p>
+                Grün: Archiviert am {{date2}}
+            </p>
 
             <p id="compare" class="content">
             </p>
