@@ -25,7 +25,7 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 
-				<h1 class="hover-color"><a  href="{% url 'article_history' %}?id={{article.id}}">{{ article.latest_version.title }}</a></h1> <p>(<a href="{{article.url}}">Originalartikel von {{source}} lesen</a>)</p>
+				<h1 class="hover-color"><a  href="{% url 'article_history' %}?id={{article.id}}">{{ article.latest_version.title }}</a></h1> <p><span class="glyphicon glyphicon-book"></span><a href="{{article.url}}">Originalartikel von {{source}} lesen</a></p>
 				<p>Erste Archivierung: {{ created_at }}</p>
 				<h3>Änderungsübersicht</h3>
 
