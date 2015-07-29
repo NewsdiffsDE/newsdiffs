@@ -142,7 +142,6 @@ def search(request):
 
 def get_archive(date, ressort, search_source, begin_at, end_at):
     articles = {}
-    article_set = set()
     # get all articles which were updated on s specific date
     article_ids = Version.objects.filter(date__year=date[6:10],
                                             date__month=date[3:5],
@@ -155,7 +154,7 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
             article_objects = article_objects.filter(source__icontains = search_source)
         if ressort in RESSORTS:
             article_objects = article_objects.filter(category__icontains = ressort)
-        all_articles += article_objects.order_by('last_update')[begin_at : end_at]          # range of results
+        all_articles = article_objects.order_by('-last_update')[begin_at : end_at]          # range of results
 
         for a in all_articles:
             versions = Version.objects.filter(article_id = a.id)
@@ -199,10 +198,10 @@ def get_articles_by_url(url):
 def get_articles_by_author(searchterm, search_source, ressort, date, begin_at, end_at):
     articles = {}
     all_articles = []
-    versions = Version.objects.filter(byline__icontains = searchterm)
+    article_ids = Version.objects.filter(byline__icontains = searchterm).exclude(diff_json__isnull = True).values_list('article_id')
 
-    for v in versions:
-        article_objects = Article.objects.filter(id = v.article_id).exclude(source='')
+    if len(article_ids) > 0:
+        article_objects = Article.objects.filter(id__in=article_ids)
         if len(date) is 10:
             article_objects = article_objects.filter(last_update__year=date[6:10],
                                                         last_update__month=date[3:5],
@@ -211,17 +210,14 @@ def get_articles_by_author(searchterm, search_source, ressort, date, begin_at, e
             article_objects = article_objects.filter(source__icontains = search_source)
         if ressort in RESSORTS :
             article_objects = article_objects.filter(category = ressort)
-        all_articles += article_objects.order_by('-initial_date')
-
-    all_articles = all_articles[begin_at : end_at]
+        all_articles = article_objects.order_by('-last_update')[begin_at : end_at]          # range of results
 
     for a in all_articles:
         versions = Version.objects.filter(article_id = a.id)
-        version_count = versions.count()
-        if version_count > 1:           # get all articles with changes
-            all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
-            article_title = versions.order_by('-date')[0].title
-            articles[a.id] = {
+        version_count = versions.count()     # get all articles with changes
+        all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
+        article_title = versions.order_by('-date')[0].title
+        articles[a.id] = {
                 'id': a.id,
                 'title': article_title,
                 'url': a.url,
@@ -230,14 +226,13 @@ def get_articles_by_author(searchterm, search_source, ressort, date, begin_at, e
                 'ressort':  a.category,
                 'versioncount': version_count-1,
                 'all_diffs' : all_diffs
-            }
-
+        }
     return articles
 
 def get_articles_by_keyword(searchterm, search_source, ressort, date, begin_at, end_at):
     articles = {}
 
-    all_articles = Article.objects.filter(keywords__icontains = searchterm).exclude(source='')
+    all_articles = Article.objects.filter(keywords__icontains = searchterm)
 
     if len(date) is 10:
         all_articles = all_articles.filter(last_update__year=date[6:10],

@@ -33,7 +33,7 @@
 
                     {% for difflink, version in versions %}
                         <tr>
-                          <td><a class="hover-color" href="{{link}}">{{version.title}}</a></td>
+                          <td><a class="hover-color" href="{{link}}">{{version.title}} {%if version.byline != '' %}({{version.byline}}){%endif%}</a></td>
                           <td>{{version.date}}</td>
                           {% if difflink %}
                             <td><a class="hover-color" href="{{difflink}}">
