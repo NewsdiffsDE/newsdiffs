@@ -45,4 +45,19 @@ button[type=button] {
 }
 
 
+@media (max-width: 950px){
+	.share li {
+	  margin-top: 8px;
+	  margin-bottom: 10px;
+	  padding: 5px;
+	  list-style: none;
+	  display: block;
+	  float: left;
+	  width: 110px;
+	}
 
+@media (min-width: 450px){
+	.share {
+  	 margin-top: 300px;
+	}
+}
