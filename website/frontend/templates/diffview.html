@@ -77,12 +77,14 @@
                     {{ article.source }}
                 </a>(<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>)
             </p>
-            <p>
-                Rot: Archiviert am {{date1}}
-            </p>
-            <p>
-                Grün: Archiviert am {{date2}}
-            </p>
+            <ul>
+                <li>
+                    <del>Rot: Archiviert am {{date1}}</del>
+                </li>
+                <li>
+                    <ins>Grün: Archiviert am {{date2}}</ins>
+                </li>
+            </ul>
 
             <p id="compare" class="content">
             </p>
