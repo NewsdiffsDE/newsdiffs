@@ -7,9 +7,10 @@ h5 {
 }
 
 .col-xs-12{
+    padding-top: 10px;
+    margin-bottom: 0px;
 	font-weight: 700;
 }
 
 #filter-bg {
-    background-color: #e7e7e7;
 }
