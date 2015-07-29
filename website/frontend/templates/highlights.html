@@ -1,5 +1,9 @@
 {% extends 'headerfooter.html' %}
 {% load url from future %}
+{% block css_import %}
+    <link href="{% url 'static' 'css/custom-highlights.css' %}" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+{% endblock %}
 {% block title %}Highlights{% endblock %}
 {% block active_highlights %}class="active"{% endblock %}
 
@@ -16,14 +20,112 @@
         </div>
     </div>
 
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h1>Highlights</h1>
-                <p>
-                    Hier kommen 3-5 kuratierte Artikel hin und
-                    (je nach Arbeitsaufwand) weitere Artikel, die durch Upvotes von Usern ermittelt werden.
-                </p>
+
+       <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+			<div class="fancytitle">
+				Highlights
+			</div>
+			<div class="subtitle">
+				Schaue dir besonders kuriose Artikeländerungen an.
+				
+        			<div style="font-size:18px; line-height: 19px"><br>Hast du ein neues Highlight entdeckt? <a href="{% url 'kontakt' %}">Schreib uns</a>.</br>
+				</div>
+				<br><span class="glyphicon glyphicon-star-empty"></span>
+				
+			</div>
+		</div>
+
+    	</div>
+
+
+	    <div class="row">
+		<div class="col-md-6 col-md-offset-3">
+		<div class="table text-center">
+                <table class="table table-condensed table-striped">
+                    <tbody>
+                    
+                    <tr>
+                         <td>
+                            <em>
+				Quelle: <a href="http://#" target="_blank">#</a> (<a id="original" href="#" target="_blank">zum Original</a>) |
+
+                                Ressort: #
+                            </em>
+
+                            <h3 class="title">
+                                <a  href="#">Highlight-Titel</a>
+                            </h3>
+			    <p class="description">Kurze Beschreibung, warum es sich hierbei um ein Highlight handelt.Kurze Beschreibung, warum es sich hierbei um ein Highlight handelt.Kurze Beschreibung, warum es sich hierbei um ein Highlight handelt.Kurze Beschreibung, warum es sich hierbei um ein Highlight handelt.</p>
+                            <p>
+                                <a class="no-link-color" href="#">
+                                    <img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png"
+                                         alt="Artikelverlauf-Icon">
+                                </a>
+                                <a href="#">Änderung anschauen</a>
+                            </p>
+
+                        </td>
+                    </tr>
+
+		<tr>
+                         <td>
+                            <em>
+				Quelle: <a href="http://#" target="_blank">#</a> (<a id="original" href="#" target="_blank">zum Original</a>) |
+
+                                Ressort: #
+                            </em>
+
+                            <h3 class="title">
+                                <a  href="#">Highlight-Titel</a>
+                            </h3>
+			    <p class="description">Kurze Beschreibung, warum es sich hierbei um ein Highlight handelt.Kurze Beschreibung, warum es sich hierbei um ein Highlight handelt.Kurze Beschreibung, warum es sich hierbei um ein Highlight handelt.Kurze Beschreibung, warum es sich hierbei um ein Highlight handelt.</p>
+                            <p>
+                                <a class="no-link-color" href="#">
+                                    <img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png"
+                                         alt="Artikelverlauf-Icon">
+                                </a>
+                                <a href="#">Änderung anschauen</a>
+                            </p>
+
+                        </td>
+                    </tr>
+
+<tr>
+                         <td>
+                            <em>
+				Quelle: <a href="http://#" target="_blank">#</a> (<a id="original" href="#" target="_blank">zum Original</a>) |
+
+                                Ressort: #
+                            </em>
+
+                            <h3 class="title">
+                                <a  href="#">Highlight-Titel</a>
+                            </h3>
+			    <p class="description">Kurze Beschreibung, warum es sich hierbei um ein Highlight handelt.Kurze Beschreibung, warum es sich hierbei um ein Highlight handelt.Kurze Beschreibung, warum es sich hierbei um ein Highlight handelt.Kurze Beschreibung, warum es sich hierbei um ein Highlight handelt.</p>
+                            <p>
+                                <a class="no-link-color" href="#">
+                                    <img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png"
+                                         alt="Artikelverlauf-Icon">
+                                </a>
+                                <a href="#">Änderung anschauen</a>
+                            </p>
+
+                        </td>
+                    </tr>
+
+
+
+                    </tbody>
+                </table>
+
+
             </div>
-        </div>
+
+		</div>
+	   </div>
+
+
+
     </div>
 {% endblock %}
