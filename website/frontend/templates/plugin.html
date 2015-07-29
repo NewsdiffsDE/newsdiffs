@@ -7,51 +7,31 @@
     <div class="container-fluid maincontent">
         {% include "searchbar.html" %}
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h1>Plugin</h1>
-                <p>So Kinders hier nen Proof of Concept für das Browser Plugin. Basiert auf https://github.com/zthomae/newsdiffs-chrome. Das Plugin funktioniert nur mit dem Chrome Browser und auch nur mit folgenden Seiten: bild.de, focus.de, spiegel.de und stern.de</p>
-		<p>Zur Installation die folgenden Schritte ausführen:</p>
-		<table class="table table-condensed table-striped">
-			<tr>
-				<td>1. Zip entpacken</td>
-				<td><img src="{% url 'static' 'images/logo_nd_neu.png' %}" alt="NewsDiffs Logo"></td>
-			</tr>
-			<tr>
-				<td>2. chrome://extensions/ aufrufen</td>
-				<td><img src="{% url 'static' 'images/logo_nd_neu.png' %}" alt="NewsDiffs Logo"></td>
-			</tr>
-			<tr>
-				<td>3. Auf „Entpackte Erweiterung laden…“ klicken</td>
-				<td><img src="{% url 'static' 'images/logo_nd_neu.png' %}" alt="NewsDiffs Logo"></td>
-			</tr>
-			<tr>
-				<td>4. Den entpackten Ordner auswählen</td>
-				<td><img src="{% url 'static' 'images/logo_nd_neu.png' %}" alt="NewsDiffs Logo"></td>
-			</tr>
-                </table>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6">
-					<p>1. Zip entpacken</p>
-					<img src="{% url 'static' 'images/logo_nd_neu.png' %}" alt="NewsDiffs Logo">
-				</div>
-				<div class="col-md-6">
-					<p>2. chrome://extensions/ aufrufen</p>
-					<img src="{% url 'static' 'images/logo_nd_neu.png' %}" alt="NewsDiffs Logo">
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
-					<p>3. Auf „Entpackte Erweiterung laden…“ klicken</p>
-					<img src="{% url 'static' 'images/logo_nd_neu.png' %}" alt="NewsDiffs Logo">
-				</div>
-				<div class="col-md-6">
-					<p>4. Den entpackten Ordner auswählen</p>
-					<img src="{% url 'static' 'images/logo_nd_neu.png' %}" alt="NewsDiffs Logo">
-				</div>
-			</div>
+		    <div class="col-md-8 col-md-offset-2">
+		        <h1>Das Plugin für newsdiffs.de</h1>
+		        <p class="text-justify">Das newsdiffs Chrome Plugin zeigt Ihnen die Änderungen von Nachrichtenartikeln direkt im Browser an. Wenn sie das Plugin installiert und aktiviert haben, wird auf jeder Seite, die in unserem Archiv ist, das newsdiffs.de Logo angezeigt. Wenn Sie auf dieses Logo klicken, bekommen Sie im Popup eine Auswahl zu den verschiedenen Versionen des Artikels angezeigt. Sobald Sie eine Version auswählen, wird Ihnen diese direkt auf der Seite angezeigt. Wollen Sie zum originalen Artikel zurückkehren, müssen Sie nur auf "Original Artikel anzeigen" klicken. Das newsdiffs.de Logo wird nicht angezeigt, wenn Sie auf einer Seite surfen, die NICHT Teil unseres Archivs ist.</p>
+			<p class="text-justify">Um das Chrome Plugin zu installieren, führen Sie bitte die folgenden Schritte aus:</p>
+		    </div>
+        </div>		
+	<div class="row">
+		<div class="col-md-4 col-md-offset-2">
+			<p class="text-justify">1. Laden Sie sich das Plugin herunter</p>
+			<img class="img-responsive" src="{% url 'static' 'images/logo_nd_neu.png' %}" alt="NewsDiffs Logo">
 		</div>
-            </div>
-        </div>
+		<div class="col-md-4">
+			<p class="text-justify">2. Rufen Sie in ihrem Chrome Browser die folgende URL auf: chrome://extensions</p>
+			<img class="img-responsive" src="{% url 'static' 'images/logo_nd_neu.png' %}" alt="NewsDiffs Logo">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4 col-md-offset-2">
+			<p class="text-justify">3. Klicken Sie auf "Erweiterung laden"</p>
+			<img class="img-responsive" src="{% url 'static' 'images/logo_nd_neu.png' %}" alt="NewsDiffs Logo">
+		</div>
+		<div class="col-md-4">
+			<p class="text-justify">4. Rufen Sie eine URL aus unserem Archiv auf</p>
+			<img class="img-responsive" src="{% url 'static' 'images/logo_nd_neu.png' %}" alt="NewsDiffs Logo">
+		</div>
+	</div>
     </div>
 {% endblock %}
