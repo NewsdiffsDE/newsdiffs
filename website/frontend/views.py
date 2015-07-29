@@ -155,8 +155,7 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
                 article_objects = article_objects.filter(source__icontains = search_source)
             if ressort in RESSORTS:
                 article_objects = article_objects.filter(category__icontains = ressort)
-
-        all_articles += article_objects[begin_at : end_at]          # range of results
+            all_articles += article_objects[begin_at : end_at]          # range of results
         article_set = article_set.union(set(all_articles))
 
         for a in article_set:
