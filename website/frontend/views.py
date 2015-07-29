@@ -502,11 +502,13 @@ def article_history(request):
                 return HttpResponse('Bug!')
     created_at = article.initial_date.strftime('%d.%m.%Y - %H:%M Uhr')
     versions = get_rowinfo(article)
+    all_diffs = '/diffview/?vid1='+str(article.first_version().id)+'&vid2='+str(article.latest_version().id)
     return render_to_response('article_history.html', {'article':article,
                                                        'versions':versions,
                                                         'display_search_banner': came_from_search_engine(request),
                                                        'created_at': created_at,
-                                                       'source' : article.source
+                                                       'source' : article.source,
+                                                       'all_diffs' : all_diffs
                                                        })
 def article_history_feed(request):
     id = request.REQUEST.get('id')
