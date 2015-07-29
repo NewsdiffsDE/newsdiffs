@@ -17,7 +17,6 @@ class SternParser(BaseParser):
     def _parse(self, html):
         soup = BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES,
                              fromEncoding='utf-8')
-
         self.meta = soup.findAll('meta')
         keywords = self.url.strip('http://www.stern.de/').replace('/', ', ')
         self.source = ', '.join(self.domains)
