@@ -3,7 +3,7 @@
 {% block css_import %}
     <link href="{% url 'static' 'css/custom-about.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
-{% block title %}Über NewsDiffsDE{% endblock %}
+{% block title %}Über newsdiffs.de{% endblock %}
 {% block active_about %}class="active"{% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
         {% include "searchbar.html" %}
         <div class="row" id ="submenu-row">
             <div class="col-md-8 col-md-offset-2">
-                <h1>Über NewsDiffs</h1>
+                <h1>Über newsdiffs.de</h1>
                 <ul class="nav nav-pills" id="submenu">
                     <li role="presentation"><a href="#intro">Einführung</a></li>
                     <li role="presentation"><a href="#faq">F.A.Q.</a></li>
@@ -40,7 +40,7 @@
                     oder gar andere Sichtweisen fließen in ein- und denselben Artikel ein. Im Gegensatz zur Welt der
                     Printmedien werden diese Änderungen aber selten gekennzeichnet. Noch seltener ist es, dass Leser die ursprüngliche gegen die korrigierte Version abgleichen können.<br>
                     <br>
-                    NewsDiffs DE nimmt sich dieser Problematik an und macht Änderungen an Artikeln nachvollziehbar.
+                    newsdiffs.de nimmt sich dieser Problematik an und macht Änderungen an Artikeln nachvollziehbar.
                     Wir beobachten die Titelseiten der zehn größten Online-Nachrichtenportale, speichern Artikel und
                     machen die Änderungen mithilfe von Diff-Technologie sichtbar. <br>
                     <br>
@@ -63,26 +63,26 @@
                 </h2>
 
 
-                <h4>Wie funktioniert NewsDiffs DE?</h4>
+                <h4>Wie funktioniert newsdiffs.de?</h4>
                 <p>
-                    NewsDiffs DE nutzt Web Scraping, um in regelmäßigen Abständen die Titelseiten von
+                    newsdiffs.de nutzt Web Scraping, um in regelmäßigen Abständen die Titelseiten von
                     Online-Nachrichtenportalen abzulaufen und die dort verlinkten Artikel in einer Datenbank zu
-                    speichern. Sobald bei einem Artikel Änderungen festzustellen sind, wird der Artikel auf NewsDiffs
+                    speichern. Sobald bei einem Artikel Änderungen festzustellen sind, wird der Artikel auf newsdiffs.de
                     DE angezeigt und ist im Archiv und über die Suche auffindbar.
                 </p>
 
-                <h4>Wofür kann ich NewsDiffs DE benutzen?</h4>
+                <h4>Wofür kann ich newsdiffs.de benutzen?</h4>
                 <p>
-                    Mit NewsDiffs DE kannst du gezielt nach Artikeln zu einem Thema suchen, z.B. "G7-Gipfel".
+                    Mit newsdiffs.de kannst du gezielt nach Artikeln zu einem Thema suchen, z.B. "G7-Gipfel".
                     Inspiration zu aktuellen Themen oder Zeitungsressorts findest du unter <a href={% url 'entdecken'
                         %}>Entdecken</a>. Neben Stichwörtern wie "G7-Gipfel" kannst du auch
                     nach einer URL, einer Zeitung, einem Datum oder einem Autor suchen.<br>
-                    Oder du nutzt NewsDiffs DE, um durch die Artikel im Archiv zu stöbern und interessante Änderungen
+                    Oder du nutzt newsdiffs.de, um durch die Artikel im Archiv zu stöbern und interessante Änderungen
                     zu <a href={% url 'kontakt' %}>melden</a>. Hilf uns dabei, für mehr Transparenz im alltäglichen
                     Nachrichtenbusiness zu sorgen.
                 </p>
 
-                <h4>Wie kann ich NewsDiffs DE benutzen?</h4>
+                <h4>Wie kann ich newsdiffs.de benutzen?</h4>
                 <p>
                     Wenn du unser Archiv nach bestimmten Artikeln durchsuchen möchtest, dann nutze unsere Suchleiste.
                     Möchtest du stöbern, dann nutze den Menüpunkt <a href={% url 'entdecken' %}>Entdecken</a>.
@@ -91,7 +91,7 @@
                 </p>
 
 
-                <h4>Was sind die Kriterien dafür, dass ein Artikel auf NewsDiffs DE erscheint?</h4>
+                <h4>Was sind die Kriterien dafür, dass ein Artikel auf newsdiffs.de erscheint?</h4>
                 <p>
                     Der Artikel muss auf der Titelseite einer der momentan bedienten Online-Nachrichtenportale
                     verlinkt sein und bereits mindestens einmal geändert worden sein. Diese Seiten sind: BILD,
@@ -102,18 +102,18 @@
 
                 <h4>Warum gibt es keine Archivierung für [anderes Online-Nachrichtenportal]?</h4>
                 <p>
-                    Für NewsDiffs DE wurden lediglich Parser für die zehn meistbesuchten Online-Nachrichtenportale
+                    Für newsdiffs.de wurden lediglich Parser für die zehn meistbesuchten Online-Nachrichtenportale
                     in Deutschland geschrieben.<br>
                     Als Entwickler kannst du aber vom <a href="https://github.com/ecprice/newsdiffs">ursprünglichen
-                    Github-Repository</a> oder vom <a href="https://github.com/NewsdiffsDE/newsdiffs">NewsDiffs DE
+                    Github-Repository</a> oder vom <a href="https://github.com/NewsdiffsDE/newsdiffs">newsdiffs.de
                     Github-Repository</a> forken und deine eigenen Parser schreiben.
                 </p>
 
-                <h4>Wie ist NewsDiffs DE entstanden?</h4>
+                <h4>Wie ist newsdiffs.de entstanden?</h4>
                 <p>
-                    NewsDiffs DE entstand im Sommer 2015 im Rahmen eines studentischen Projekts an der Hochschule
+                    newsdiffs.de entstand im Sommer 2015 im Rahmen eines studentischen Projekts an der Hochschule
                     für Technik und Wirtschaft. <br>
-                    NewsDiffs DE basiert auf Open-Source-Software, welche im Jahr 2012 auf dem Knight Mozilla MIT
+                    newsdiffs.de basiert auf Open-Source-Software, welche im Jahr 2012 auf dem Knight Mozilla MIT
                     Hackaton von Eric Price, Jennifer 8. Lee und Greg Price geschaffen wurde. Die Originalseite
                     befindet sich unter <a href="http://www.newsdiffs.org">newsdiffs.org</a> und der Quellcode unter
                     <a href="https://github.com/ecprice/newsdiffs">https://github.com/ecprice/newsdiffs</a>. <br>
@@ -121,7 +121,7 @@
                     Usability und Erscheinungsbild umgesetzt.
                 </p>
 
-                <h4>Wofür steht der Name NewsDiffs DE?</h4>
+                <h4>Wofür steht der Name newsdiffs.de?</h4>
                 <p>
                     Der Namensbestandteil "Diff" bezieht sich auf ein in der Programmierwelt viel genutztes Tool,
                     das die Unterschiede (engl.: differences) zwischen zwei Dateien aufzeigt. Normalerweise wird das
@@ -135,7 +135,7 @@
                 <p>
                     Im allgemeinen Sprachgebrauch bezeichnet URL (Uniform Resource Locator) die Webadresse einer
                     Seite. Zum Beispiel könntest du auf der Titelseite einer Zeitung einen Artikel auswählen und
-                    dann NewsDiffs DE gezielt nutzen, um zu recherchieren, ob an diesem Artikel bereits Änderungen
+                    dann newsdiffs.de gezielt nutzen, um zu recherchieren, ob an diesem Artikel bereits Änderungen
                     vorgenommen wurden.<br>
                     So gehst du vor:<br>
                     <ol>
@@ -144,7 +144,7 @@
                         <li>Kopiere* die URL des Artikels aus der Adressleiste deines Browsers in deine
                             Zwischenablage. Bsp: http://www.spiegel
                             .de/politik/ausland/griechenland-das-sind-die-opfer-von-tsipras-streichliste-a-1040237.html</li>
-                        <li>Besuche NewsDiffs DE und füge die URL des Artikels in die Suchleiste ein*.</li>
+                        <li>Besuche newsdiffs.de und füge die URL des Artikels in die Suchleiste ein*.</li>
                         <li>Klicke auf das Lupensymbol oder drücke Enter, um die Suche zu starten.</li>
                     </ol>
                     * <a href="http://praxistipps.chip.de/tastenkombination-kopieren-und-einfuegen_13193">Hilfe zu
@@ -153,8 +153,13 @@
 
                 <h4>Welche Tools wurden eingesetzt?</h4>
                 <p>
-                    NewsDiffs DE wurde mit dem Python-Web-Framework <a href="http://www.django-de.org/">Django</a> gebaut. Zum Vergleichen der verschiedenen Versionen eines Artikels wird die <a href="https://code.google.com/p/google-diff-match-patch/">Diff-Match-Patch</a> Bibliothek verwendet. Der CSS-Framework <a href="http://holdirbootstrap.de/">Bootstrap</a> bildet das Grundgerüst für die Umsetzung des Designs und die Anpassung an unterschiedliche Endgeräte.<br>
-Diese Technologien wurden auch auf der Original-Website <a href="http://www.newsdiffs.org">newsdiffs.org</a> eingesetzt und sind quelloffen.
+                    newsdiffs.de wurde mit dem Python-Web-Framework <a href="http://www.django-de.org/">Django</a>
+                    gebaut. Zum Vergleichen der verschiedenen Versionen eines Artikels wird die <a href="https://code
+                    .google.com/p/google-diff-match-patch/">Diff-Match-Patch</a> Bibliothek verwendet. Das
+                    CSS-Framework <a href="http://holdirbootstrap.de/">Bootstrap</a> bildet das Grundgerüst für die
+                    Umsetzung des Designs und die Anpassung an unterschiedliche Endgeräte.<br>
+                    Diese Technologien wurden auch auf der Original-Website <a href="http://www.newsdiffs.org">newsdiffs.org</a>
+                    eingesetzt und sind quelloffen.
                 </p>
             </div>
         </div>
