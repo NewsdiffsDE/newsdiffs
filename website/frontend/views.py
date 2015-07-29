@@ -243,7 +243,8 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, date, begin
 def get_articles_by_keyword(searchterm, sort, search_source, ressort, date, begin_at, end_at):
     articles = {}
 
-    all_articles = Article.objects.filter(keywords__icontains = searchterm).exclude(source='')
+    #all_articles = Article.objects.filter(keywords__icontains = searchterm).exclude(source='')
+    all_articles = Article.objects.filter(keywords__icontains = searchterm)
 
     if len(date) is 10:
         all_articles = all_articles.filter(initial_date__year=date[6:10],
@@ -256,9 +257,9 @@ def get_articles_by_keyword(searchterm, sort, search_source, ressort, date, begi
     all_articles = all_articles.order_by('initial_date')[begin_at : end_at]
 
     for a in all_articles:
-        versions = Version.objects.filter(article_id = a.id)
+        versions = a.versions()
         version_count = versions.count()
-        if version_count > 0:
+        if version_count > 1:
             article_title = versions.order_by('date')[0].title
             oldest_newest = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
             articles[a.id] = {
@@ -493,15 +494,20 @@ def prepend_http(url):
 
 
 def article_history(request):
-    id = request.REQUEST.get('id') # this is the deprecated interface.
-    try:
-        article = Article.objects.get(id=id)
-    except Article.DoesNotExist:
+    id = request.REQUEST.get('id')
+    url = request.REQUEST.get('url')
+
+    if url :
+        article = Article.objects.get(url=url)
+    else:
         try:
-            return render_to_response('article_history_missing.html', {'id': id})
-        except (TypeError, ValueError):
-            # bug in django + mod_rewrite can cause this. =/
-            return HttpResponse('Bug!')
+            article = Article.objects.get(id=id)
+        except Article.DoesNotExist:
+            try:
+                return render_to_response('article_history_missing.html', {'id': id})
+            except (TypeError, ValueError):
+                # bug in django + mod_rewrite can cause this. =/
+                return HttpResponse('Bug!')
     created_at = article.initial_date.strftime('%d.%m.%Y - %H:%M Uhr')
     versions = get_rowinfo(article)
     return render_to_response('article_history.html', {'article':article,
@@ -512,7 +518,12 @@ def article_history(request):
                                                        })
 def article_history_feed(request):
     id = request.REQUEST.get('id')
-    article = get_object_or_404(Article, id=id)
+    url = request.REQUEST.get('url')
+
+    if url :
+        article = Article.objects.get(url=url)
+    else:
+        article = get_object_or_404(Article, id=id)
     rowinfo = get_rowinfo(article)
     return render_to_response('article_history.xml',
                               { 'article': article,

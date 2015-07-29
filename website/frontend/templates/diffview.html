@@ -30,6 +30,20 @@
     {% include "searchbar.html" %}
 
 
+  <!-- Breadcrumbs -->
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'entdecken' %}">Suche</a></li>
+                    <li><a href="{% url 'entdecken' %}">Suchergebnisse</a></li>
+		    <li><a href="{% url 'entdecken' %}">Änderungsübersicht</a></li>
+                    <li class="active">{{title}}</li>
+                </ol>
+            </div>
+        </div>
+
+
+
     <!-- Article -->
     <div class="col-md-6 col-md-offset-2">
         <h2>{{title}}</h2>
@@ -77,6 +91,7 @@
     </div>
 
     <!-- Share -->
+
     <div class="col-md-2">
         <ul class="share">
             <li><h4><span class="glyphicon glyphicon-share"></span> Teilen</h4></li>
@@ -99,7 +114,7 @@
             </li>
 
             <li>
-                <a href="mailto:?subject=NewsDiffsDE - Neue Änderungen!&amp;body=Neue Änderungen gefunden im Artikel '{{ title }}' {{ article.url }}."
+                <a href="mailto:?subject=NewsDiffsDE - Neue Änderungen!&amp;body=Neue Änderungen gefunden im Artikel '{{ title }}' &url={{ article.url }}."
                    title="Share by Email">
                     <img src="{% url 'static' 'images/mail.png' %}">Email</a></li>
         </ul>
