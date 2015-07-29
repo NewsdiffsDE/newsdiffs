@@ -81,7 +81,7 @@ def get_last_update(source):
 
 def search(request):
     search_type = request.REQUEST.get('search_type')
-    searchterm = request.REQUEST.get('searchterm')
+    searchterm = request.REQUEST.get('searchterm').lower()
     sort = request.REQUEST.get('sort')
     source = request.REQUEST.get('source')
     date = request.REQUEST.get('date')
