@@ -110,12 +110,12 @@ class BaseParser(object):
     meta = []  # Currently unused.
 
     categories = {u'Allgemein': [u'Allgemein', u'Sonstiges', u'Vermischtes'],
-                  u'Politik': [u'Politik'],
-                  u'Wirtschaft': [u'Geld', u'Finanzen', u'Wirtschaft', u'Arbeit'],
-                  u'Regional': [u'Regional', u'Region', u'Regionales'],
-                  u'Technik': [u'Digital', u'Internet', u'Technik', u'Netzwelt'],
-                  u'Wissenschaft': [u'Wissen', u'Gesundheit', u'Bildung'],
-                  u'Gesellschaft': [u'Gesellschaft', u'Alltag']}
+                  u'Politik': [u'Politik', u'Gipfel', u'Waffen', u'Terror', u'Konflikt'],
+                  u'Wirtschaft': [u'Geld', u'Finanzen', u'Wirtschaft', u'Arbeit', u'Krise'],
+                  u'Regional': [u'Regional', u'Region', u'Regionales', u'Tote', u'Tatort'],
+                  u'Technik': [u'Digital', u'Internet', u'Technik', u'Netzwelt', u'Handy'],
+                  u'Wissenschaft': [u'Wissen', u'Gesundheit', u'Bildung', u'Planet', u'Sonne'],
+                  u'Gesellschaft': [u'Gesellschaft', u'Alltag', u'Datenschutz', u'Drogen']}
 
      # Used when finding articles to parse
     feeder_pat   = None # Look for links matching this regular expression
@@ -196,11 +196,14 @@ class BaseParser(object):
         #extracts keywords from text
     def extract_keywords(self, text):
         text.encode('utf-8')
-        words = text.replace(',', ' ').split(' ')
+        conversion = '!@#$%^&*()[]{};:,./<>?\|`~-=_+'
+        newtext = ''
+        for c in text:
+            newtext += ' ' if c in conversion else c
+        words = newtext.replace('  ', ' ').split(' ')
         results = []
         map(lambda x : (results.append(x) if x and x[0].isupper() else None), words)
-        return ', '.join(results)
-
+        return (', '.join(results)).lower()
 
         # clean byline tag, replaces "und" with a comma, strips "Von"
     def _cleanByline(self):

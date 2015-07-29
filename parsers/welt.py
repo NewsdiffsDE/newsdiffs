@@ -14,6 +14,7 @@ class WeltParser(BaseParser):
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
         self.source = ', '.join(self.domains)
+        self.url = soup.find('meta', {'property': 'og:url'})['content'] if soup.find('meta', {'property': 'og:url'}) else self.url
         # category
         keywords = self.url.strip('http://www.welt.de/').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')
@@ -26,7 +27,7 @@ class WeltParser(BaseParser):
         # tags from meta-keywords and title
         meta_keywords = soup.find('meta', {'name': 'keywords'})['content'] if soup.find('meta', {'name': 'keywords'}) else ""
         self.keywords = self.extract_keywords(meta_keywords)
-        self.keywords += self.extract_keywords(self.title)
+        self.keywords += ', ' + self.extract_keywords(self.title)
         # byline / author
         authorids = soup.find('span', {'itemprop': 'author'})
         self.byline = authorids.getText() if authorids else ''

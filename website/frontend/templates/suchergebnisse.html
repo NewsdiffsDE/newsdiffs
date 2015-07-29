@@ -70,7 +70,7 @@
 
                     <tr>
                         <td>
-                            <em>{{ forloop.counter }}. Ergebnis | Anzahl der Änderungen: {{article.versioncount}} |
+                            <em>{{ forloop.counter0|add:begin_at}}. Ergebnis | Anzahl der Änderungen: {{article.versioncount}} |
                                 Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> (<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
 
                                 Ressort: {{article.ressort}}
@@ -89,9 +89,9 @@
                                     ({{article.versioncount}})</a>
                             </p>
 
-                            <p><a href="{% url 'diffview' %}"><img class="ownbtn"
+                            <p><a href="{{article.all_diffs}}"><img class="ownbtn"
                                                                    src="../static/images/Icon_Vergleichen.png"
-                                                                   alt="Vergleichen-Icon">neueste Änderung</a></p>
+                                                                   alt="Vergleichen-Icon">alle Änderungen</a></p>
                         </td>
                     </tr>
                     {% endfor %}
@@ -101,7 +101,7 @@
                 {% include "subtemplates/pager.html" %}
                 {% endif %}
                 {%else%}
-                <p>Keine Artikel gefunden.</p>
+                <p>Keine Ergebnisse</p>
                 {%endif%}
             </div>
             <!-- /.table -->

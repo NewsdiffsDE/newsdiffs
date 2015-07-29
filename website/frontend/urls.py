@@ -1,12 +1,11 @@
 from django.conf.urls import url
 
 urlpatterns = [
-  url(r'^diffview/$', 'frontend.views.artikel', name='diffview'),
+  url(r'^diffview/$', 'frontend.views.diffview', name='diffview'),
   url(r'^about/$', 'frontend.views.about', name='about'),
   url(r'^entdecken/$', 'frontend.views.entdecken', name='entdecken'),
   url(r'^kontakt/$', 'frontend.views.kontakt', name='kontakt'),
   url(r'^impressum/$', 'frontend.views.impressum', name='impressum'),
-  url(r'^artikel/$', 'frontend.views.artikel', name='artikel'),
   url(r'^history/$', 'frontend.views.history', name='history'),
   url(r'^suchergebnisse/$', 'frontend.views.search', name='suchergebnisse'),
   url(r'^archive/$', 'frontend.views.browse', name='archive'),

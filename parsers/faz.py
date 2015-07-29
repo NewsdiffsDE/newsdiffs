@@ -18,7 +18,7 @@ class FAZParser(BaseParser):
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
         self.source = ', '.join(self.domains)
-        self.url = soup.find('meta', {'name': 'og\:url'})['content'] if soup.find('meta', {'name': 'og\:url'}) else self.url
+        self.url = soup.find('meta', {'property': 'og:url'})['content'] if soup.find('meta', {'property': 'og:url'}) else self.url
         # category
         keywords = self.url.strip('http://www.faz.net').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')
@@ -31,7 +31,7 @@ class FAZParser(BaseParser):
         # tags from meta-keywords and title
         meta_keywords = soup.find('meta', {'name': 'news_keywords'})['content'] if soup.find('meta', {'name': 'news_keywords'}) else ""
         self.keywords = self.extract_keywords(meta_keywords)
-        self.keywords += self.extract_keywords(self.title)
+        self.keywords += ', ' + self.extract_keywords(self.title)
         # byline / author
         author = soup.find('meta', {'name': 'author'})
         self.byline = author['content'] if author else ''

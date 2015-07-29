@@ -13,6 +13,11 @@ class SDParser(BaseParser):
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
         self.source = ', '.join(self.domains)
+        #premium/pay content
+        if soup.find('article', 'reduced'):
+            self.real_article = False
+            return
+        self.url = soup.find('meta', {'property': 'og:url'})['content'] if soup.find('meta', {'property': 'og:url'}) else self.url
         # category
         keywords = self.url.strip('http://www.sueddeutsche.de/').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')
@@ -26,7 +31,7 @@ class SDParser(BaseParser):
         # tags from meta-keywords and title
         meta_keywords = soup.find('meta', {'name': 'news_keywords'})['content'] if soup.find('meta', {'name': 'news_keywords'}) else ""
         self.keywords = self.extract_keywords(meta_keywords)
-        self.keywords += self.extract_keywords(self.title)
+        self.keywords += ', ' + self.extract_keywords(self.title)
         # byline / author
         author = soup.find('div', {'class': 'authorProfileContainer'})
         self.byline = author.getText() if author else ''
