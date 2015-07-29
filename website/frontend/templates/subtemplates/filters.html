@@ -15,7 +15,13 @@
             <div class="row">
                 <p class="col-xs-12">Datum »</p>
                 <div class="col-xs-6 col-sm-3 col-md-12 date-wrapper">
+
+                    <!-- Fills Placeholder of Datepicker according to date-->
+                    {% if archive_date %}
+                        <input id="datepicker" name="date-value" placeholder="{{ archive_date }}"/>
+                    {% else %}
                         <input id="datepicker" name="date-value" placeholder="Datum wählen"/>
+                    {% endif %}
                 </div>
             </div>
             <div class="row">
