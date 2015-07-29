@@ -49,7 +49,7 @@
             {% else %}
             <h1>Suchergebnisse für {{search_type}} "{{ searchterm }}"</h1>
             {% endif %}
-            {% if articles|length > 1 %}
+            {% if articles|length > 0 %}
             {% include "subtemplates/pager.html" %}
             {% endif %}
             {% if search_type != "URL"%}
@@ -97,7 +97,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                {% if articles|length > 1 %}
+                {% if articles|length > 0 %}
                 {% include "subtemplates/pager.html" %}
                 {% endif %}
                 {%else%}

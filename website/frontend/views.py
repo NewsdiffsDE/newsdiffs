@@ -201,9 +201,9 @@ def get_articles_by_author(searchterm, search_source, ressort, date, begin_at, e
     for v in versions:
         article_objects = Article.objects.filter(id = v.article_id).exclude(source='')
         if len(date) is 10:
-            article_objects = article_objects.filter(initial_date__year=date[6:10],
-                                                        initial_date__month=date[3:5],
-                                                        initial_date__day=date[0:2])
+            article_objects = article_objects.filter(last_update__year=date[6:10],
+                                                        last_update__month=date[3:5],
+                                                        last_update__day=date[0:2])
         if search_source in SOURCES:
             article_objects = article_objects.filter(source__icontains = search_source)
         if ressort in RESSORTS :
@@ -237,13 +237,14 @@ def get_articles_by_keyword(searchterm, search_source, ressort, date, begin_at, 
     all_articles = Article.objects.filter(keywords__icontains = searchterm).exclude(source='')
 
     if len(date) is 10:
-        all_articles = all_articles.filter(initial_date__year=date[6:10],
-                                                        initial_date__month=date[3:5],
-                                                        initial_date__day=date[0:2])
+        all_articles = all_articles.filter(last_update__year=date[6:10],
+                                                        last_update__month=date[3:5],
+                                                        last_update__day=date[0:2])
     if search_source in SOURCES:
         all_articles = all_articles.filter(source__icontains = search_source)
     if ressort in RESSORTS:
         all_articles = all_articles.filter(category__icontains = ressort)
+
     all_articles = all_articles.order_by('-initial_date')[begin_at : end_at]
 
     for a in all_articles:
