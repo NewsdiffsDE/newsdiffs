@@ -30,9 +30,12 @@
 	width: 18px;
 }
 
-.del-ins ul {
-    padding-left: 0;
+ul.del-ins{
     list-style: none;
+}
+
+ul.del-ins li {
+    padding-left: 0px;
 }
 
 del{
