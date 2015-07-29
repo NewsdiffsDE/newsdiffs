@@ -30,7 +30,6 @@
     {% include "searchbar.html" %}
 
 
-
     <!-- Article -->
     <div class="row">
         <div class="col-md-6 col-md-offset-2">
@@ -68,7 +67,8 @@
             <p>
                 <span class="glyphicon glyphicon-book"></span>
                 Quelle:<a href="http://{{ article.source }}" target="_blank">
-                    {{ article.source }}</a>(<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
+                    {{ article.source }}</a> (<a id="original" href="{{ article.url }}" target="_blank">zum
+                Original</a>) |
                 Ressort: {{ article.category }}
 
             </p>
@@ -91,7 +91,7 @@
 
     <div class="col-md-2">
         <ul class="share">
-            <li><h4><span class="glyphicon glyphicon-share"></span> Teilen</h4></li>
+            <li><span class="shtitle"><span class="glyphicon glyphicon-share"></span> Teilen</span></li>
 
             <li>
                 <a href="https://twitter.com/share?url={{ article.url }}&via=newsdiffs_de&text=Neue Änderungen im Artikel '{{ title }}'"

@@ -67,3 +67,7 @@ button[type=button] {
   	 margin-top: 300px;
 	}
 }
+
+span.shtitle{
+  font-size: 18px;
+}
