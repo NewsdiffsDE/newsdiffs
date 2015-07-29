@@ -248,7 +248,7 @@ def get_articles_by_keyword(searchterm, sort, search_source, ressort, date, begi
     articles = {}
 
     #all_articles = Article.objects.filter(keywords__icontains = searchterm).exclude(source='')
-    all_articles = Article.objects.filter(keywords__icontains = searchterm)
+    all_articles = Article.objects.filter(keywords__contains = searchterm)
 
     if len(date) is 10:
         all_articles = all_articles.filter(initial_date__year=date[6:10],
@@ -263,7 +263,7 @@ def get_articles_by_keyword(searchterm, sort, search_source, ressort, date, begi
     for a in all_articles:
         versions = a.versions()
         version_count = versions.count()
-        if version_count > 1:
+        if version_count > 0:
             article_title = versions.order_by('date')[0].title
             oldest_newest = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
             articles[a.id] = {
@@ -557,11 +557,11 @@ def history(request):
 def artikel(request):
     return render_to_response('diffview.html', {})
 
-def entdecken(self, request):
+def entdecken(request):
     config = {}
     execfile("/var/www/dev/config.py", config)
-    if datetime.hour != self.CURRENT_HOUR:
-        self.CURRENT_HOUR = datetime.hour
+    if datetime.hour != CURRENT_HOUR:
+        CURRENT_HOUR = datetime.hour
         twitter = Twitter(auth = OAuth(config["access_key"], config["access_secret"], config["consumer_key"], config["consumer_secret"]))
         alltrends = twitter.trends.place(_id = 23424829)
         results = []
@@ -571,20 +571,21 @@ def entdecken(self, request):
                 if result.startswith('#'):
                     result = result.replace("#", "")
                 results.append(result)
-        self.TWITTER_RESULTS = results
+        TWITTER_RESULTS = results
 
     return render_to_response('entdecken.html', {
-                        'trend1': self.Twitter_RESULTS[0],
-						'trend2': self.Twitter_RESULT[1],
-						'trend3': self.Twitter_RESULT[2],
-						'trend4': self.Twitter_RESULT[3],
-						'trend5': self.Twitter_RESULT[4],
-						'trend6': self.Twitter_RESULT[5],
-						'trend7': self.Twitter_RESULT[6],
-						'trend8': self.Twitter_RESULT[7],
-						'trend9': self.Twitter_RESULT[8],
-						'trend10': self.Twitter_RESULT[9],
+                        'trend1': TWITTER_RESULTS[0],
+						'trend2': TWITTER_RESULTS[1],
+						'trend3': TWITTER_RESULTS[2],
+						'trend4': TWITTER_RESULTS[3],
+						'trend5': TWITTER_RESULTS[4],
+						'trend6': TWITTER_RESULTS[5],
+						'trend7': TWITTER_RESULTS[6],
+						'trend8': TWITTER_RESULTS[7],
+						'trend9': TWITTER_RESULTS[8],
+						'trend10': TWITTER_RESULTS[9],
 						})
+
 
 
 def highlights(request):
