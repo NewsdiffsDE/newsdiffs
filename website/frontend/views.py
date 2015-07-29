@@ -153,6 +153,7 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
         all_articles = all_articles.filter(category__icontains = ressort)
 
     all_articles = all_articles[begin_at : end_at]          # range of results
+
     for a in all_articles:
         versions = Version.objects.filter(article_id = a.id)
         version_count = versions.count()
