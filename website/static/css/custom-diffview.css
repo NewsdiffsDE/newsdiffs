@@ -30,6 +30,10 @@
 	width: 18px;
 }
 
+ul.del-ins {
+    list-style: none;
+}
+
 del{
 	background-color: #ff8080;
 	text-decoration: line-through;
