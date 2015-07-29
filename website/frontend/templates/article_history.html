@@ -25,15 +25,15 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 
-				<h1 class="hover-color"><a  href="{% url 'article_history' %}?id={{article.id}}">{{ article.latest_version.title }}</a></h1> <p><span class="glyphicon glyphicon-book"></span><a href="{{article.url}}">Originalartikel von {{source}} lesen</a></p>
-				<p>Erste Archivierung: {{ created_at }}</p>
+				<h1 class="hover-color"><a  href="{% url 'article_history' %}?id={{article.id}}">{{ article.latest_version.title }}</a></h1>
+				<p><span class="glyphicon glyphicon-book"></span>Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> (<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) | Ressort: {{article.ressort}} | Anzahl der Änderungen: {{article.versioncount}} | Erste Archivierung: {{ created_at }}</p>
 				<h3>Änderungsübersicht</h3>
 
 				<table class="table table-condensed table-striped">
 					<thead>
 						<tr>
 							<th>Schlagzeile</th>
-							<th>Datum/Zeit (UMT+1) der Archivierung</th>
+							<th>Datum/Zeit der Archivierung</th>
 							<th>Diff</th>
 						</tr>
 					</thead>
