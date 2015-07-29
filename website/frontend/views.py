@@ -506,9 +506,7 @@ def article_history(request):
                                                        'versions':versions,
                                                         'display_search_banner': came_from_search_engine(request),
                                                        'created_at': created_at,
-                                                       'source' : article.source,
-							'ressort': article.ressort,
-							'versioncount': article.versioncount
+                                                       'source' : article.source
                                                        })
 def article_history_feed(request):
     id = request.REQUEST.get('id')
