@@ -68,6 +68,6 @@ button[type=button] {
 	}
 }
 
-.share .shtitle span{
+span.shtitle{
   font-size: 18px;
 }
