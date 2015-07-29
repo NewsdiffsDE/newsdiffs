@@ -436,7 +436,7 @@ def diffview(request, vid1='', vid2=''):
             links.append('')
 
 
-    oldest_newest = '/diffview/?vid1='+str(article.first_version().id)+'&vid2='+str(article.latest_version().id)
+    all_diffs = '/diffview/?vid1='+str(article.first_version().id)+'&vid2='+str(article.latest_version().id)
 
     return render_to_response('diffview.html', {
             'title': title,
@@ -447,7 +447,7 @@ def diffview(request, vid1='', vid2=''):
             'article_shorturl': article.filename(),
             'article_id' : article.id,
             'article_url': article.url, 'v1': v1, 'v2': v2,
-            'all_diffs' : oldest_newest,
+            'all_diffs' : all_diffs,
             }, context_instance=RequestContext(request))
 
 def get_rowinfo(article, version_lst=None):
