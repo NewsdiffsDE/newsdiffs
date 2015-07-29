@@ -10,6 +10,7 @@ import django.db
 from django.db.models import Count
 from twitter import *
 from django.template import Context, RequestContext, loader
+from django.views.decorators.cache import cache_page
 
 OUT_FORMAT = '%B %d, %Y at %l:%M%P EDT'
 
@@ -538,6 +539,7 @@ def history(request):
 def artikel(request):
     return render_to_response('diffview.html', {})
 
+@cache_page(60 * 60)  #60 minute cache
 def entdecken(request):
     config = {}
     execfile("/var/www/dev/config.py", config)
