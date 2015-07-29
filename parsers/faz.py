@@ -17,7 +17,7 @@ class FAZParser(BaseParser):
         soup = BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES,
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
-        keywords = self.url.strip('http://www.faz.net').replace('/', ',')
+        keywords = self.url.strip('http://www.faz.net').replace('/', ', ')
         self.source = ', '.join(self.domains)
         self.url = soup.find('meta', {'property': 'og:url'})['content'] if soup.find('meta', {'property': 'og:url'}) else self.url
         # category
