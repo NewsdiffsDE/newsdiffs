@@ -1,22 +1,15 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 import re
 import operator
-
-from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.shortcuts import render_to_response, get_object_or_404
 from models import Article, Version
 import models
 import json
-from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.core.urlresolvers import reverse
-import urllib
+from django.http import HttpResponse, Http404
 import django.db
 from django.db.models import Count
-import time
 from twitter import *
 from django.template import Context, RequestContext, loader
-from django.views.decorators.cache import cache_page
-
-from random import randint
 
 OUT_FORMAT = '%B %d, %Y at %l:%M%P EDT'
 
@@ -37,7 +30,6 @@ Technik
 Wissenschaft
 Gesellschaft
 """.split()
-
 
 SOURCES = '''
 Zeit
@@ -62,8 +54,6 @@ URL
 def came_from_search_engine(request):
     return any(x in request.META.get('HTTP_REFERER', '')
                for x in SEARCH_ENGINES)
-
-
 
 def Http400():
     t = loader.get_template('404.html')
@@ -97,6 +87,8 @@ def search(request):
     ressort = request.REQUEST.get('ressort')
     pagestr=request.REQUEST.get('page', '1')
 
+    results_displayed = 10          # number of results for each page
+
     if date is None:
         date = ''
     if searchterm is None:
@@ -107,12 +99,13 @@ def search(request):
     except ValueError:
         page = 1
 
+    # range of results
     begin_at = 1
-    end_at = 10
+    end_at = results_displayed
 
     if page > 1:
-        begin_at = ((page-1)*10)+1
-        end_at = begin_at + 9
+        begin_at = ((page-1)*results_displayed)+1
+        end_at = begin_at + (results_displayed-1)
 
     if len(searchterm) > 0:
         if search_type not in SEARCH_TYPES :
@@ -148,7 +141,7 @@ def search(request):
 
 def get_archive(date, ressort, search_source, begin_at, end_at):
     articles = {}
-
+    # get all articles which were updated on s specific date
     all_articles = Article.objects.filter(last_update__year=date[6:10],
                                             last_update__month=date[3:5],
                                             last_update__day=date[0:2]).exclude(source='')
@@ -158,12 +151,12 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
     if ressort in RESSORTS:
         all_articles = all_articles.filter(category__icontains = ressort)
 
-    all_articles = all_articles[begin_at : end_at]
+    all_articles = all_articles[begin_at : end_at]          # range of results
 
     for a in all_articles:
         versions = Version.objects.filter(article_id = a.id)
         version_count = versions.count()
-        if version_count > 1:
+        if version_count > 1:       # get all articles with changes
             all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
             article_title = versions.order_by('-date')[0].title
             articles[a.id] = {
@@ -185,7 +178,7 @@ def get_articles_by_url(url):
         for a in all_articles:
             versions = Version.objects.filter(article_id = a.id)
             version_count = versions.count()
-            if version_count > 1:
+            if version_count > 1:           # get all articles with changes
                 all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
                 article_title = versions.order_by('-date')[0].title
                 articles[a.id] = {
@@ -222,7 +215,7 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, date, begin
     for a in all_articles:
         versions = Version.objects.filter(article_id = a.id)
         version_count = versions.count()
-        if version_count > 1:
+        if version_count > 1:           # get all articles with changes
             all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
             article_title = versions.order_by('-date')[0].title
             articles[a.id] = {
@@ -258,7 +251,7 @@ def get_articles_by_keyword(searchterm, sort, search_source, ressort, date, begi
     for a in all_articles:
         versions = Version.objects.filter(article_id = a.id)
         version_count = versions.count()
-        if version_count > 1:
+        if version_count > 1:           # get all articles with changes
             article_title = versions.order_by('-date')[0].title
             all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
             articles[a.id] = {
@@ -337,17 +330,21 @@ def browse(request):
     source=request.REQUEST.get('source')
     pagestr=request.REQUEST.get('page', '1')
     sort=request.REQUEST.get('sort')
+
+    results_displayed = 10          # number of results for each page
+
     try:
         page = int(pagestr)
     except ValueError:
         page = 1
 
+    # range of results
     begin_at = 1
-    end_at = 10
+    end_at = results_displayed
 
     if page > 1:
-        begin_at = ((page-1)*10)+1
-        end_at = begin_at + 9
+        begin_at = ((page-1)*results_displayed)+1
+        end_at = begin_at + (results_displayed-1)
 
     if archive_date is None or archive_date is u'':
         archive_date = datetime.today().strftime('%d.%m.%Y')
@@ -395,11 +392,9 @@ def feed(request, source=''):
             mimetype='application/atom+xml')
 
 def diffview(request, vid1='', vid2=''):
-    # urlarg is unused, and only for readability
-    # Could be strict and enforce urlarg == article.filename()
-
     vid1=request.REQUEST.get('vid1')
     vid2=request.REQUEST.get('vid2')
+
     try:
         v1 = Version.objects.get(id=int(vid1))
         v2 = Version.objects.get(id=int(vid2))
@@ -463,13 +458,11 @@ def get_rowinfo(article, version_lst=None):
         version_lst = article.versions()
     rowinfo = []
     lastv = None
-    urlarg = article.filename()
     for version in version_lst:
         version.date = version.date.strftime('%d.%m.%Y - %H:%M Uhr')
         if lastv is None:
             diffl = ''
         else:
-           # diffl = reverse('diffview', kwargs=dict(vid1=lastv.id, vid2=version.id, urlarg=urlarg))
             diffl = '/diffview/?vid1='+str(lastv.id)+'&vid2='+str(version.id)
         rowinfo.append((diffl, version))
         lastv = version
@@ -535,7 +528,6 @@ def article_history_feed(request):
 def json_view(request, vid):
     version = get_object_or_404(Version, id=int(vid))
     data = dict(
-        #category=version.category,
         title=version.title,
         byline = version.byline,
         date = version.date.isoformat(),
