@@ -105,14 +105,9 @@
                    target="_blank" title="Share on Facebook"><img src="{% url 'static' 'images/fb_icon_blue.png' %}">Facebook</a>
             </li>
 
-            <li>
-                <a href="https://plus.google.com/share?url={{ article.url }}&text=Neue Änderungen gefunden im Artikel '{{ title }}' via&url=http://newsdiffs.de"
-                   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=350,width=480');return false;"
-                   target="_blank" title="Share on Google+"><img src="{% url 'static' 'images/gplus_logo_red.png' %}">Google+</a>
-            </li>
 
             <li>
-                <a href="mailto:?subject=NewsDiffsDE - Neue Änderungen!&amp;body=Neue Änderungen gefunden im Artikel '{{ title }}' &url={{ article.url }}."
+                <a href="mailto:?subject=NewsDiffsDE - Neue Änderungen!&amp;body=Neue Änderungen gefunden im Artikel '{{ title }}' {{ article.url }} "
                    title="Share by Email">
                     <img src="{% url 'static' 'images/mail.png' %}">Email</a></li>
         </ul>
