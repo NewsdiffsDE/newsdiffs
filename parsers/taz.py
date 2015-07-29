@@ -29,7 +29,7 @@ class TAZParser(BaseParser):
             self.real_article = False
             return
         self.keywords = self.extract_keywords(meta_keywords)
-        self.keywords += self.extract_keywords(self.title)
+        self.keywords += ', ' + self.extract_keywords(self.title)
         # byline / author
         try:
             author = soup.find('meta', {'name': 'author'})['content']
