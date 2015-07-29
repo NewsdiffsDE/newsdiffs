@@ -25,25 +25,6 @@
                 </div>
             </div>
             <div class="row">
-                <h5 class="col-xs-12">Sortieren nach:</h5>
-		<div class="col-xs-6 col-sm-3 col-md-12 radio">
-		    <label>
-			<input type="radio" name="sortOptionsRadios" id="sortNew" value="neueste" {% if sort == 'sortNew' %}checked{% endif %}>
-			<a class="filterbar" href="/{{template}}/?search_type={{search_type}}&searchterm={{searchterm}}&sort=sortNew&source={{source}}&ressort={{ressort}}&date={{archive_date}}">
-			    Neueste
-			</a>
-		    </label>
-		</div>
-		<div class="col-xs-6 col-sm-3 col-md-12 radio">
-		    <label>
-			<a class="filterbar" href="/{{template}}/?search_type={{search_type}}&searchterm={{searchterm}}&sort=sortCount&source={{source}}&ressort={{ressort}}&date={{archive_date}}">
-			    <input type="radio" name="sortOptionsRadios" id="sortCount" value="meiste" {% if sort == 'sortCount' %}checked{% endif %}>
-			    Meiste Änderungen
-			</a>
-		    </label>
-		</div>
-            </div>
-            <div class="row">
                 <h5 class="col-xs-12">Filtern nach:</h5>
                 {% if search_type != "URL" %}
                 {% endif %}

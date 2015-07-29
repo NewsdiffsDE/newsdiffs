@@ -114,9 +114,9 @@ def search(request):
             search_type = u'URL'
 
         if search_type == u'Stichwort':
-            articles = get_articles_by_keyword(searchterm, sort, source, ressort, date, begin_at-1, end_at)
+            articles = get_articles_by_keyword(searchterm, source, ressort, date, begin_at-1, end_at)
         elif search_type == u'Autor':
-            articles = get_articles_by_author(searchterm, sort, source, ressort, date, begin_at-1, end_at)
+            articles = get_articles_by_author(searchterm, source, ressort, date, begin_at-1, end_at)
         elif search_type == u'URL':
             articles = get_articles_by_url(searchterm)
 
@@ -152,7 +152,6 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
         all_articles = all_articles.filter(category__icontains = ressort)
 
     all_articles = all_articles[begin_at : end_at]          # range of results
-
     for a in all_articles:
         versions = Version.objects.filter(article_id = a.id)
         version_count = versions.count()
@@ -193,7 +192,7 @@ def get_articles_by_url(url):
                 }
         return articles
 
-def get_articles_by_author(searchterm, sort, search_source, ressort, date, begin_at, end_at):
+def get_articles_by_author(searchterm, search_source, ressort, date, begin_at, end_at):
     articles = {}
     all_articles = []
     versions = Version.objects.filter(byline__icontains = searchterm)
@@ -229,11 +228,9 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, date, begin
                 'all_diffs' : all_diffs
             }
 
-    if sort == u'sortCount':
-        articles = sorted(articles.items(), reverse=True, key=operator.itemgetter('versioncount'))
     return articles
 
-def get_articles_by_keyword(searchterm, sort, search_source, ressort, date, begin_at, end_at):
+def get_articles_by_keyword(searchterm, search_source, ressort, date, begin_at, end_at):
     articles = {}
 
     all_articles = Article.objects.filter(keywords__icontains = searchterm).exclude(source='')
@@ -264,9 +261,6 @@ def get_articles_by_keyword(searchterm, sort, search_source, ressort, date, begi
                 'ressort' : a.category,
                 'all_diffs' : all_diffs
             }
-
-    if sort is 'sortCount':
-        articles = sorted(articles.items(), reverse=True, key=operator.itemgetter('versioncount'))
     return articles
 
 def get_articles(source=None, distance=0):
