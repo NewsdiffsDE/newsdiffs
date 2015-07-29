@@ -73,7 +73,7 @@ def get_first_update(source):
     if source is None:
         source = ''
     updates = models.Article.objects.order_by('last_update').filter(last_update__gt=datetime(1990, 1, 1, 0, 0),
-                                                                    url__contains=source)
+                                                                    url__icontains=source)
     try:
         return updates[0].last_update
     except IndexError:
@@ -82,7 +82,7 @@ def get_first_update(source):
 def get_last_update(source):
     if source is None:
         source = ''
-    updates = models.Article.objects.order_by('-last_update').filter(last_update__gt=datetime.datetime(1990, 1, 1, 0, 0), url__contains=source)
+    updates = models.Article.objects.order_by('-last_update').filter(last_update__gt=datetime.datetime(1990, 1, 1, 0, 0), url__icontains=source)
     try:
         return updates[0].last_update
     except IndexError:
@@ -154,9 +154,9 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
                                             initial_date__day=date[0:2]).exclude(source='')
 
     if search_source in SOURCES:
-        all_articles = all_articles.filter(source__contains = search_source)
+        all_articles = all_articles.filter(source__icontains = search_source)
     if ressort in RESSORTS:
-        all_articles = all_articles.filter(category__contains = ressort)
+        all_articles = all_articles.filter(category__icontains = ressort)
 
     all_articles = all_articles[begin_at : end_at]
 
@@ -164,8 +164,8 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
         versions = Version.objects.filter(article_id = a.id)
         version_count = versions.count()
         if version_count > 1:
-            oldest_newest = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
-            article_title = versions.order_by('date')[0].title
+            all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
+            article_title = versions.order_by('-date')[0].title
             articles[a.id] = {
                 'id': a.id,
                 'title': article_title,
@@ -174,7 +174,7 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
                 'ressort' : a.category,
                 'date':  a.initial_date,
                 'versioncount': version_count,
-                'all_diffs' : oldest_newest
+                'all_diffs' : all_diffs
                 }
     return articles
 
@@ -186,8 +186,8 @@ def get_articles_by_url(url):
             versions = Version.objects.filter(article_id = a.id)
             version_count = versions.count()
             if version_count > 1:
-                oldest_newest = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
-                article_title = versions.order_by('date')[0].title
+                all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
+                article_title = versions.order_by('-date')[0].title
                 articles[a.id] = {
                     'id': a.id,
                     'title': article_title,
@@ -196,14 +196,14 @@ def get_articles_by_url(url):
                     'date':  a.initial_date,
                     'versioncount': version_count,
                     'ressort' : a.category,
-                    'all_diffs' : oldest_newest
+                    'all_diffs' : all_diffs
                 }
         return articles
 
 def get_articles_by_author(searchterm, sort, search_source, ressort, date, begin_at, end_at):
     articles = {}
     all_articles = []
-    versions = Version.objects.filter(byline__contains = searchterm)
+    versions = Version.objects.filter(byline__icontains = searchterm)
 
     for v in versions:
         article_objects = Article.objects.filter(id = v.article_id).exclude(source='')
@@ -212,10 +212,10 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, date, begin
                                                         initial_date__month=date[3:5],
                                                         initial_date__day=date[0:2])
         if search_source in SOURCES:
-            article_objects = article_objects.filter(source__contains = search_source)
+            article_objects = article_objects.filter(source__icontains = search_source)
         if ressort in RESSORTS :
             article_objects = article_objects.filter(category = ressort)
-        all_articles += article_objects.order_by('initial_date')
+        all_articles += article_objects.order_by('-initial_date')
 
     all_articles = all_articles[begin_at : end_at]
 
@@ -223,8 +223,8 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, date, begin
         versions = Version.objects.filter(article_id = a.id)
         version_count = versions.count()
         if version_count > 1:
-            oldest_newest = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
-            article_title = versions.order_by('date')[0].title
+            all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
+            article_title = versions.order_by('-date')[0].title
             articles[a.id] = {
                 'id': a.id,
                 'title': article_title,
@@ -233,7 +233,7 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, date, begin
                 'date':  a.initial_date,
                 'ressort':  a.category,
                 'versioncount': version_count,
-                'all_diffs' : oldest_newest
+                'all_diffs' : all_diffs
             }
 
     if sort == u'sortCount':
@@ -243,25 +243,24 @@ def get_articles_by_author(searchterm, sort, search_source, ressort, date, begin
 def get_articles_by_keyword(searchterm, sort, search_source, ressort, date, begin_at, end_at):
     articles = {}
 
-    #all_articles = Article.objects.filter(keywords__icontains = searchterm).exclude(source='')
-    all_articles = Article.objects.filter(keywords__contains = searchterm)
+    all_articles = Article.objects.filter(keywords__icontains = searchterm).exclude(source='')
 
     if len(date) is 10:
         all_articles = all_articles.filter(initial_date__year=date[6:10],
                                                         initial_date__month=date[3:5],
                                                         initial_date__day=date[0:2])
     if search_source in SOURCES:
-        all_articles = all_articles.filter(source__contains = search_source)
+        all_articles = all_articles.filter(source__icontains = search_source)
     if ressort in RESSORTS:
-        all_articles = all_articles.filter(category__contains = ressort)
-    all_articles = all_articles.order_by('initial_date')[begin_at : end_at]
+        all_articles = all_articles.filter(category__icontains = ressort)
+    all_articles = all_articles.order_by('-initial_date')[begin_at : end_at]
 
     for a in all_articles:
-        versions = a.versions()
+        versions = Version.objects.filter(article_id = a.id)
         version_count = versions.count()
-        if version_count > 0:
-            article_title = versions.order_by('date')[0].title
-            oldest_newest = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
+        if version_count > 1:
+            article_title = versions.order_by('-date')[0].title
+            all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
             articles[a.id] = {
                 'id': a.id,
                 'title': article_title,
@@ -270,7 +269,7 @@ def get_articles_by_keyword(searchterm, sort, search_source, ressort, date, begi
                 'date':  a.initial_date,
                 'versioncount': version_count,
                 'ressort' : a.category,
-                'all_diffs' : oldest_newest
+                'all_diffs' : all_diffs
             }
 
     if sort is 'sortCount':
