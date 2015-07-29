@@ -2,9 +2,9 @@
 <html>
 <head lang="en">
      <meta charset="utf-8">
-    <title>NewsDiffsDE | {% block title %}redaktionelle Änderungen an Nachrichten verfolgen{% endblock %}</title>
+    <title>newsdiffs.de | {% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Die Idee hinter NewsDiffs.de ist es, Änderungen an Nachrichtenartikeln sichtbar und nachvollziehbar zu machen. NewsDiffs.de trackt alle Änderungen an Artikeln der Titelseiten der 10 größten deutschsprachigen Nachrichtenportale. Nutze die Suchfunktion, um nach Artikeln zu suchen oder sieh dir unsere Highlights an.">
+    <meta name="description" content="Die Idee hinter newsdiffs.de ist es, Änderungen an Nachrichtenartikeln sichtbar und nachvollziehbar zu machen. newsdiffs.de trackt alle Änderungen an Artikeln der Titelseiten der 10 größten deutschsprachigen Nachrichtenportale. Nutze die Suchfunktion, um nach Artikeln zu suchen oder sieh dir unsere Highlights an.">
     <meta name="author" content="Robert, Cat, Relana, Shenglin, Paula, Anja, Moreno">
 
     <!-- CSS -->
@@ -52,7 +52,7 @@
                         <li {% block active_entdecken %}{% endblock %}><a href="{% url 'entdecken' %}">Entdecken</a></li>
                         <li {% block active_highlights %}{% endblock %}><a href="{% url 'highlights' %}">Highlights</a></li>
                         <li {% block active_archive %}{% endblock %}><a href="{% url 'archive' %}">Archiv</a></li>
-                        <li {% block active_about %}{% endblock %}><a href="{% url 'about' %}">Über NewsDiffs</a></li>
+                        <li {% block active_about %}{% endblock %}><a href="{% url 'about' %}">Über newsdiffs.de</a></li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
@@ -72,7 +72,7 @@
     <footer class="footer">
         <div class="container-fluid col-md-8 col-md-offset-2">
             <div class="footer-left">
-                <p>© 2015 NewsDiffs DE</p>
+                <p>© 2015 newsdiffs.de</p>
                 <p><a href="{% url 'kontakt' %}">Kontakt</a></p>
                 <p><a href="{% url 'impressum' %}">Impressum</a></p>
             </div>
