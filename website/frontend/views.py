@@ -142,34 +142,38 @@ def search(request):
 
 def get_archive(date, ressort, search_source, begin_at, end_at):
     articles = {}
+    article_set = set()
     # get all articles which were updated on s specific date
-    all_articles = Article.objects.filter(last_update__year=date[6:10],
-                                            last_update__month=date[3:5],
-                                            last_update__day=date[0:2]).exclude(source='')
+    all_versions = Version.objects.filter(date__year=date[6:10],
+                                            date__month=date[3:5],
+                                            date__day=date[0:2]).exclude(diff_json__isnull = True)
+    all_articles = []
+    if len(all_versions) > 0:
+        for v in all_versions:
+            article_objects = Article.objects.filter(id = v.article_id)
+            if search_source in SOURCES:
+                article_objects = article_objects.filter(source__icontains = search_source)
+            if ressort in RESSORTS:
+                article_objects = article_objects.filter(category__icontains = ressort)
 
-    if search_source in SOURCES:
-        all_articles = all_articles.filter(source__icontains = search_source)
-    if ressort in RESSORTS:
-        all_articles = all_articles.filter(category__icontains = ressort)
+        all_articles += article_objects[begin_at : end_at]          # range of results
+        article_set = article_set.union(set(all_articles))
 
-    all_articles = all_articles[begin_at : end_at]          # range of results
-
-    for a in all_articles:
-        versions = Version.objects.filter(article_id = a.id)
-        version_count = versions.count()
-        if version_count > 1:       # get all articles with changes
+        for a in article_set:
+            versions = Version.objects.filter(article_id = a.id)
+            version_count = versions.count()
             all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
             article_title = versions.order_by('-date')[0].title
             articles[a.id] = {
-                'id': a.id,
-                'title': article_title,
-                'url': a.url,
-                'source':  a.source,
-                'ressort' : a.category,
-                'date':  a.initial_date,
-                'versioncount': version_count,
-                'all_diffs' : all_diffs
-                }
+                    'id': a.id,
+                    'title': article_title,
+                    'url': a.url,
+                    'source':  a.source,
+                    'ressort' : a.category,
+                    'date':  a.initial_date,
+                    'versioncount': version_count-1,
+                    'all_diffs' : all_diffs
+                    }
     return articles
 
 def get_articles_by_url(url):
@@ -188,7 +192,7 @@ def get_articles_by_url(url):
                     'url': a.url,
                     'source':  a.source,
                     'date':  a.initial_date,
-                    'versioncount': version_count,
+                    'versioncount': version_count-1,
                     'ressort' : a.category,
                     'all_diffs' : all_diffs
                 }
@@ -226,7 +230,7 @@ def get_articles_by_author(searchterm, search_source, ressort, date, begin_at, e
                 'source':  a.source,
                 'date':  a.initial_date,
                 'ressort':  a.category,
-                'versioncount': version_count,
+                'versioncount': version_count-1,
                 'all_diffs' : all_diffs
             }
 
@@ -260,7 +264,7 @@ def get_articles_by_keyword(searchterm, search_source, ressort, date, begin_at, 
                 'url': a.url,
                 'source':  a.source,
                 'date':  a.initial_date,
-                'versioncount': version_count,
+                'versioncount': version_count-1,
                 'ressort' : a.category,
                 'all_diffs' : all_diffs
             }
