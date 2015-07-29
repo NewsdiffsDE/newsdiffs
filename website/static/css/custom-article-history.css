@@ -14,6 +14,11 @@ a img {
     color: #666;
 }
 
+.glyphicon{
+   padding-right: 5px;
+   color: #a4a4a4;
+}
+
 /* 
 
 From: https://css-tricks.com/responsive-data-tables/

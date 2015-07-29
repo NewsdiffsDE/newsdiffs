@@ -13,6 +13,11 @@ class SDParser(BaseParser):
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
         self.source = ', '.join(self.domains)
+        #premium/pay content
+        if soup.find('article', 'reduced'):
+            self.real_article = False
+            return
+        self.url = soup.find('meta', {'property': 'og:url'})['content'] if soup.find('meta', {'property': 'og:url'}) else self.url
         # category
         keywords = self.url.strip('http://www.sueddeutsche.de/').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')

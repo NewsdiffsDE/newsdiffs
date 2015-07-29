@@ -132,7 +132,7 @@ $(window).load(function () {
 
 
 
-    $('#sort-btn').click(function(){
+    $('sort-btn').click(function(){
         $(this).text(function(i,old){
             return old=='Sortieren & Filtern verbergen' ?  'Sortieren & Filtern anzeigen' : 'Sortieren & Filtern verbergen';
         });

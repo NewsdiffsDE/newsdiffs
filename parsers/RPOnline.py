@@ -13,6 +13,7 @@ class RPOParser(BaseParser):
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
         self.source = ', '.join(self.domains)
+        self.url = soup.find('meta', {'property': 'og:url'})['content'] if soup.find('meta', {'property': 'og:url'}) else self.url
         # category
         keywords = soup.find('meta', {'property': 'vr:category'})
         self.category = self.compute_category(keywords['content'] if keywords else '')
