@@ -63,15 +63,15 @@ border: none;
 
 
 @media(max-width:690px){
-.cloud{
-	margin-top: 50px;
+	.cloud{
+		margin-top: 50px;
 		
 
-}
+	}
 
-.subtitle {
-	margin-top: 150px;
-}
+	.subtitle {
+		margin-top: 50px;
+	}
 }
 
 .slide{
@@ -138,9 +138,15 @@ border: none;
     line-height: 40px;
 }
 
-.categories_list{
-    margin-top: 30px;
+@media (min-width: 1380px){
+	.categories_list{
+	    margin-top: 30px;
+	    padding: 0 280px;	
+	}
 }
+
+
+
 
 .categories_list ul {
     margin: 0px;
@@ -209,8 +215,21 @@ hr{
 
 }
 
-@media(max-width:1150px){
+@media (max-width: 1380px){
 	.categories_list ul li {
-		float: none;
+	   width: 49%;
+  	   background-color: #F5F5F5;
+  	   margin: 5px 5px 5px 0px;
+	}
+	
+	hr{
+	   display:none;
+	}
+}
+
+@media (max-width: 500px){
+	.categories_list ul li {
+	  width: 90%;
+  	  padding-left: 9%;
 	}
 }
