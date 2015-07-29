@@ -67,3 +67,7 @@ button[type=button] {
   	 margin-top: 300px;
 	}
 }
+
+.share .shtitle span{
+  font-size: 18px;
+}
