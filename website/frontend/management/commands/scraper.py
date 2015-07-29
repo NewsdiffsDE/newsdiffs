@@ -318,8 +318,6 @@ def load_article(url):
 #        logger.error(traceback.format_exc())
 #        logger.error('Continuing')
         return
-    if not parsed_article.real_article:
-        return
     return parsed_article
 
 #Update url in git
@@ -333,7 +331,6 @@ def update_article(article, parsed_article):
     article.category = parsed_article.category
     article.keywords = parsed_article.keywords
     article.source = parsed_article.source
-    article.url = parsed_article.url
     article.save()
     v, boring, diff_info = add_to_git_repo(to_store,
                                            url_to_filename(article.url),
@@ -366,17 +363,18 @@ def update_articles(todays_git_dir):
         if not models.Article.objects.filter(url=url).count():
 #            logger.debug('Adding!')
             parsed_article = load_article(url)
-            if parsed_article:
-                ogUrl = parsed_article.url
+            ogUrl = parsed_article.url
+            if not parsed_article.real_article:
+                article = models.Article(url=url, git_dir='old')
+            else:
                 if not models.Article.objects.filter(url=ogUrl).count():
                     article = models.Article(url=ogUrl, git_dir=todays_git_dir)
                 else:
                     models.Article(url=url, git_dir='old').save();
                     article = models.Article.objects.get(url=ogUrl)
+
                 update_article(article, parsed_article)
-                article.save()
-            else:
-                models.Article(url=url, git_dir='old').save()
+            article.save()
 #    logger.info('Done storing to database')
 
 def get_update_delay(minutes_since_update):
@@ -419,10 +417,10 @@ def update_versions(todays_repo, do_all=False):
 
 #    logger.info('Done!')
     for i, article in enumerate(articles):
-        logger.debug('Woo: %s %s %s (%s/%s)',
-                     article.minutes_since_update(),
-                     article.minutes_since_check(),
-                     update_priority(article), i+1, len(articles))
+#        logger.debug('Woo: %s %s %s (%s/%s)',
+#                     article.minutes_since_update(),
+#                     article.minutes_since_check(),
+#                     update_priority(article), i+1, len(articles))
         delay = get_update_delay(article.minutes_since_update())
         if article.minutes_since_check() < delay and not do_all:
             continue
