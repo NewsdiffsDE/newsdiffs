@@ -30,33 +30,24 @@
     {% include "searchbar.html" %}
 
 
-  <!-- Breadcrumbs -->
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <ol class="breadcrumb">
-                    <li><a href="{% url 'entdecken' %}">Suche</a></li>
-                    <li><a href="{% url 'entdecken' %}">Suchergebnisse</a></li>
-		            <li><a href="{% url 'article_history' %}?id={{article_id}}">Änderungsübersicht</a></li>
-                    <li class="active">{{title}}</li>
-                </ol>
-            </div>
-        </div>
-
-
 
     <!-- Article -->
-    <div class="col-md-6 col-md-offset-2">
-        <h2>{{title}}</h2>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-2">
 
-        <p>Quelle: <a href="{{article_url}}">{{article_url}}</a></p>
-        <ul>
-            <li>
-                <del>Pink: Archived {{date1}}</del>
-            </li>
-            <li>
-                <ins>Green: Archived {{date2}}</ins>
-            </li>
-        </ul>
+        <div class="row">
+             <h2>{{title}}</h2>
+            <p>Quelle: <a href="{{article_url}}">{{article_url}}</a></p>
+            <ul>
+                <li>
+                    <del>Pink: Archived {{date1}}</del>
+                </li>
+                <li>
+                    <ins>Green: Archived {{date2}}</ins>
+                </li>
+            </ul>
+        </div>
+
         <div class="row">
                 <a href="{% url 'article_history' %}?id={{article_id}}">
                     <button type="button" class="btn btn-default btn-sm"><img
@@ -89,6 +80,7 @@
             </p>
         </div>
     </div>
+
 
     <!-- Share -->
 
