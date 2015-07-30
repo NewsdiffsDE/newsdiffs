@@ -193,6 +193,29 @@ footer p a{
     border-bottom: 1px solid #ddd;
 }
 
+.round-btn-hover > a {
+    display: inline-block;
+    padding: 5px 14px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+
+}
+
+.round-btn-hover > a:hover,
+.round-btn-hover > a:focus {
+    text-decoration: none;
+    background-color: #eee;
+    border: 1px solid transparent;
+}
+
+.round-btn > a {
+    display: inline-block;
+    padding: 5px 14px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+
+}
+
 
 
 /* *****************************************************************************
