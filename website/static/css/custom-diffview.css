@@ -10,8 +10,8 @@
 	padding: 0;
 }
 
-.pager li a {
-	border-bottom: 1px;
+.pager a, .pager a:hover {
+    border-bottom: 1px;
 }
 
 @media (max-width: 768px){
