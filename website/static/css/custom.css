@@ -198,6 +198,8 @@ footer p a{
     padding: 5px 14px;
     border: 1px solid #ddd;
     border-radius: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 
 }
 
@@ -213,14 +215,11 @@ footer p a{
     padding: 5px 14px;
     border: 1px solid #ddd;
     border-radius: 15px;
-
-}
-
-.archive-buttons > div{
-    display: inline;
     margin-top: 15px;
     margin-bottom: 15px;
+
 }
+
 
 
 
