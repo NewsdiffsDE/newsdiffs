@@ -11,7 +11,7 @@
 		{% include "searchbar.html" %}
 
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
+			<div class="col-md-8 col-md-offset-2 text">
 
                 <!-- Heading/Title -->
 				<h1 class="hover-color">{{ article.latest_version.title }}</h1>
@@ -47,16 +47,16 @@
                             {% if difflink %}
                                 <td>
 
-                                        <a class="hover-color text" href="{{difflink}}">
+                                        <a href="{{difflink}}">
                                             <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
-                                            alt="Vergleichen-Icon">Vorherige Version
+                                            alt="Vergleichen-Icon">Vgl. mit vorheriger Version
                                         </a>
 
                                 </td>
                             {% else %}
                                 <td>
 
-                                    <a class="hover-color text" href="{{all_diffs}}">
+                                    <a href="{{all_diffs}}">
                                         <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
                                         alt="Vergleichen-Icon">Neueste vs. älteste Version
                                     </a>
