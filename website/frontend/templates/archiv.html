@@ -47,16 +47,14 @@
 
                     <tr>
                          <td>
-                            <em>{{ forloop.counter0|add:begin_at }}. Ergebnis | Anzahl der Änderungen: {{article.versioncount}} |
-                                Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> (<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
-
+                            <em>{{ forloop.counter0|add:begin_at }}. Ergebnis | Anzahl der Versionen: {{article.versioncount}} |
+                                Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a>
+                                (<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
                                 Ressort: {{article.ressort}}
                             </em>
-
                             <h3 class="title">
                                 <a  href="{% url 'article_history' %}?id={{article.id}}">{{ article.title }}</a>
                             </h3>
-
                             <p>
 
                                     <a class="no-link-color" href="{% url 'article_history' %}?id={{article.id}}">
@@ -68,7 +66,6 @@
 
 
                             </p>
-
                             <p>
                                 <a href="{{article.all_diffs}}"><img class="ownbtn"
                                                                    src="../static/images/Icon_Vergleichen.png"
