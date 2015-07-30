@@ -15,9 +15,9 @@ class FocusParser(BaseParser):
 
         self.meta = soup.findAll('meta')
         self.source = ', '.join(self.domains)
+        keywords = self.url.strip('http://www.focus.de/').replace('/', ', ')
         self.url = soup.find('meta', {'name': 'og\:url'})['content'] if soup.find('meta', {'name': 'og\:url'}) else self.url
         # category
-        keywords = self.url.strip('http://www.focus.de/').replace('/', ', ')
         self.category = self.compute_category(keywords if keywords else '')
         #article headline
         elt = soup.find('h1')
