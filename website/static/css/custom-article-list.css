@@ -2,7 +2,7 @@
 /* filter tags */
 
 .label {
-    margin: 1px;
+    margin: 1px; !important
 }
 .radio + .radio {
 	margin-top: 10px;
