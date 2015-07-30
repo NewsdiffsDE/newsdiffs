@@ -31,30 +31,30 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-2">
 			<div class="row">
-					<nav>
-						<ul class="pager">
-							{% if prev %}
-							<li class="previous col-md-4"><a
-									href="{{ prev }}"><span
-									aria-hidden="true">&larr;</span>ältere Änderung</a></li>
-							{% else %}
-							<li class="previous disabled"><a><span aria-hidden="true">&larr;</span>ältere Änderung</a></li>
-							{%endif%}
-							<li class="col-md-4">
-								<a href="{% url 'article_history' %}?id={{article_id}}"><img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf">Versionsübersicht</a>
-							</li>
-							{% if next %}
-							<li class="next"><a
-									href="{{ next }}">neuere Änderung
-								<span aria-hidden="true">&rarr;</span></a></li>
-							{% else %}
-							<li class="next disabled col-md-4"><a>neuere Änderung<span aria-hidden="true">&rarr;</span></a></li>
-							{%endif%}
-						</ul>
-					</nav>
+				<nav>
+					<ul class="pager">
+						{% if prev %}
+						<li class="previous col-md-4"><a
+								href="{{ prev }}"><span
+								aria-hidden="true">&larr;</span>ältere Änderung</a></li>
+						{% else %}
+						<li class="previous disabled"><a><span aria-hidden="true">&larr;</span>ältere Änderung</a></li>
+						{%endif%}
+						<li class="col-md-4">
+							<a href="{% url 'article_history' %}?id={{article_id}}"><img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf">Versionsübersicht</a>
+						</li>
+						{% if next %}
+						<li class="next"><a
+								href="{{ next }}">neuere Änderung
+							<span aria-hidden="true">&rarr;</span></a></li>
+						{% else %}
+						<li class="next disabled col-md-4"><a>neuere Änderung<span aria-hidden="true">&rarr;</span></a></li>
+						{%endif%}
+					</ul>
+				</nav>
 			</div>
 
-			<div class="row">
+			<div class="row col-xs-12">
 				<h2>{{title}}</h2>
 				<p>
 					<span class="glyphicon glyphicon-book"></span>
