@@ -67,9 +67,12 @@
 
                             </p>
                             <p>
-                                <a href="{{article.all_diffs}}"><img class="ownbtn"
-                                                                   src="../static/images/Icon_Vergleichen.png"
-                                                                   alt="Vergleichen-Icon">alle Änderungen</a>
+                                <div class="round-btn-hover">
+                                    <a href="{{all_diffs}}">
+                                        <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
+                                        alt="Vergleichen-Icon">Neueste gg. älteste Version
+                                    </a>
+                                </div>
                             </p>
                         </td>
                     </tr>
