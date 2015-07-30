@@ -55,9 +55,13 @@
 
                             <!--Diff Spalte-->
                             {% if difflink %}
-                                <td><a class="hover-color" href="{{difflink}}">
-                                    <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
-                                         alt="Vergleichen-Icon">Diff mit vorheriger Version</a>
+                                <td>
+                                    <div class="round-btn">
+                                        <a class="hover-color" href="{{difflink}}">
+                                            <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
+                                            alt="Vergleichen-Icon">Diff mit vorheriger Version
+                                        </a>
+                                    </div>
                                 </td>
                             {% else %}
                                 <td>
