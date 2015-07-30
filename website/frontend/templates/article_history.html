@@ -19,7 +19,7 @@
                 <!-- Information -->
                 <p>
                     <span class="glyphicon glyphicon-book"></span>
-                    Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> (<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
+                    Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> (<a class="hover-color text" id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
                     Ressort: {{article.category}}
                 </p>
 
@@ -49,21 +49,21 @@
                             <!--Diff Spalte-->
                             {% if difflink %}
                                 <td>
-                                    <div class="round-btn-hover">
-                                        <a class="hover-color" href="{{difflink}}">
+
+                                        <a class="hover-color text" href="{{difflink}}">
                                             <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
                                             alt="Vergleichen-Icon">Vgl. mit vorheriger Version
                                         </a>
-                                    </div>
+
                                 </td>
                             {% else %}
                                 <td>
-                                     <div class="round-btn-hover">
-                                    <a href="{{all_diffs}}">
+
+                                    <a class="hover-color text" href="{{all_diffs}}">
                                         <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
                                         alt="Vergleichen-Icon">Neueste vs. älteste Version
                                     </a>
-                                    </div>
+
                                 </td>
                             {% endif %}
 
