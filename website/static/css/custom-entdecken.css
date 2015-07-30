@@ -1,6 +1,6 @@
 /* Tag Wolke */
 a.tag12{
-    font-size: 1.4em;
+    font-size: 1.7em;
 	font-weight: 300;
 	color: #666666;
 }
@@ -19,7 +19,7 @@ a.tag2{
 }
 
 a.tag3{
-    font-size:3em;
+    font-size:2.8em;
     font-weight:700;
     color:#a8a8a8;
 }
@@ -35,7 +35,6 @@ a.tag35{
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
-	font-family: 'Oswald', sans-serif;
 	animation-name: slideslow;
 	animation-duration: 1s; 
 	animation-timing-function: ease-out;
@@ -64,8 +63,8 @@ border: none;
 
 .slide{
   font-size: 50px;
-  font-family: 'Open Sans', sans-serif;
   font-weight: 300;
+  font-family: 'Open Sans', sans-serif;
   margin-top: 50px;
   text-align: center;
   animation-name: slide;
@@ -86,8 +85,8 @@ border: none;
 .subtitle {
  text-align: center;
   font-size: 22px;
-  font-family: 'Open Sans', sans-serif;
   font-weight: 300;
+  font-family: 'Open Sans', sans-serif;
   animation-name: slideslow;
   animation-duration: 1s; 
   animation-timing-function: ease-out;
