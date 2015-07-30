@@ -6,6 +6,10 @@
 	padding:0 3px;
 }
 
+.pager li {
+	margin-bottom: 3px;
+}
+
 @media (max-width: 768px){
 	.pager .next > a, .pager .previous > a {
 		float: none;
