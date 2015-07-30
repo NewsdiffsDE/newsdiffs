@@ -18,7 +18,7 @@
 	}
 }
 
-@media (max-width: px) and (min-width: 550px {
+@media (max-width: 767px) and (min-width: 550px {
 	.pager li {
 		display: inline;
 	}
