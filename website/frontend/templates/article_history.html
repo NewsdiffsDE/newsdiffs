@@ -14,9 +14,18 @@
 			<div class="col-md-8 col-md-offset-2">
 
 				<h1 class="hover-color">{{ article.latest_version.title }}</h1>
-				<p><span class="glyphicon glyphicon-book"></span>
+				<p>
+                    <span class="glyphicon glyphicon-book"></span>
                     Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> (<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
                     Ressort: {{article.category}}
+                </p>
+                <p>
+                    <a href="{{all_diffs}}">
+                        <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
+                         alt="Vergleichen-Icon"> Diff neueste:älteste Version
+                    </a>
+                </p>
+
 
 
 
@@ -34,7 +43,6 @@
                     {% for difflink, version in versions %}
                         <tr>
 
-
                             <!-- Schlagzeile Spalte -->
                             <td>{{version.title}} {%if version.byline != '' %}({{version.byline}}){%endif%}</td>
 
@@ -49,10 +57,6 @@
                                 </td>
                             {% else %}
                                 <td>
-                                    <a href="{{all_diffs}}">
-                                        <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
-                                             alt="Vergleichen-Icon">Diff mit neuester Version
-                                    </a>
                                 </td>
                             {% endif %}
 
