@@ -32,3 +32,21 @@
 ul#submenu {
 	margin-top: 15px;
 }
+
+h2 {
+  padding-bottom: 12px;
+}
+
+
+h4{
+  font-size: 22px;
+  font-weight: 300;
+  margin-top: 20px;
+}
+
+p.faq{
+	padding: 15px;
+	text-align: justify;
+	margin-bottom: 0;
+}
+

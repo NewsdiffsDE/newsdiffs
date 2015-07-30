@@ -9,6 +9,11 @@
 .pager li {
 	padding: 0;
 }
+
+.pager a, .pager a:hover {
+    border-bottom: 1px solid #ddd;
+}
+
 @media (max-width: 768px){
 	.pager .next > a, .pager .previous > a {
 		float: none;
@@ -23,13 +28,7 @@
 }
 
 .share{
-	margin-top: 10px;
-}
-
-.share li{
-	margin-top: 8px;
-	padding-top: 5px;
-	list-style: none;
+	    margin: 30px 10px;
 }
 
 .share img{
@@ -39,6 +38,15 @@
 
 .share span{
 	width: 18px;
+}
+
+.share>span, .share>a {
+    margin-right: 10px;
+    padding: 5px;
+}
+
+span.shtitle{
+  font-size: 18px;
 }
 
 ul.del-ins{
@@ -60,15 +68,7 @@ button[type=button] {
 	margin-top: 5px;
 }
 
-@media (min-width: 992px){
-	.share {
-  	 margin-top: 300px;
-	}
-}
 
-span.shtitle{
-  font-size: 18px;
-}
 
 .glyphicon.glyphicon-book{
    padding-right: 3px;
