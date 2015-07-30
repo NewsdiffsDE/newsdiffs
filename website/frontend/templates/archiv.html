@@ -56,14 +56,12 @@
                                 <a  href="{% url 'article_history' %}?id={{article.id}}">{{ article.title }}</a>
                             </h3>
                             <p>
-                                <div class="round-btn">
-                                    <a class="no-link-color" href="article_history.html">
+                                    <a class="no-link-color" href="{% url 'article_history' %}?id={{article.id}}">
                                     <img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png"
                                          alt="Artikelverlauf-Icon">
                                     </a>
                                     <a href="{% url 'article_history' %}?id={{article.id}}">Änderungsübersicht
                                     ({{article.versioncount}})</a>
-                                </div>
                             </p>
                             <p>
                                 <a href="{{article.all_diffs}}"><img class="ownbtn"
