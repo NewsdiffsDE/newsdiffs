@@ -148,7 +148,7 @@ class BaseParser(object):
         raise NotImplementedError()
 
     def __unicode__(self):
-        return canonicalize(u'\n'.join((self.date, self.category, self.title, self.byline,
+        return canonicalize(u'\n'.join((self.date, self.title, self.byline,
                                         self.body,)))
 
     @classmethod
@@ -207,7 +207,9 @@ class BaseParser(object):
 
         # clean byline tag, replaces "und" with a comma, strips "Von"
     def _cleanByline(self):
+        if self.byline.startswith(' '):
+            self.byline = self.byline[1:]
         if self.byline.startswith('Von ') or self.byline.startswith('von '):
             self.byline = self.byline[4:]
-        self.byline = self.byline.replace(' und ', ',')
+        self.byline = self.byline.replace(' und ', ', ')
 
