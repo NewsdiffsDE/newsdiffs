@@ -4,6 +4,11 @@
 .label {
     margin: 1px; !important
 }
+
+.label-default {
+    background-color: #999;
+}
+
 .radio + .radio {
 	margin-top: 10px;
 }
