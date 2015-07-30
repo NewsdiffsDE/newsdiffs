@@ -10,10 +10,6 @@
         <div id="search-element">
             <div id="search-input">
                 <form method="get" action="{% url 'suchergebnisse' %}">
-                    {% if message%}
-                    <p class="bg-danger">{{message}}</p>
-                    {%endif%}
-
                     <input type="hidden" id="search_type" name="search_type"/>
                     <input type="text" name="searchterm" placeholder="Suche" id="search-input-line" autocomplete="off">
                     <a href="#" id="button-wrapper-link">

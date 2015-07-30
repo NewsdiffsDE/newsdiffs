@@ -68,6 +68,10 @@ ul.nav.navbar-nav.navbar-right li > a{
 	margin-top: 15px;
 }
 
+.alert.alert-danger.fade.in {
+    margin-top: 25px;
+}
+
 .nav > li > a {
 	padding: 5px 15px;
 	margin: 10px 0px;
