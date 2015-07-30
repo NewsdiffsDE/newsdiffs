@@ -212,5 +212,3 @@ class BaseParser(object):
         if self.byline.startswith('Von ') or self.byline.startswith('von '):
             self.byline = self.byline[4:]
         self.byline = self.byline.replace(' und ', ', ')
-        self.byline = self.byline.replace(' (Fotos)', '')
-

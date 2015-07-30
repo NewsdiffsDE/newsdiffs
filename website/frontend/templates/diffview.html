@@ -6,6 +6,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script>
 <script src="{% url 'static' 'lib/diff_match_patch_uncompressed.js'%}" type="text/javascript"></script>
 <link href="{% url 'static' 'css/custom-diffview.css' %}" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
 
 <script type="text/javascript">
   var text1 = '{{text1|escapejs}}';
@@ -30,53 +31,52 @@
     <!-- Article -->
     <div class="row">
         <div class="col-md-6 col-md-offset-2">
-			<div class="container">
-				<div class="row">
-						<nav>
-							<ul class="pager">
-								{% if prev %}
-								<li class="previous col-md-4"><a
-										href="{{ prev }}"><span
-										aria-hidden="true">&larr;</span>ältere Änderung</a></li>
-								{% else %}
-								<li class="previous disabled"><a><span aria-hidden="true">&larr;</span>ältere Änderung</a></li>
-								{%endif%}
-								<li class="col-md-4">
-									<a href="{% url 'article_history' %}?id={{article_id}}"><img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf">Versionsübersicht</a>
-								</li>
-								{% if next %}
-								<li class="next"><a
-										href="{{ next }}">neuere Änderung
-									<span aria-hidden="true">&rarr;</span></a></li>
-								{% else %}
-								<li class="next disabled col-md-4"><a>neuere Änderung<span aria-hidden="true">&rarr;</span></a></li>
-								{%endif%}
-							</ul>
-						</nav>
-				</div>
-
-				<div class="row">
-					<h2>{{title}}</h2>
-					<p>
-						<span class="glyphicon glyphicon-book"></span>
-						Quelle:<a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> 
-						(<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
-						Ressort: {{ article.category }}
-					</p>
-					<ul class="del-ins">
-						<li>
-							<del>Rot: Archiviert am {{date1}}</del>
+			<div class="row col-xs-12">
+				<nav>
+					<ul class="pager">
+						{% if prev %}
+						<li class="previous col-xs-12 col-sm-4"><a
+								href="{{ prev }}"><span
+								aria-hidden="true">&larr;</span>ältere Änderung</a></li>
+						{% else %}
+						<li class="previous disabled col-xs-12 col-sm-4"><a><span aria-hidden="true">&larr;</span>ältere Änderung</a></li>
+						{%endif%}
+						<li class="col-xs-12 col-sm-4">
+							<a href="{% url 'article_history' %}?id={{article_id}}"><img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf">Versionsübersicht</a>
 						</li>
-						<li>
-							<ins>Grün: Archiviert am {{date2}}</ins>
-						</li>
+						{% if next %}
+						<li class="next col-xs-12 col-sm-4"><a
+								href="{{ next }}">neuere Änderung
+							<span aria-hidden="true">&rarr;</span></a></li>
+						{% else %}
+						<li class="next disabled col-xs-12 col-sm-4"><a>neuere Änderung<span aria-hidden="true">&rarr;</span></a></li>
+						{%endif%}
 					</ul>
+				</nav>
+			</div>
 
-					<p id="compare" class="content">
-					</p>
-				</div>
+			<div class="row col-xs-12">
+				<h2>{{title}}</h2>
+				<p>
+					<span class="glyphicon glyphicon-book"></span>
+					Quelle:<a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> 
+					(<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
+					Ressort: {{ article.category }}
+				</p>
+				<ul class="del-ins">
+					<li>
+						<del>Rot: Archiviert am {{date1}}</del>
+					</li>
+					<li>
+						<ins>Grün: Archiviert am {{date2}}</ins>
+					</li>
+				</ul>
+
+				<p id="compare" class="content">
+				</p>
 			</div>
 		</div>
+		
 
 		<!-- Share -->
 
