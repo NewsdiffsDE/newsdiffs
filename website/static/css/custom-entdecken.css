@@ -63,6 +63,7 @@ border: none;
 
 .slide{
   font-size: 36px;
+  font-weight: 300;
   margin-top: 50px;
   text-align: center;
   animation-name: slide;
@@ -83,6 +84,8 @@ border: none;
 .subtitle {
  text-align: center;
   font-size: 22px;
+  font-weight: 300;
+  font-family: 'Open Sans', sans-serif;
   animation-name: slideslow;
   animation-duration: 1s; 
   animation-timing-function: ease-out;
