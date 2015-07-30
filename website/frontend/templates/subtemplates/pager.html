@@ -5,12 +5,12 @@
         {% if page > 1 %}
         <li class="previous"><a
                 href="/{{template}}/?search_type={{search_type}}&searchterm={{searchterm}}&sort={{sort}}&ressort={{ressort}}&source={{source}}&page={{page|add:-1}}&date={{archive_date}}"><span
-                aria-hidden="true">&larr;</span>zurück</a></li>
+                aria-hidden="true">&larr;</span> zurück</a></li>
         {% else %}
-        <li class="previous disabled"><a><span aria-hidden="true">&larr;</span>zurück</a></li>
+        <li class="previous disabled"><a><span aria-hidden="true">&larr;</span> zurück</a></li>
         {%endif%}
         {% if articles_count < 10 %}
-        <li class="next disabled"><a>weiter<span aria-hidden="true">&rarr;</span></a></li>
+        <li class="next disabled"><a>weiter <span aria-hidden="true">&rarr;</span></a></li>
         {% else %}
         <li class="next"><a
                 href="/{{template}}/?search_type={{search_type}}&searchterm={{searchterm}}&sort={{sort}}&ressort={{ressort}}&source={{source}}&page={{page|add:1}}&date={{archive_date}}">weiter
