@@ -35,6 +35,7 @@ class FAZParser(BaseParser):
         # byline / author
         author = soup.find('span', {'class': 'Content Autor caps'})
         self.byline = author.getText() if author else ''
+        self.byline = '' if self.byline == 'Frankfurter Allgemeine Zeitung GmbH' else self.byline
         self._cleanByline()
         # article date
         created_at = soup.find('meta', {'name': 'DC.date.issued'})
