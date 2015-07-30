@@ -12,10 +12,8 @@
 
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-                <h1>Versionsübersicht</h1>
 
-				<h2 class="hover-color"><a href="{% url 'article_history' %}?id={{article.id}}">{{ article
-				.latest_version.title }}</a></h2>
+				<h1 class="hover-color">{{ article.latest_version.title }}</h1>
 				<p><span class="glyphicon glyphicon-book"></span>
                     Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> (<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
                     Ressort: {{article.category}}
