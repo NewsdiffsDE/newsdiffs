@@ -1,6 +1,8 @@
 {% extends 'headerfooter.html' %}
 {% load url from future %}
 {% block title %}Kontakt{% endblock %}
+{% block active_about %}class="active"{% endblock %}
+
 
 {% block css_import %}
     <link href="{% url 'static' 'css/custom-contact.css' %}" rel="stylesheet" type="text/css">
