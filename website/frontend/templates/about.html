@@ -34,7 +34,7 @@
                     </a>
                 </h2>
 
-                <p>
+                <p class="text-justify">
                     In einer Welt, in der Nachrichten im Sekundentakt verbreitet werden, stellt sich die Problematik
                     einer transparenten Archivierung von Artikeln. Artikel auf Online-Nachrichtenportalen werden heute
                     auch nach ihrer Veröffentlichung redigiert. Hierbei handelt es sich nicht nur um Korrekturen von
@@ -64,7 +64,7 @@
 
 
                 <h4>Wie funktioniert newsdiffs.de?</h4>
-                <p>
+                <p class="faq">
                     newsdiffs.de nutzt Web Scraping, um in regelmäßigen Abständen die Titelseiten von
                     Online-Nachrichtenportalen abzulaufen und die dort verlinkten Artikel in einer Datenbank zu
                     speichern. Sobald bei einem Artikel Änderungen festzustellen sind, wird der Artikel auf newsdiffs.de
@@ -72,7 +72,7 @@
                 </p>
 
                 <h4>Wofür kann ich newsdiffs.de benutzen?</h4>
-                <p>
+                <p class="faq">
 
                     Mit newsdiffs.de kannst du gezielt nach Artikeln zu einem Thema suchen, z.B. "G7-Gipfel".
                     Inspiration zu aktuellen Themen oder Zeitungsressorts findest du unter <a href={% url 'entdecken' %}>Entdecken</a>.
@@ -85,7 +85,7 @@
                 </p>
 
                 <h4>Wie kann ich newsdiffs.de benutzen?</h4>
-                <p>
+                <p class="faq">
                     Wenn du unser Archiv nach bestimmten Artikeln durchsuchen möchtest, dann nutze unsere Suchleiste.
                     Möchtest du stöbern, dann nutze den Menüpunkt <a href={% url 'entdecken' %}>Entdecken</a>.
                     Für eine chronologische Auflistung aller gespeicherten Artikel nutze das <a
@@ -94,7 +94,7 @@
 
 
                 <h4>Was sind die Kriterien dafür, dass ein Artikel auf newsdiffs.de erscheint?</h4>
-                <p>
+                <p class="faq">
                     Der Artikel muss auf der Titelseite einer der momentan bedienten Online-Nachrichtenportale
                     verlinkt sein und bereits mindestens einmal geändert worden sein. Diese Seiten sind: BILD,
                     FOCUS, DER SPIEGEL, DIE WELT, stern, DIE ZEIT, Süddeutsche Zeitung, F.A.Z., n-tv und RP online –
@@ -103,7 +103,7 @@
                 </p>
 
                 <h4>Warum gibt es keine Archivierung für [anderes Online-Nachrichtenportal]?</h4>
-                <p>
+                <p class="faq">
                     Für newsdiffs.de wurden lediglich Parser für die zehn meistbesuchten Online-Nachrichtenportale
                     in Deutschland geschrieben.<br>
                     Als Entwickler kannst du aber vom <a href="https://github.com/ecprice/newsdiffs">ursprünglichen
@@ -112,7 +112,7 @@
                 </p>
 
                 <h4>Wie ist newsdiffs.de entstanden?</h4>
-                <p>
+                <p class="faq">
                     newsdiffs.de entstand im Sommer 2015 im Rahmen eines studentischen Projekts an der Hochschule
                     für Technik und Wirtschaft. <br>
                     newsdiffs.de basiert auf Open-Source-Software, welche im Jahr 2012 auf dem Knight Mozilla MIT
@@ -124,7 +124,7 @@
                 </p>
 
                 <h4>Wofür steht der Name newsdiffs.de?</h4>
-                <p>
+                <p class="faq">
                     Der Namensbestandteil "Diff" bezieht sich auf ein in der Programmierwelt viel genutztes Tool,
                     das die Unterschiede (engl.: differences) zwischen zwei Dateien aufzeigt. Normalerweise wird das
                     Tool dazu genutzt, die Unterschiede zwischen der jetzigen und einer früheren Version einer Datei
@@ -134,27 +134,26 @@
                 </p>
 
                 <h4>Was ist die URL-Suche und wie kann ich sie verwenden?</h4>
-                <p>
+                <p class="faq">
                     Im allgemeinen Sprachgebrauch bezeichnet URL (Uniform Resource Locator) die Webadresse einer
                     Seite. Zum Beispiel könntest du auf der Titelseite einer Zeitung einen Artikel auswählen und
                     dann newsdiffs.de gezielt nutzen, um zu recherchieren, ob an diesem Artikel bereits Änderungen
                     vorgenommen wurden.<br>
-                    So gehst du vor:<br>
+                    So gehst du vor:
                     <ol>
                         <li>Besuche die Titelseite eines der Online-Nachrichtenportale. Bsp: http://www.spiegel.de</li>
                         <li>Klicke auf einen dort verlinkten Artikel.</li>
                         <li>Kopiere* die URL des Artikels aus der Adressleiste deines Browsers in deine
-                            Zwischenablage. Bsp: http://www.spiegel
-                            .de/politik/ausland/griechenland-das-sind-die-opfer-von-tsipras-streichliste-a-1040237.html</li>
+                            Zwischenablage. Bsp: http://www.spiegel.de/politik/ausland/griechenland-das-sind-die-opfer-von-tsipras-streichliste-a-1040237.html</li>
                         <li>Besuche newsdiffs.de und füge die URL des Artikels in die Suchleiste ein*.</li>
                         <li>Klicke auf das Lupensymbol oder drücke Enter, um die Suche zu starten.</li>
                     </ol>
-                    * <a href="http://praxistipps.chip.de/tastenkombination-kopieren-und-einfuegen_13193">Hilfe zu
+                  * <a href="http://praxistipps.chip.de/tastenkombination-kopieren-und-einfuegen_13193">Hilfe zu
                 "Kopieren und Einfügen"</a>
                 </p>
 
                 <h4>Welche Tools wurden eingesetzt?</h4>
-                <p>
+                <p class="faq">
                     newsdiffs.de wurde mit dem Python-Web-Framework <a href="http://www.django-de.org/">Django</a>
                     gebaut. Zum Vergleichen der verschiedenen Versionen eines Artikels wird die <a href="https://code
                     .google.com/p/google-diff-match-patch/">Diff-Match-Patch</a> Bibliothek verwendet. Das
@@ -165,40 +164,7 @@
                 </p>
             </div>
         </div>
-<!-- (Maybe someday)
-        <div class="row" id="press">
-            <div class="col-md-8 col-md-offset-2">
-                <h2>
-                    Presse
-                    <a href="#top">
-                        <button type="button" class="btn btn-default btn-md go-up-btn">
-                            <span class="glyphicon glyphicon-arrow-up"></span>
-                        </button>
-                    </a>
-                </h2>
 
-                <h4>Zeitung XYZ</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod aliquet feugiat. Nullam
-                    iaculis purus quis blandit lacinia.
-            Suspendisse feugiat pretium lorem, in porttitor tortor convallis nec. Integer eget auctor nulla. Donec
-                    rhoncus purus metus, non rhoncus lorem posuere at.
-            Phasellus eget purus elementum, congue augue eu, porta tortor. Integer quis volutpat libero, a malesuada
-                    libero.
-            Donec cursus euismod placerat. Donec quis elit sit amet mi mattis efficitur. Pellentesque metus nisl,
-                    pellentesque nec dignissim et,
-            convallis eget lorem. Aliquam id consectetur nulla, et semper nisl.</p>
-
-                <h4>Zeitung ABC</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus euismod aliquet feugiat. Nullam
-                    iaculis purus quis blandit lacinia.
-            Suspendisse feugiat pretium lorem, in porttitor tortor convallis nec. Integer eget auctor nulla. Donec
-                    rhoncus purus metus, non rhoncus lorem posuere at.
-            Phasellus eget purus elementum, congue augue eu, porta tortor. Integer quis volutpat libero, a malesuada
-                    libero.
-            Donec cursus euismod placerat. Donec quis elit sit amet mi mattis efficitur. Pellentesque metus nisl,
-                    pellentesque nec dignissim et,
-            convallis eget lorem. Aliquam id consectetur nulla, et semper nisl.</p>
--->
             </div>
         </div>
 

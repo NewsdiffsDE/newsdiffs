@@ -11,6 +11,12 @@ from django.db.models import Count
 from twitter import *
 from django.template import Context, RequestContext, loader
 from django.views.decorators.cache import cache_page
+from BeautifulSoup import BeautifulSoup
+import urllib2
+import cookielib
+import re
+import socket
+import time
 
 OUT_FORMAT = '%B %d, %Y at %l:%M%P EDT'
 
@@ -172,10 +178,35 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
                     }
     return articles
 
-def get_articles_by_url(url):
-        articles = {}
-        all_articles = Article.objects.filter(url = url).exclude(source='')
+def grab_url(url, max_depth=5, opener=None):
+    if opener is None:
+        cj = cookielib.CookieJar()
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+    retry = False
+    try:
+        text = opener.open(url, timeout=5).read()
+        if '<title>NY Times Advertisement</title>' in text:
+            retry = True
+    except socket.timeout:
+        retry = True
+    if retry:
+        if max_depth == 0:
+            raise Exception('Too many attempts to download %s' % url)
+        time.sleep(1)
+        return grab_url(url, max_depth-1, opener)
+    return text
 
+def get_articles_by_url(url):
+        html = grab_url(url)
+        soup = BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES, fromEncoding='utf-8')
+        articles = {}
+        alreadyOriginal = Article.objects.filter(url=url)
+        if not alreadyOriginal.count():
+            if soup.find('meta', {'property': 'og:url'}):
+                url = soup.find('meta', {'property': 'og:url'})['content']
+            elif soup.find('meta', {'name': 'og:url'}):
+                url = soup.find('meta', {'name': 'og:url'})['content']
+        all_articles = Article.objects.filter(url = url).exclude(source='')
         for a in all_articles:
             versions = Version.objects.filter(article_id = a.id, boring = 0)
             version_count = versions.count()
@@ -540,38 +571,14 @@ def history(request):
 def artikel(request):
     return render_to_response('diffview.html', {})
 
-@cache_page(60 * 60)  #60 minute cache
-def entdecken(request):
-    config = {}
-    execfile("/var/www/dev/config.py", config)
-    twitter = Twitter(auth = OAuth(config["access_key"], config["access_secret"], config["consumer_key"], config["consumer_secret"]))
-    alltrends = twitter.trends.place(_id = 23424829)
-    results = []
-
-    for location in alltrends:
-        for trend in location["trends"]:
-            result = trend["name"].encode("utf-8")
-            if result.startswith('#'):
-                result = result.replace("#", "")
-            results.append(result)
-
-    return render_to_response('entdecken.html', {
-                        'trend1': results[0],
-						'trend2': results[1],
-						'trend3': results[2],
-						'trend4': results[3],
-						'trend5': results[4],
-						'trend6': results[5],
-						'trend7': results[6],
-						'trend8': results[7],
-						'trend9': results[8],
-						'trend10': results[9],
-						})
 
 
 
 def highlights(request):
     return render_to_response('highlights.html', {})
+
+def plugin(request):
+    return render_to_response('plugin.html', {})
 
 def kontakt(request):
     return render_to_response('kontakt.html', {})
@@ -581,3 +588,35 @@ def impressum(request):
 
 def index(request):
     return render_to_response('index.html', {'sources': SOURCES})
+
+
+@cache_page(60 * 60)  #60 minute cache
+def entdecken(request):
+    #config = {}
+  	#with open("/home/shingel/Downloads/newsdiffs/website/frontend/config.py") as con:
+    	#code = compile(con.read(), "/home/shingel/Downloads/newsdiffs/website/frontend/config.py", 'exec')
+    	#exec(code, config)
+    #execfile("/home/shingel/Downloads/newsdiffs/website/frontend/config.py", config)
+    #twitter = Twitter(auth = OAuth("config[access_token]", "config[access_token_secret]", "config[consumer_key]", "config[consumer_secret]"))
+    twitter = Twitter(auth = OAuth("3153069820-uCPWdwQ3lfpt9bZUJ2fJk5afnLYVxmyuk7AeaCm", "elPkoVmSSVqZ7p06tSmrdGBqeHr3UDty76xfjKnp4lnDz", "CUBTeh0rVd2ZLqrUmKI2tOh5n", "JTjRjHLO2WASE3Sf7jop0jJLcmmjJPuizmYrGAgkQhFL5g3dwb"))
+    alltrends = twitter.trends.place(_id = 23424829)
+    results = []
+
+    for location in alltrends:
+	for trend in location["trends"]:
+		result = trend["name"].encode("utf-8")
+		if result.startswith('#'):
+			result = result.replace("#", "")
+		results.append(result)
+
+    return render_to_response('entdecken.html', {'trend1': results[0],
+						 'trend2': results[1],
+						 'trend3': results[2],
+						 'trend4': results[3],
+						 'trend5': results[4],
+						 'trend6': results[5],
+						 'trend7': results[6],
+						 'trend8': results[7],
+						 'trend9': results[8],
+						 'trend10': results[9],
+						})

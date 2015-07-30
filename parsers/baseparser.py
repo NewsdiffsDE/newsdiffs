@@ -111,11 +111,11 @@ class BaseParser(object):
 
     categories = {u'Allgemein': [u'Allgemein', u'Sonstiges', u'Vermischtes'],
                   u'Politik': [u'Politik', u'Gipfel', u'Waffen', u'Terror', u'Konflikt'],
-                  u'Wirtschaft': [u'Geld', u'Finanzen', u'Wirtschaft', u'Arbeit', u'Krise'],
-                  u'Regional': [u'Regional', u'Region', u'Regionales', u'Tote', u'Tatort'],
-                  u'Technik': [u'Digital', u'Internet', u'Technik', u'Netzwelt', u'Handy'],
-                  u'Wissenschaft': [u'Wissen', u'Gesundheit', u'Bildung', u'Planet', u'Sonne'],
-                  u'Gesellschaft': [u'Gesellschaft', u'Alltag', u'Datenschutz', u'Drogen']}
+                  u'Wirtschaft': [u'Geld', u'Finanzen', u'Wirtschaft', u'Arbeit', u'DAX', u'Boerse', u'Banken', u'Bank',u'Euro', u'Waehrung', u'Aktien', u'Aktienkurs', u'Firma', u'Unternehmen' ],
+                  u'Regional': [u'Regional', u'Region', u'Regionales', u'Tatort',  u'Kreis', u'Gemeinde', u'Lokal'],
+                  u'Technik': [u'Datenschutz', u'Digital', u'Internet', u'Technik', u'Netzwelt', u'Handy', u'Web', u'Technologie', u'Smartphone', u'Mail' , u'E-Mail', u'Homepage', u'Website', u'Mail', u'Auto', u'Mechanik', u'Ingeneur'],
+                  u'Wissenschaft': [u'Wissen', u'Gesundheit', u'Ernaehrung', u'Bildung', u'Planet', u'Sonne', u'Forschung', u'Forscher', u'Studie', u'Erkenntnis'],
+                  u'Gesellschaft': [u'Gesellschaft', u'Alltag', u'Essen', u'Kirche', u'Religion', u'Drogen', u'Deutsche', u'Rentner', u'Schule', u'Bildung', u'Reise', u'Urlaub']}
 
      # Used when finding articles to parse
     feeder_pat   = None # Look for links matching this regular expression

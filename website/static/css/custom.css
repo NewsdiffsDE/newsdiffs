@@ -162,6 +162,18 @@ footer p a{
 }
 
 
+/* *****************************************************************************
+ Display for large screens: affects header (menu) and footer
+ **************************************************************************** */
+/*@media (min-width: 1366px) {
+    .limit-header {
+        width: 74%;
+    }
+    .limit-footer {
+        padding-left: 9%;
+        width: 58%;
+    }
+}*/
 
 /* *****************************************************************************
  Buttons
@@ -171,6 +183,14 @@ footer p a{
 	/*secures regular button height of 30px*/
 	height: 25px;
 	padding: 0px 2px;
+}
+
+.pager li {
+	padding: 0;
+}
+
+.pager a, .pager a:hover {
+    border-bottom: 1px solid #ddd;
 }
 
 
@@ -204,4 +224,12 @@ body {
 
 #datepicker{
   width: 100%;
+}
+
+/* *****************************************************************************
+ Radio Tag 
+ **************************************************************************** */
+
+.label {
+    margin: 1px; !important
 }

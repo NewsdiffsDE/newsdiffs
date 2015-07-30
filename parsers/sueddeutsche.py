@@ -17,9 +17,9 @@ class SDParser(BaseParser):
         if soup.find('article', 'reduced'):
             self.real_article = False
             return
+        keywords = self.url.strip('http://www.sueddeutsche.de/').replace('/', ', ')
         self.url = soup.find('meta', {'property': 'og:url'})['content'] if soup.find('meta', {'property': 'og:url'}) else self.url
         # category
-        keywords = self.url.strip('http://www.sueddeutsche.de/').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')
         #article headline
         elt = soup.find('meta', {'property': 'og:title'})

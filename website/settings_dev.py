@@ -88,6 +88,10 @@ INSTALLED_APPS = (
     'frontend',
     'debug_toolbar',
 
+
 )
+
+#    'debug_toolbar',
+
 
 STATIC_URL = '/website/static/'
