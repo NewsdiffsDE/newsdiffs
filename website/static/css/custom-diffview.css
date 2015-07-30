@@ -60,7 +60,7 @@ button[type=button] {
 	margin-top: 5px;
 }
 
-
+/*
 @media (max-width: 992px){
 	.share li {
 	  margin-top: 8px;
@@ -71,7 +71,7 @@ button[type=button] {
 	  float: left;
 	  width: 110px;
 	}
-}
+}*/
 
 @media (min-width: 992px){
 	.share {
