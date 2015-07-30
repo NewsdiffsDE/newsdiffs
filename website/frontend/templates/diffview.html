@@ -45,9 +45,7 @@
                         {% else %}
                         <li class="previous disabled"><a><span aria-hidden="true">&larr;</span>ältere Änderung</a></li>
                         {%endif%}
-			<li><a href="{% url 'article_history' %}?id={{article_id}}">
-                    		<button type="button" class="btn btn-default btn-sm"><img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf">Versionsübersicht</button>
-		        </a></li>
+			<li><a href="{% url 'article_history' %}?id={{article_id}}"><img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf">Versionsübersicht</a></li>
                         {% if next %}
                         <li class="next"><a
                                 href="{{ next }}">neuere Änderung
