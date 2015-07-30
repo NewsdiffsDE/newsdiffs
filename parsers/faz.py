@@ -17,7 +17,7 @@ class FAZParser(BaseParser):
         soup = BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES,
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
-        keywords = self.url.strip('http://www.faz.net').replace('/', ', ')
+        keywords = self.url.strip('http://www.faz.net/aktuell/').replace('/', ', ')
         self.source = ', '.join(self.domains)
         self.url = soup.find('meta', {'property': 'og:url'})['content'] if soup.find('meta', {'property': 'og:url'}) else self.url
         # category
@@ -33,8 +33,8 @@ class FAZParser(BaseParser):
         self.keywords = self.extract_keywords(meta_keywords)
         self.keywords += ', ' + self.extract_keywords(self.title)
         # byline / author
-        author = soup.find('meta', {'name': 'author'})
-        self.byline = author['content'] if author else ''
+        author = soup.find('span', {'class': 'Content Autor caps'})
+        self.byline = author.getText() if author else ''
         self._cleanByline()
         # article date
         created_at = soup.find('meta', {'name': 'DC.date.issued'})

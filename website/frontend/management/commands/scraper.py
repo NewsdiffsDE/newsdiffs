@@ -328,7 +328,7 @@ def update_article(article, parsed_article):
     to_store = unicode(parsed_article).encode('utf8')
     t = datetime.now()
 #    logger.debug('Article parsed; trying to store')
-    article.category = parsed_article.category
+    article.category = article.category if article.category else parsed_article.category
     article.keywords = parsed_article.keywords
     article.source = parsed_article.source
     article.save()
@@ -363,18 +363,21 @@ def update_articles(todays_git_dir):
         if not models.Article.objects.filter(url=url).count():
 #            logger.debug('Adding!')
             parsed_article = load_article(url)
+            if not parsed_article:
+                continue
             ogUrl = parsed_article.url
             if not parsed_article.real_article:
                 article = models.Article(url=url, git_dir='old')
             else:
                 if not models.Article.objects.filter(url=ogUrl).count():
+                    if not ogUrl == url:
+                        models.Article(url=url, git_dir='old').save();
                     article = models.Article(url=ogUrl, git_dir=todays_git_dir)
                 else:
                     models.Article(url=url, git_dir='old').save();
                     article = models.Article.objects.get(url=ogUrl)
 
                 update_article(article, parsed_article)
-            article.save()
 #    logger.info('Done storing to database')
 
 def get_update_delay(minutes_since_update):
