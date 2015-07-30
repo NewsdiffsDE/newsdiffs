@@ -19,8 +19,8 @@
                 <!-- Information -->
                 <p>
                     <span class="glyphicon glyphicon-book"></span>
-                    Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> (<div class="text"> <a class="hover-color" id="original" href="{{ article.url }}" target="_blank">zum Original</a></div>) |
-                    Ressort: {{article.category}}
+                    Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> <div class="text"> (<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
+                    Ressort: {{article.category}}</div>
                 </p>
              
 				<table class="table table-condensed table-striped">
@@ -38,7 +38,7 @@
                         <tr>
 
                             <!-- Schlagzeile Spalte -->
-                            <td><a href="http://{{article.url}}">{{version.title}}</a> {%if version.byline != '' %}({{version.byline}}){%endif%}</td>
+                            <td><div class="hover-color"> <a href="http://{{article.url}}">{{version.title}}</a></div> {%if version.byline != '' %}({{version.byline}}){%endif%}</td>
 
                             <!-- Datum Spalte -->
                             <td>{{version.date}}</td>
