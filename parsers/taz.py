@@ -15,7 +15,7 @@ class TAZParser(BaseParser):
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
         self.source = ', '.join(self.domains)
-
+        self.url = soup.find('meta', {'property': 'og:url'})['content'] if soup.find('meta', {'property': 'og:url'}) else self.url
         #article headline
         elt = soup.find('meta', {'property': 'og:title'})
         if elt is None:

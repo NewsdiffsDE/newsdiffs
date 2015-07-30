@@ -11,6 +11,7 @@
 }
 @media (max-width: 768px){
 	.pager .next > a, .pager .previous > a {
+		float: none;
 		margin-left: auto;
 		margin-right: auto;
 	}
@@ -40,6 +41,10 @@
 	width: 18px;
 }
 
+span.shtitle{
+  font-size: 18px;
+}
+
 ul.del-ins{
     list-style: none;
     padding-left: 0px;
@@ -60,24 +65,8 @@ button[type=button] {
 }
 
 
-@media (max-width: 992px){
-	.share li {
-	  margin-top: 8px;
-	  margin-bottom: 10px;
-	  padding: 5px;
-	  list-style: none;
-	  display: block;
-	  float: left;
-	  width: 110px;
-	}
-}
 
-@media (min-width: 992px){
-	.share {
-  	 margin-top: 300px;
-	}
-}
-
-span.shtitle{
-  font-size: 18px;
+.glyphicon.glyphicon-book{
+   padding-right: 3px;
+   color: #a4a4a4;
 }

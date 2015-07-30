@@ -14,9 +14,9 @@ class WeltParser(BaseParser):
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
         self.source = ', '.join(self.domains)
+        keywords = self.url.strip('http://www.welt.de/').replace('/', ', ')
         self.url = soup.find('meta', {'property': 'og:url'})['content'] if soup.find('meta', {'property': 'og:url'}) else self.url
         # category
-        keywords = self.url.strip('http://www.welt.de/').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')
         #article headline
         elt = soup.find('h1', 'widget storyContent title    prefix_1 grid_8')

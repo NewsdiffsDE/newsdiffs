@@ -14,7 +14,7 @@ class ZeitParser(BaseParser):
                              fromEncoding='utf-8')
 
         self.meta = soup.findAll('meta')
-        keywords = self.url.strip('http://www.zeit.de').replace('/', ',')
+        keywords = self.url.strip('http://www.zeit.de').replace('/', ', ')
         self.source = ', '.join(self.domains)
         self.url = soup.find('meta', {'property': 'og:url'})['content'] if soup.find('meta', {'property': 'og:url'}) else self.url
         # category

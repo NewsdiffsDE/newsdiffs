@@ -547,6 +547,9 @@ def artikel(request):
 def highlights(request):
     return render_to_response('highlights.html', {})
 
+def plugin(request):
+    return render_to_response('plugin.html', {})
+
 def kontakt(request):
     return render_to_response('kontakt.html', {})
 
