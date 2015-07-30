@@ -367,7 +367,7 @@ def update_articles(todays_git_dir):
                 continue
             ogUrl = parsed_article.url
             if not parsed_article.real_article:
-                article = models.Article(url=url, git_dir='old')
+                models.Article(url=url, git_dir='old').save()
             else:
                 if not models.Article.objects.filter(url=ogUrl).count():
                     if not ogUrl == url:
