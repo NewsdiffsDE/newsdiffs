@@ -32,12 +32,12 @@
 					</thead>
 
                         <tr>
-                            <th>
+                            <td>
                                 <a href="{{all_diffs}}">
                                     <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
-                                         alt="Vergleichen-Icon">neueste:älteste Version
+                                         alt="Vergleichen-Icon"> Diff neueste:älteste Version
                                 </a><
-                            </th>
+                            </td>
                         </tr>
 
                     {% for difflink, version in versions %}
@@ -53,7 +53,7 @@
                             {% if difflink %}
                                 <td><a class="hover-color" href="{{difflink}}">
                                     <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
-                                         alt="Vergleichen-Icon">Diff mit vorheriger Version></a>
+                                         alt="Vergleichen-Icon">Diff mit vorheriger Version</a>
                                 </td>
                             {% else %}
                                 <td>
