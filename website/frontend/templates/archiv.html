@@ -47,8 +47,7 @@
 
                     <tr>
                          <td>
-                            <em>{{ forloop.counter0|add:begin_at }}. Ergebnis | Anzahl der Versionen: {{article
-                            .versioncount}} |
+                            <em>{{ forloop.counter0|add:begin_at }}. Ergebnis | Anzahl der Änderungen: {{article.versioncount}} |
                                 Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> (<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
 
                                 Ressort: {{article.ressort}}
@@ -59,18 +58,22 @@
                             </h3>
 
                             <p>
-                                <a class="no-link-color" href="article_history.html">
+                                <div class="round-btn">
+                                    <a class="no-link-color" href="article_history.html">
                                     <img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png"
                                          alt="Artikelverlauf-Icon">
-                                </a>
-                                <a href="{% url 'article_history' %}?id={{article.id}}">Versionsübersicht
+                                    </a>
+                                    <a href="{% url 'article_history' %}?id={{article.id}}">Änderungsübersicht
                                     ({{article.versioncount}})</a>
+                                </div>
+
                             </p>
 
-                            <p class="round-btn"><a href="{{article.all_diffs}}"><img class="ownbtn"
+                            <p>
+                                <a href="{{article.all_diffs}}"><img class="ownbtn"
                                                                    src="../static/images/Icon_Vergleichen.png"
-                                                                   alt="Vergleichen-Icon">Diff älteste:neueste
-                                Version</a></p>
+                                                                   alt="Vergleichen-Icon">alle Änderungen</a>
+                            </p>
                         </td>
                     </tr>
                     {% endfor %}
