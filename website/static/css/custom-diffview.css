@@ -11,7 +11,7 @@
 }
 
 .pager a, .pager a:hover {
-    border-bottom: 1px;
+    border-bottom: 1px solid #ddd;
 }
 
 @media (max-width: 768px){
