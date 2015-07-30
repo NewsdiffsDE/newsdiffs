@@ -14,8 +14,8 @@ a img {
     color: #666;
 }
 
-.glyphicon{
-   padding-right: 8px;
+.glyphicon.glyphicon-book{
+   padding-right: 3px;
    color: #a4a4a4;
 }
 

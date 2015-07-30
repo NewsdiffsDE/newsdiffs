@@ -69,3 +69,8 @@ button[type=button] {
 span.shtitle{
   font-size: 18px;
 }
+
+.glyphicon.glyphicon-book{
+   padding-right: 3px;
+   color: #a4a4a4;
+}
