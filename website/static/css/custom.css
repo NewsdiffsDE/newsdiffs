@@ -200,7 +200,7 @@ footer p a{
 }
 
 .round-btn-hover > a {
-    
+    display: inline;
     padding: 5px 14px;
     border: 1px solid #ddd;
     border-radius: 15px;
@@ -215,7 +215,7 @@ footer p a{
 }
 
 .round-btn > a {
-
+    display: inline;
     padding: 5px 14px;
     border: 1px solid #ddd;
     border-radius: 15px;
