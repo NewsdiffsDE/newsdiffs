@@ -94,7 +94,7 @@ $(window).load(function () {
             clear: "Löschen"
     };
 
-    $('#datepicker').attr("placeholder", "Datum wählen");
+    /**$('#datepicker').attr("placeholder", "Datum wählen");**/
 
     $('#datepicker').datepicker({
         //format: "dd/mm/yyyy",
