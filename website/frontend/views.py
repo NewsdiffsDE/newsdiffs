@@ -589,13 +589,9 @@ def index(request):
 
 @cache_page(60 * 60)  #60 minute cache
 def entdecken(request):
-    #config = {}
-  	#with open("/home/shingel/Downloads/newsdiffs/website/frontend/config.py") as con:
-    	#code = compile(con.read(), "/home/shingel/Downloads/newsdiffs/website/frontend/config.py", 'exec')
-    	#exec(code, config)
-    #execfile("/home/shingel/Downloads/newsdiffs/website/frontend/config.py", config)
-    #twitter = Twitter(auth = OAuth("config[access_token]", "config[access_token_secret]", "config[consumer_key]", "config[consumer_secret]"))
-    twitter = Twitter(auth = OAuth("3153069820-uCPWdwQ3lfpt9bZUJ2fJk5afnLYVxmyuk7AeaCm", "elPkoVmSSVqZ7p06tSmrdGBqeHr3UDty76xfjKnp4lnDz", "CUBTeh0rVd2ZLqrUmKI2tOh5n", "JTjRjHLO2WASE3Sf7jop0jJLcmmjJPuizmYrGAgkQhFL5g3dwb"))
+    config = {}
+    execfile("/var/www/dev/config.py", config)
+    twitter = Twitter(auth = OAuth(config["access_key"], config["access_secret"], config["consumer_key"], config["consumer_secret"]))
     alltrends = twitter.trends.place(_id = 23424829)
     results = []
 
@@ -606,14 +602,15 @@ def entdecken(request):
                 result = result.replace("#", "")
             results.append(result)
 
-    return render_to_response('entdecken.html', {'trend1': results[0],
-						 'trend2': results[1],
-						 'trend3': results[2],
-						 'trend4': results[3],
-						 'trend5': results[4],
-						 'trend6': results[5],
-						 'trend7': results[6],
-						 'trend8': results[7],
-						 'trend9': results[8],
-						 'trend10': results[9],
+    return render_to_response('entdecken.html', {
+                        'trend1': results[0],
+						'trend2': results[1],
+						'trend3': results[2],
+						'trend4': results[3],
+						'trend5': results[4],
+						'trend6': results[5],
+						'trend7': results[6],
+						'trend8': results[7],
+						'trend9': results[8],
+						'trend10': results[9],
 						})
