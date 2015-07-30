@@ -17,7 +17,7 @@
 
 
 var hideElementFunction = function(element) {
-	console.log(element + ' hidden!');
+	//console.log(element + ' hidden!');
 	$(element).hide();
 };
 
@@ -26,9 +26,9 @@ var showElementFunction = function(element) {
 };
 
 var chooseListItemFunction = function(e) {
-	console.log('click event');
-	console.log(e.target);
-	// handle this!
+	//console.log('click event');
+	//console.log(e.target);
+
 	// Weil je nach Kick-Ziel (Link, Icon, Listenelement) etwas anderes das Target ist, muss man ggf suchen.
 	var clickedListItem;
 	if (e.target.tagName.toUpperCase() === 'LI') {
@@ -36,11 +36,12 @@ var chooseListItemFunction = function(e) {
 	} else {
 		clickedListItem = $(e.target).closest('li');
 	}
+    //
 	console.log(clickedListItem);
 
 	// Und nun kann man ID und Text auslesen und damit weiterarbeiten:
 	// console.log(clickedListItem.attr('id'));
-	console.log(clickedListItem.text());
+	//console.log(clickedListItem.text());
 
 	var icon = document.createElement("span");
 	icon.className = "glyphicon glyphicon-link";
