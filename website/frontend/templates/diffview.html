@@ -41,9 +41,7 @@
 				<nav>
 					<ul class="pager">
 						{% if prev %}
-						<li class="previous col-xs-12 col-sm-4"><a
-								href="{{ prev }}"><span
-								aria-hidden="true">&larr;</span>ältere Änderung</a></li>
+						<li class="previous col-xs-12 col-sm-4"><a href="{{ prev }}"><span	aria-hidden="true">&larr;</span> ältere Änderung</a></li>
 						{% else %}
 						<li class="previous disabled col-xs-12 col-sm-4"><a><span aria-hidden="true">&larr;</span>ältere Änderung</a></li>
 						{%endif%}
@@ -51,9 +49,7 @@
 							<a href="{% url 'article_history' %}?id={{article_id}}"><img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf">Versionsübersicht</a>
 						</li>
 						{% if next %}
-						<li class="next col-xs-12 col-sm-4"><a
-								href="{{ next }}">neuere Änderung
-							<span aria-hidden="true">&rarr;</span></a></li>
+						<li class="next col-xs-12 col-sm-4"><a	href="{{ next }}"> neuere Änderung<span aria-hidden="true">&rarr;</span></a></li>
 						{% else %}
 						<li class="next disabled col-xs-12 col-sm-4"><a>neuere Änderung<span aria-hidden="true">&rarr;</span></a></li>
 						{%endif%}
