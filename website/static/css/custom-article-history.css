@@ -57,11 +57,6 @@ only screen and (max-width: 760px),
 	
 }
 
-.round-btn > a:hover,
-.round-btn > a:focus {
-    text-decoration: none;
-    background-color: #eee;
-}
 
 .round-btn > a {
     display: inline-block;
@@ -69,4 +64,11 @@ only screen and (max-width: 760px),
     border: 1px solid #ddd;
     border-radius: 15px;
 
+}
+
+.round-btn > a:hover,
+.round-btn > a:focus {
+    text-decoration: none;
+    background-color: #eee;
+    border: 1px solid transparent;
 }
