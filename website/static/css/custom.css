@@ -10,6 +10,9 @@ code {
   font-size: 80%;
 }
 
+h1{
+	font-weight: 300;
+}
 
 .maincontent a{
 	color: #333333;
