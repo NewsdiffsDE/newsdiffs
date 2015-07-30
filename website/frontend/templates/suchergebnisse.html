@@ -18,7 +18,7 @@
 
         <div class="col-md-2 col-md-offset-2">
             <button id="sort-btn" class="btn btn-default" data-toggle="collapse" data-target="#allfilters">
-                Filter anzeigen
+                Sortieren & Filtern anzeigen
             </button>
         </div>
     </div>
@@ -74,20 +74,23 @@
                                 <a  href="{% url 'article_history' %}?id={{article.id}}">{{ article.title }}</a>
                             </h3>
 
-
-                                <p><a class="no-link-color no-line-under-icon" href="article_history.html">
-                                    <img src="../static/images/Icon_Artikelverlauf.png"
+                            <span class="text">
+                                <p>
+                                    <a class="no-link-color no-line-under-icon" href="article_history.html">
+                                    <img class="no-line-under-icon"
+                                        src="../static/images/Icon_Artikelverlauf.png"
                                          alt="Artikelverlauf-Icon">
-                                </a><span class="text">
-                                <a class="no-link-color no-line-under-icon" href="{% url 'article_history' %}?id={{article.id}}">Versionsübersicht
-                                    ({{article.versioncount}})</a> </span>
+                                    </a>
+                                    <a class="no-link-color no-line-under-icon" href="{% url 'article_history' %}?id={{article.id}}">Versionsübersicht
+                                    ({{article.versioncount}})</a>
 
 
 
-                            <span class="text"><a class="no-link-color no-line-under-icon" href="{{article.all_diffs}}"><img
+                                    <a class="no-link-color" href="{{article.all_diffs}}"><img class="no-line-under-icon"
                                                                    src="../static/images/Icon_Vergleichen.png"
-                                                                   alt="Vergleichen-Icon">alle Änderungen</a>
-                            </p>
+                                                                   alt="Vergleichen-Icon">Neueste Version vs. Originalversion</a>
+                                </p>
+                            </span>
                         </td>
                     </tr>
                     {% endfor %}
