@@ -17,6 +17,10 @@
 				<p><span class="glyphicon glyphicon-book"></span>
                     Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> (<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
                     Ressort: {{article.category}}
+                <a href="{{all_diffs}}">
+                    <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
+                         alt="Vergleichen-Icon"> Diff neueste:älteste Version
+                </a>
 
 
 
@@ -30,15 +34,6 @@
 
 						</tr>
 					</thead>
-
-                        <tr>
-                            <td>
-                                <a href="{{all_diffs}}">
-                                    <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
-                                         alt="Vergleichen-Icon"> Diff neueste:älteste Version
-                                </a><
-                            </td>
-                        </tr>
 
                     {% for difflink, version in versions %}
                         <tr>
