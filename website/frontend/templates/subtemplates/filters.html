@@ -1,0 +1,191 @@
+{% load url from future %}
+{% block css_import %}
+<link href="{% url 'static' 'css/custom-filter.css' %}" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Nobile' rel='stylesheet' type='text/css'>
+{% endblock %}
+
+<div id="allfilters" class="collapse">
+
+
+    <!--Filter-->
+    <div class="col-md-2 col-md-offset-2">
+        <div class=" containter-fluid sidebar">
+            <div class="row">
+                <h5 class="col-xs-12">Filtern nach:</h5>
+
+                <!-- Datum -->
+                <p class="col-xs-12">Datum »</p>
+                <div class="col-xs-6 col-sm-3 col-md-12 date-wrapper">
+
+                    <!-- Fills Placeholder of Datepicker according to date-->
+                    {% if archive_date %}
+                        <input id="datepicker" name="date-value" placeholder="{{ archive_date }}"/>
+                    {% else %}
+                        <input id="datepicker" name="date-value" placeholder="Datum wählen"/>
+                    {% endif %}
+                </div>
+                <p class="col-xs-12">Zeitung »</p>
+
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+                        <a class="filterbar"href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=Bild&ressort={{ressort}}&date={{archive_date}}">
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioBild" value="bild" {% if source == 'Bild' %}checked{% endif %}>
+                            BILD
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+                        <a class="filterbar" href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=Focus&ressort={{ressort}}&date={{archive_date}}">
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioFocus" value="focus" {% if source == 'Focus' %}checked{% endif %}>
+                            Focus
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+                        <a class="filterbar" href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=TAZ&ressort={{ressort}}&date={{archive_date}}">
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioTaz"
+                                   value="taz" {% if source == 'TAZ' %}checked{% endif %}>
+                            taz
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+                        <a class="filterbar" href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=Spiegel&ressort={{ressort}}&date={{archive_date}}">
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioSpiegel"
+                                   value="spiegel" {% if source == 'Spiegel' %}checked{% endif %}>
+                            Spiegel Online
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+                        <a class="filterbar" href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=Welt&ressort={{ressort}}&date={{archive_date}}">
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioWelt" value="welt" {% if source == 'Welt' %}checked{% endif %}>
+                            Die Welt
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+                        <a class="filterbar" href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=Stern&ressort={{ressort}}&date={{archive_date}}">
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioStern" value="stern" {% if source == 'Stern' %}checked{% endif %}>
+                            stern
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+                        <a class="filterbar" href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=Zeit&ressort={{ressort}}&date={{archive_date}}">
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioZeit" value="zeit" {% if source == 'Zeit' %}checked{% endif %}>
+                            Zeit Online
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+                        <a class="filterbar" href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=Sueddeutsche&ressort={{ressort}}&date={{archive_date}}">
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioSueddeutsche"
+                                   value="sueddeutsche" {% if source == 'Sueddeutsche' %}checked{% endif %}>
+                            Süddeutsche Zeitung
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+                        <a class="filterbar" href="/{{template}}/?%}?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=FAZ&ressort={{ressort}}&date={{archive_date}}">
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioFaz" value="faz" {% if source == 'FAZ' %}checked{% endif %}>
+                            FAZ
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+                        <a class="filterbar" href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=n-tv&ressort={{ressort}}&date={{archive_date}}">
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioNtv" value="ntv" {% if source == 'n-tv' %}checked{% endif %}>
+                            n-tv
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+                        <a class="filterbar" href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source=RP-ONLINE&ressort={{ressort}}&date={{archive_date}}">
+                            <input type="radio" name="newspaperFilterOptionsRadios" id="radioRp" value="rp" {% if source == 'RP-ONLINE' %}checked{% endif %}>
+                            RP Online
+                        </a>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <p class="col-xs-12">Ressort »</p>
+
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+                        <a class="filterbar" href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source={{source}}&ressort=Allgemein&date={{archive_date}}">
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioAllgemein"
+                                   value="allgemein" {% if ressort == 'Allgemein' %}checked{% endif %}>
+                            Allgemein
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+
+                        <a class="filterbar" href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source={{source}}&ressort=Politik&date={{archive_date}}">
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioPolitik"
+                               value="politik" {% if ressort == 'Politik' %}checked{% endif %}>Politik
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+                        <a class="filterbar" href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source={{source}}&ressort=Wirtschaft&date={{archive_date}}">
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioWirtschaft"
+                                   value="wirtschaft" {% if ressort == 'Wirtschaft' %}checked{% endif %}>
+                            Wirtschaft
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+                        <a class="filterbar" href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source={{source}}&ressort=Regional&date={{archive_date}}">
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioRegional"
+                                   value="regional" {% if ressort == 'Regional' %}checked{% endif %}>
+                            Regional
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+                        <a class="filterbar" href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source={{source}}&ressort=Technik&date={{archive_date}}">
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioTechnik"
+                                   value="technik" {% if ressort == 'Technik' %}checked{% endif %}>
+                            Technik
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+                        <a class="filterbar" href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source={{source}}&ressort=Wissenschaft&date={{archive_date}}">
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioWissenschaft"
+                                   value="wissenschaft" {% if ressort == 'Wissenschaft' %}checked{% endif %}>
+                            Wissenschaft
+                        </a>
+                    </label>
+                </div>
+                <div class="col-xs-6 col-sm-3 col-md-12 radio">
+                    <label>
+                        <a class="filterbar" href="/{{template}}/?searchterm={{searchterm}}&search_type={{search_type}}&sort={{sort}}&source={{source}}&ressort=Gesellschaft&date={{archive_date}}">
+                            <input type="radio" name="categoryFilterOptionsRadios" id="radioGesellschaft"
+                                   value="gesellschaft" {% if ressort == 'Gesellschaft' %}checked{% endif %}>
+                            Gesellschaft
+                        </a>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.allfilters -->

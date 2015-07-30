@@ -80,9 +80,14 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'django.contrib.staticfiles',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
     'south',
     'frontend',
+    #'debug_toolbar',
+
 )
+
+STATIC_URL = '/website/static/'

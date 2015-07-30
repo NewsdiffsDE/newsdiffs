@@ -5,7 +5,7 @@
 	<link rel="alternate" href="http://{{request.META.HTTP_HOST}}{% url 'browse' source %}?page={{page}}"/>
 	<updated>{{last_update|date:"r"}}</updated>
 	<author>
-		<name>NewsDiffs</name>
+		<name>newsdiffs.de</name>
 	</author>
 
 	{% for article, last_version, versions in articles %}

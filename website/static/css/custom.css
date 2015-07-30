@@ -1,0 +1,219 @@
+/* *****************************************************************************
+ Body 
+ **************************************************************************** */
+
+body{
+    font-family: 'Open Sans', sans-serif;
+}
+
+code {
+  font-size: 80%;
+}
+
+
+.maincontent a{
+	color: #333333;
+
+}
+
+
+.maincontent a:hover {
+	color: #333333;
+	text-decoration: none;
+	border-bottom: none;
+}
+
+/* for links in text*/
+.text a{
+	color: #333333;
+	text-decoration: none;
+	border-bottom: 1px #333333 dotted;
+}
+
+.text a:hover {
+	color: #333333;
+	text-decoration: none;
+	border-bottom: none;
+}
+
+
+/* *****************************************************************************
+ Navbar
+ **************************************************************************** */
+
+
+.navbar-brand img{
+	height: 50px;
+	margin: 15px 15px 15px 0;
+
+}
+
+@media screen and (max-width: 768px){
+	.navbar-brand img{
+		height: 60%;
+		margin-top: 12px;
+	}
+}
+
+
+.navbar-brand {
+	padding: 0px;
+}
+
+ul.nav.navbar-nav.navbar-right li > a{
+	text-align: center;
+}
+
+#bs-example-navbar-collapse-1 {
+	margin-top: 15px;
+}
+
+.nav > li > a {
+	padding: 5px 15px;
+	margin: 10px 0px;
+}
+
+
+
+.navbar-default {
+    background-color: #FFF;
+    border: none;
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border: none;
+}
+
+
+.navbar-default .navbar-nav > .active > a{
+    background-color:rgba(236, 236, 236, 0.68);
+}
+
+/* *****************************************************************************
+ Footer
+ **************************************************************************** */
+
+footer {
+	background-color: #666;
+	padding-top: 10px;
+	color: #fff;
+}
+
+footer img {
+	height: 20px;
+}
+footer p a{
+	color: #fff;
+	border-bottom: 1px #fff dotted;
+
+}
+
+
+.footer-social img{
+	height: 30px;
+	/*padding: 0 5px;*/
+	padding: 5px;
+  	padding: 5px;
+  	border-radius: 2px;
+}
+
+.footer-left p {
+	float: left;
+	padding-right: 10px;
+	padding-top: 5px;
+}
+
+
+.footer-left a:hover {
+	color: #ffffff;
+    text-decoration: none;
+    border-bottom: 1px #fff dotted;
+}
+
+.footer-right img:hover{
+	background-color: #389800;
+}
+
+.footer-social{
+    list-style-type: none;
+    float: right;
+}
+
+.footer-social li {
+    display: inline;
+}
+
+@media (max-width:450px){
+
+ .footer-left p{
+  padding-top: 3px;
+  font-size: 11px;
+}
+
+.footer-social {
+  list-style-type: none;
+  float: none;
+}
+
+ .footer-social img{
+  height: 26px;
+}
+
+}
+
+
+/* *****************************************************************************
+ Display for large screens: affects header (menu) and footer
+ **************************************************************************** */
+@media (min-width: 1366px) {
+    .limit-header {
+        width: 74%;
+    }
+    .limit-footer {
+        padding-left: 9%;
+        width: 58%;
+    }
+}
+
+/* *****************************************************************************
+ Buttons
+ **************************************************************************** */
+
+.ownbtn{
+	/*secures regular button height of 30px*/
+	height: 25px;
+	padding: 0px 2px;
+}
+
+
+
+/* *****************************************************************************
+ Sticky Footer Styles
+ **************************************************************************** */
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+/* *****************************************************************************
+ Datepicker Styles
+ **************************************************************************** */
+
+.datepicker table tr td.today, .datepicker table tr td.today:hover {
+    background-image: -webkit-linear-gradient(top,#FCFCFC,#CBCBCB);
+}
+
+#datepicker{
+  width: 100%;
+}

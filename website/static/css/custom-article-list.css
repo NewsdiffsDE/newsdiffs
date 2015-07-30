@@ -1,0 +1,52 @@
+.radio + .radio {
+	margin-top: 10px;
+}
+
+.radio, {
+	white-space:nowrap;
+}
+
+a img:hover {
+	text-decoration: none;
+	border: none;
+}
+
+.title a:hover{
+    color: #666;
+}
+
+#original{
+    border-bottom: 1px #666 dotted;
+}
+
+.table-condensed {
+	clear:both;
+}
+
+.table-condensed > tbody > tr > td > h3 {
+	margin-top: 10px;
+}
+
+.table-condensed > tbody > tr > td > p {
+	float: left;
+	margin-right: 5%;
+}
+
+
+/* Gehe zu */
+
+#pagination-nav ul{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* Toggle Sortieren und Filtern*/
+
+@media (min-width: 992px) {
+    #sort-btn-row{
+        display: none;
+    }
+    #allfilters{
+        display: block;
+    }
+}

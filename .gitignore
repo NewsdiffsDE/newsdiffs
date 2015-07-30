@@ -31,4 +31,7 @@ pip-log.txt
 .mr.developer.cfg
 
 newsdiffs.db
+newsdiffs.db-journal
 database_settings.py
+
+.DS_Store

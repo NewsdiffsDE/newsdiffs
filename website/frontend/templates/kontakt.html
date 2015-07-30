@@ -1,0 +1,33 @@
+{% extends 'headerfooter.html' %}
+{% load url from future %}
+{% block title %}Kontakt{% endblock %}
+
+{% block css_import %}
+    <link href="{% url 'static' 'css/custom-contact.css' %}" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{# nichts ist active #}
+{#{% block active_entdecken %}class="active"{% endblock %}#}
+
+{% block content %}
+    <div class="container-fluid maincontent">
+        {% include "searchbar.html" %}
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="slide">Kontakt</div>
+		<p style="text-align: center">Schreiben Sie uns eine Nachricht und wir antworten so schnell wie möglich!</p>
+            </div>
+        </div>
+
+        <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+			<script type="text/javascript" src="http://form.jotformeu.com/jsform/52066125030340"></script>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

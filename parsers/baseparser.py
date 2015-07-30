@@ -5,6 +5,7 @@ import socket
 import sys
 import time
 import urllib2
+from BeautifulSoup import BeautifulSoup, Comment
 
 # Define a logger
 
@@ -41,7 +42,7 @@ def grab_url(url, max_depth=5, opener=None):
     if retry:
         if max_depth == 0:
             raise Exception('Too many attempts to download %s' % url)
-        time.sleep(0.5)
+        time.sleep(1)
         return grab_url(url, max_depth-1, opener)
     return text
 
@@ -96,18 +97,30 @@ class BaseParser(object):
 
     # These should be filled in by self._parse(html)
     date = None
+    category = None
     title = None
     byline = None
     body = None
+    keywords = None
+    source = None
 
     real_article = True # If set to False, ignore this article
     SUFFIX = ''         # append suffix, like '?fullpage=yes', to urls
 
     meta = []  # Currently unused.
 
-    # Used when finding articles to parse
+    categories = {u'Allgemein': [u'Allgemein', u'Sonstiges', u'Vermischtes'],
+                  u'Politik': [u'Politik', u'Gipfel', u'Waffen', u'Terror', u'Konflikt'],
+                  u'Wirtschaft': [u'Geld', u'Finanzen', u'Wirtschaft', u'Arbeit', u'Krise'],
+                  u'Regional': [u'Regional', u'Region', u'Regionales', u'Tote', u'Tatort'],
+                  u'Technik': [u'Digital', u'Internet', u'Technik', u'Netzwelt', u'Handy'],
+                  u'Wissenschaft': [u'Wissen', u'Gesundheit', u'Bildung', u'Planet', u'Sonne'],
+                  u'Gesellschaft': [u'Gesellschaft', u'Alltag', u'Datenschutz', u'Drogen']}
+
+     # Used when finding articles to parse
     feeder_pat   = None # Look for links matching this regular expression
     feeder_pages = []   # on these pages
+    feed_div = None
 
     feeder_bs = BeautifulSoup #use this version of beautifulsoup for feed
 
@@ -122,6 +135,7 @@ class BaseParser(object):
             raise
         logger.debug('got html')
         self._parse(self.html)
+
 
     def _printableurl(self):
         return self.url + self.SUFFIX
@@ -143,8 +157,10 @@ class BaseParser(object):
         for feeder_url in cls.feeder_pages:
             html = grab_url(feeder_url)
             soup = cls.feeder_bs(html)
+            if(cls.feed_div):
+                soup = soup.find(cls.feed_div)
 
-            # "or ''" to make None into str
+            # "or ''" to make None into strgit
             urls = [a.get('href') or '' for a in soup.findAll('a')]
 
             # If no http://, prepend domain name
@@ -152,5 +168,47 @@ class BaseParser(object):
             urls = [url if '://' in url else concat(domain, url) for url in urls]
 
             all_urls = all_urls + [url for url in urls if
-                                   re.search(cls.feeder_pat, url)]
-        return all_urls
+
+                                   re.search(cls.feeder_pat, url) and "#" not in url]
+        return set(all_urls)
+
+        #removes all non-content
+    def remove_non_content(self, html):
+        map(lambda x: x.extract(), html.findAll('script'))
+        map(lambda x: x.extract(), html.findAll('style'))
+        map(lambda x: x.extract(), html.findAll('embed'))
+        comments = html.findAll(text=lambda text:isinstance(text, Comment))
+        [comment.extract() for comment in comments]
+        return html
+
+        #extracts the first matching category from keywords
+    def compute_category(self, keywords):
+        matched_category = str("Allgemein")
+        keywords = keywords.lower().split(', ')
+        for cats in self.categories.itervalues():
+            for key in keywords:
+                for cat in cats:
+                    if key in cat.lower():
+                        matched_category = [k for k, v in self.categories.iteritems() if v == cats][0]
+                        break
+        return str(matched_category)
+
+        #extracts keywords from text
+    def extract_keywords(self, text):
+        text.encode('utf-8')
+        conversion = '!@#$%^&*()[]{};:,./<>?\|`~-=_+'
+        newtext = ''
+        for c in text:
+            newtext += ' ' if c in conversion else c
+        words = newtext.replace('  ', ' ').split(' ')
+        results = []
+        map(lambda x : (results.append(x) if x and x[0].isupper() else None), words)
+        return (', '.join(results)).lower()
+
+        # clean byline tag, replaces "und" with a comma, strips "Von"
+    def _cleanByline(self):
+        if self.byline.startswith(' '):
+            self.byline = self.byline[1:]
+        if self.byline.startswith('Von ') or self.byline.startswith('von '):
+            self.byline = self.byline[4:]
+        self.byline = self.byline.replace(' und ', ', ')

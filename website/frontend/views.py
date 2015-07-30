@@ -1,15 +1,14 @@
-import datetime
+from datetime import datetime
 import re
-
-from django.shortcuts import render_to_response, get_object_or_404, redirect
+import operator
+from django.shortcuts import render_to_response, get_object_or_404
 from models import Article, Version
 import models
 import json
-from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.core.urlresolvers import reverse
-import urllib
+from django.http import HttpResponse, Http404
 import django.db
-import time
+from django.db.models import Count
+from twitter import *
 from django.template import Context, RequestContext, loader
 from django.views.decorators.cache import cache_page
 
@@ -23,11 +22,39 @@ search.yahoo.com
 http://www.bing.com
 """.split()
 
+RESSORTS = """
+Allgemein
+Politik
+Wirtschaft
+Regional
+Technik
+Wissenschaft
+Gesellschaft
+""".split()
+
+SOURCES = '''
+Zeit
+Bild
+Focus
+Spiegel
+Stern
+Welt
+FAZ
+n-tv
+RP-ONLINE
+Sueddeutsche
+TAZ
+'''.split()
+
+SEARCH_TYPES = '''
+Stichwort
+Autor
+URL
+'''.split()
+
 def came_from_search_engine(request):
     return any(x in request.META.get('HTTP_REFERER', '')
                for x in SEARCH_ENGINES)
-
-
 
 def Http400():
     t = loader.get_template('404.html')
@@ -36,8 +63,8 @@ def Http400():
 def get_first_update(source):
     if source is None:
         source = ''
-    updates = models.Article.objects.order_by('last_update').filter(last_update__gt=datetime.datetime(1990, 1, 1, 0, 0),
-                                                                    url__contains=source)
+    updates = models.Article.objects.order_by('last_update').filter(last_update__gt=datetime(1990, 1, 1, 0, 0),
+                                                                    url__icontains=source)
     try:
         return updates[0].last_update
     except IndexError:
@@ -46,11 +73,195 @@ def get_first_update(source):
 def get_last_update(source):
     if source is None:
         source = ''
-    updates = models.Article.objects.order_by('-last_update').filter(last_update__gt=datetime.datetime(1990, 1, 1, 0, 0), url__contains=source)
+    updates = models.Article.objects.order_by('-last_update').filter(last_update__gt=datetime.datetime(1990, 1, 1, 0, 0), url__icontains=source)
     try:
         return updates[0].last_update
     except IndexError:
         return datetime.datetime.now()
+
+def search(request):
+    search_type = request.REQUEST.get('search_type')
+    searchterm = request.REQUEST.get('searchterm').lower()
+    sort = request.REQUEST.get('sort')
+    source = request.REQUEST.get('source')
+    date = request.REQUEST.get('date')
+    ressort = request.REQUEST.get('ressort')
+    pagestr=request.REQUEST.get('page', '1')
+
+    results_displayed = 10          # number of results for each page
+
+    if date is None:
+        date = ''
+    if searchterm is None:
+        searchterm = ''
+
+    try:
+        page = int(pagestr)
+    except ValueError:
+        page = 1
+
+    # range of results
+    begin_at = 1
+    end_at = results_displayed
+
+    if page > 1:
+        begin_at = ((page-1)*results_displayed)+1
+        end_at = begin_at + (results_displayed-1)
+
+    if len(searchterm) > 0:
+        if search_type not in SEARCH_TYPES :
+            search_type = u'Stichwort'
+        if searchterm[:4] == 'http' or searchterm[:4] == 'www.':
+            search_type = u'URL'
+
+        if search_type == u'Stichwort':
+            articles = get_articles_by_keyword(searchterm, source, ressort, date, begin_at-1, end_at)
+        elif search_type == u'Autor':
+            articles = get_articles_by_author(searchterm, source, ressort, date, begin_at-1, end_at)
+        elif search_type == u'URL':
+            articles = get_articles_by_url(searchterm)
+
+        return render_to_response('suchergebnisse.html', {
+                'articles': articles,
+                'articles_count' : len(articles),
+                'searchterm': searchterm,
+                'archive_date' : date,
+                'search_type': search_type,
+                'source' : source,
+                'sort' : sort,
+                'ressort' : ressort,
+                'all_sources' : SOURCES,
+                'all_ressorts' : RESSORTS,
+                'page':page,
+                'begin_at' : begin_at,
+                'end_at' : begin_at + len(articles) -1,
+                'template' : 'suchergebnisse'
+                })
+    else:
+        return render_to_response('suchergebnisse.html', {})
+
+def get_archive(date, ressort, search_source, begin_at, end_at):
+    articles = {}
+    # get all articles which were updated on s specific date
+    article_ids = Version.objects.filter(date__year=date[6:10],
+                                            date__month=date[3:5],
+                                            date__day=date[0:2]).exclude(diff_json__isnull = True).values_list('article_id')
+
+    all_articles = []
+    if len(article_ids) > 0:
+        article_objects = Article.objects.filter(id__in=article_ids)
+        if search_source in SOURCES:
+            article_objects = article_objects.filter(source__icontains = search_source)
+        if ressort in RESSORTS:
+            article_objects = article_objects.filter(category__icontains = ressort)
+        all_articles = article_objects.order_by('-last_update')[begin_at : end_at]          # range of results
+
+        for a in all_articles:
+            versions = Version.objects.filter(article_id = a.id)
+            version_count = versions.count()
+            all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
+            article_title = versions.order_by('-date')[0].title
+            articles[a.id] = {
+                    'id': a.id,
+                    'title': article_title,
+                    'url': a.url,
+                    'source':  a.source,
+                    'ressort' : a.category,
+                    'date':  a.initial_date,
+                    'versioncount': version_count-1,
+                    'all_diffs' : all_diffs
+                    }
+    return articles
+
+def get_articles_by_url(url):
+        articles = {}
+        all_articles = Article.objects.filter(url = url).exclude(source='')
+
+        for a in all_articles:
+            versions = Version.objects.filter(article_id = a.id)
+            version_count = versions.count()
+            if version_count > 1:           # get all articles with changes
+                all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
+                article_title = versions.order_by('-date')[0].title
+                articles[a.id] = {
+                    'id': a.id,
+                    'title': article_title,
+                    'url': a.url,
+                    'source':  a.source,
+                    'date':  a.initial_date,
+                    'versioncount': version_count-1,
+                    'ressort' : a.category,
+                    'all_diffs' : all_diffs
+                }
+        return articles
+
+def get_articles_by_author(searchterm, search_source, ressort, date, begin_at, end_at):
+    articles = {}
+    all_articles = []
+    article_ids = Version.objects.filter(byline__icontains = searchterm).exclude(diff_json__isnull = True).values_list('article_id')
+
+    if len(article_ids) > 0:
+        article_objects = Article.objects.filter(id__in=article_ids)
+        if len(date) is 10:
+            article_objects = article_objects.filter(last_update__year=date[6:10],
+                                                        last_update__month=date[3:5],
+                                                        last_update__day=date[0:2])
+        if search_source in SOURCES:
+            article_objects = article_objects.filter(source__icontains = search_source)
+        if ressort in RESSORTS :
+            article_objects = article_objects.filter(category = ressort)
+        all_articles = article_objects.order_by('-last_update')[begin_at : end_at]          # range of results
+
+    for a in all_articles:
+        versions = Version.objects.filter(article_id = a.id)
+        version_count = versions.count()     # get all articles with changes
+        all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
+        article_title = versions.order_by('-date')[0].title
+        articles[a.id] = {
+                'id': a.id,
+                'title': article_title,
+                'url': a.url,
+                'source':  a.source,
+                'date':  a.initial_date,
+                'ressort':  a.category,
+                'versioncount': version_count-1,
+                'all_diffs' : all_diffs
+        }
+    return articles
+
+def get_articles_by_keyword(searchterm, search_source, ressort, date, begin_at, end_at):
+    articles = {}
+
+    all_articles = Article.objects.filter(keywords__icontains = searchterm)
+
+    if len(date) is 10:
+        all_articles = all_articles.filter(last_update__year=date[6:10],
+                                                        last_update__month=date[3:5],
+                                                        last_update__day=date[0:2])
+    if search_source in SOURCES:
+        all_articles = all_articles.filter(source__icontains = search_source)
+    if ressort in RESSORTS:
+        all_articles = all_articles.filter(category__icontains = ressort)
+
+    all_articles = all_articles.order_by('-initial_date')[begin_at : end_at]
+
+    for a in all_articles:
+        versions = Version.objects.filter(article_id = a.id)
+        version_count = versions.count()
+        if version_count > 1:           # get all articles with changes
+            article_title = versions.order_by('-date')[0].title
+            all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
+            articles[a.id] = {
+                'id': a.id,
+                'title': article_title,
+                'url': a.url,
+                'source':  a.source,
+                'date':  a.initial_date,
+                'versioncount': version_count-1,
+                'ressort' : a.category,
+                'all_diffs' : all_diffs
+            }
+    return articles
 
 def get_articles(source=None, distance=0):
     articles = []
@@ -103,38 +314,51 @@ def get_articles(source=None, distance=0):
     articles.sort(key = lambda x: x[-1][0][1].date, reverse=True)
     return articles
 
-
-SOURCES = '''nytimes.com cnn.com politico.com washingtonpost.com
-bbc.co.uk'''.split()
-
 def is_valid_domain(domain):
     """Cheap method to tell whether a domain is being tracked."""
     return any(domain.endswith(source) for source in SOURCES)
 
-@cache_page(60 * 30)  #30 minute cache
-def browse(request, source=''):
-    if source not in SOURCES + ['']:
-        raise Http404
+def browse(request):
+    archive_date=request.REQUEST.get('date')
+    ressort=request.REQUEST.get('ressort')
+    source=request.REQUEST.get('source')
     pagestr=request.REQUEST.get('page', '1')
+    sort=request.REQUEST.get('sort')
+
+    results_displayed = 10          # number of results for each page
+
     try:
         page = int(pagestr)
     except ValueError:
         page = 1
 
-    first_update = get_first_update(source)
-    num_pages = (datetime.datetime.now() - first_update).days + 1
-    page_list=range(1, 1+num_pages)
+    # range of results
+    begin_at = 1
+    end_at = results_displayed
 
-    articles = get_articles(source=source, distance=page-1)
-    return render_to_response('browse.html', {
-            'source': source, 'articles': articles,
-            'page':page,
-            'page_list': page_list,
-            'first_update': first_update,
-            'sources': SOURCES
-            })
+    if page > 1:
+        begin_at = ((page-1)*results_displayed)+1
+        end_at = begin_at + (results_displayed-1)
 
-@cache_page(60 * 30)  #30 minute cache
+    if archive_date is None or archive_date is u'':
+        archive_date = datetime.today().strftime('%d.%m.%Y')
+
+    articles = get_archive(archive_date, ressort, source, begin_at-1, end_at)
+    return render_to_response('archiv.html', {
+                'articles': articles,
+                'articles_count' : len(articles),
+                'archive_date': archive_date,
+                'all_sources': SOURCES,
+                'source' : source,
+                'ressort' : ressort,
+                'all_ressorts' : RESSORTS,
+                'page':page,
+                'sort' : sort,
+                'begin_at' : begin_at,
+                'end_at' : begin_at + len(articles) -1,
+                'template' : 'archive'
+                })
+
 def feed(request, source=''):
     if source not in SOURCES + ['']:
         raise Http404
@@ -161,34 +385,10 @@ def feed(request, source=''):
             context_instance=RequestContext(request),
             mimetype='application/atom+xml')
 
-def old_diffview(request):
-    """Support for legacy diff urls"""
-    url = request.REQUEST.get('url')
-    v1tag = request.REQUEST.get('v1')
-    v2tag = request.REQUEST.get('v2')
-    if url is None or v1tag is None or v2tag is None:
-        return HttpResponseRedirect(reverse(front))
+def diffview(request, vid1='', vid2=''):
+    vid1=request.REQUEST.get('vid1')
+    vid2=request.REQUEST.get('vid2')
 
-    try:
-        v1 = Version.objects.get(v=v1tag)
-        v2 = Version.objects.get(v=v2tag)
-    except Version.DoesNotExist:
-        return Http400()
-
-    try:
-        article = Article.objects.get(url=url)
-    except Article.DoesNotExist:
-        return Http400()
-
-    return redirect(reverse('diffview', kwargs=dict(vid1=v1.id,
-                                                    vid2=v2.id,
-                                                    urlarg=article.filename())),
-                    permanent=True)
-
-
-def diffview(request, vid1, vid2, urlarg):
-    # urlarg is unused, and only for readability
-    # Could be strict and enforce urlarg == article.filename()
     try:
         v1 = Version.objects.get(id=int(vid1))
         v2 = Version.objects.get(id=int(vid2))
@@ -210,7 +410,7 @@ def diffview(request, vid1, vid2, urlarg):
 
     for v in (v1, v2):
         texts.append(v.text())
-        dates.append(v.date.strftime(OUT_FORMAT))
+        dates.append(v.date.strftime('%d.%m.%Y - %H:%M Uhr'))
 
         indices = [i for i, x in versions.items() if x == v]
         if not indices:
@@ -225,39 +425,40 @@ def diffview(request, vid1, vid2, urlarg):
         return Http400()
 
     links = []
+
     for i in range(2):
         if all(x[i] for x in adjacent_versions):
-            diffl = reverse('diffview', kwargs=dict(vid1=adjacent_versions[0][i].id,
-                                                    vid2=adjacent_versions[1][i].id,
-                                                    urlarg=article.filename()))
-            links.append(diffl)
+           diffl = '/diffview/?vid1='+str(adjacent_versions[0][i].id)+'&vid2='+str(adjacent_versions[1][i].id)
+           links.append(diffl)
         else:
             links.append('')
+
+
+    all_diffs = '/diffview/?vid1='+str(article.first_version().id)+'&vid2='+str(article.latest_version().id)
 
     return render_to_response('diffview.html', {
             'title': title,
             'date1':dates[0], 'date2':dates[1],
             'text1':texts[0], 'text2':texts[1],
             'prev':links[0], 'next':links[1],
+            'article' : article,
             'article_shorturl': article.filename(),
+            'article_id' : article.id,
             'article_url': article.url, 'v1': v1, 'v2': v2,
-            'display_search_banner': came_from_search_engine(request),
-            })
+            'all_diffs' : all_diffs,
+            }, context_instance=RequestContext(request))
 
 def get_rowinfo(article, version_lst=None):
     if version_lst is None:
         version_lst = article.versions()
     rowinfo = []
     lastv = None
-    urlarg = article.filename()
     for version in version_lst:
-        date = version.date
+        version.date = version.date.strftime('%d.%m.%Y - %H:%M Uhr')
         if lastv is None:
             diffl = ''
         else:
-            diffl = reverse('diffview', kwargs=dict(vid1=lastv.id,
-                                                    vid2=version.id,
-                                                    urlarg=urlarg))
+            diffl = '/diffview/?vid1='+str(lastv.id)+'&vid2='+str(version.id)
         rowinfo.append((diffl, version))
         lastv = version
     rowinfo.reverse()
@@ -266,9 +467,7 @@ def get_rowinfo(article, version_lst=None):
 
 def prepend_http(url):
     """Return a version of the url that starts with the proper scheme.
-
     url may look like
-
     www.nytimes.com
     https:/www.nytimes.com    <- because double slashes get stripped
     http://www.nytimes.com
@@ -281,48 +480,39 @@ def prepend_http(url):
     return '/'.join(components)
 
 
-def article_history(request, urlarg=''):
-    url = request.REQUEST.get('url') # this is the deprecated interface.
-    if url is None:
-        url = urlarg
-    if len(url) == 0:
-        return HttpResponseRedirect(reverse(front))
+def article_history(request):
+    id = request.REQUEST.get('id')
+    url = request.REQUEST.get('url')
 
-    url = url.split('?')[0]  #For if user copy-pastes from news site
-
-    url = prepend_http(url)
-
-    # This is a hack to deal with unicode passed in the URL.
-    # Otherwise gives an error, since our table character set is latin1.
-    url = url.encode('ascii', 'ignore')
-
-    # Give an error on urls with the wrong hostname without hitting the
-    # database.  These queries are usually spam.
-    domain = url.split('/')[2]
-    if not is_valid_domain(domain):
-        return render_to_response('article_history_missing.html', {'url': url})
-
-
-    try:
+    if url :
         article = Article.objects.get(url=url)
-    except Article.DoesNotExist:
+    else:
         try:
-            return render_to_response('article_history_missing.html', {'url': url})
-        except (TypeError, ValueError):
-            # bug in django + mod_rewrite can cause this. =/
-            return HttpResponse('Bug!')
-
-    if len(urlarg) == 0:
-        return HttpResponseRedirect(reverse(article_history, args=[article.filename()]))
-
-    rowinfo = get_rowinfo(article)
+            article = Article.objects.get(id=id)
+        except Article.DoesNotExist:
+            try:
+                return render_to_response('article_history_missing.html', {'id': id})
+            except (TypeError, ValueError):
+                # bug in django + mod_rewrite can cause this. =/
+                return HttpResponse('Bug!')
+    created_at = article.initial_date.strftime('%d.%m.%Y - %H:%M Uhr')
+    versions = get_rowinfo(article)
+    all_diffs = '/diffview/?vid1='+str(article.first_version().id)+'&vid2='+str(article.latest_version().id)
     return render_to_response('article_history.html', {'article':article,
-                                                       'versions':rowinfo,
-            'display_search_banner': came_from_search_engine(request),
+                                                       'versions':versions,
+                                                        'display_search_banner': came_from_search_engine(request),
+                                                       'created_at': created_at,
+                                                       'source' : article.source,
+                                                       'all_diffs' : all_diffs
                                                        })
-def article_history_feed(request, url=''):
-    url = prepend_http(url)
-    article = get_object_or_404(Article, url=url)
+def article_history_feed(request):
+    id = request.REQUEST.get('id')
+    url = request.REQUEST.get('url')
+
+    if url :
+        article = Article.objects.get(url=url)
+    else:
+        article = get_object_or_404(Article, id=id)
     rowinfo = get_rowinfo(article)
     return render_to_response('article_history.xml',
                               { 'article': article,
@@ -345,13 +535,53 @@ def json_view(request, vid):
 def about(request):
     return render_to_response('about.html', {})
 
-def examples(request):
-    return render_to_response('examples.html', {})
+def history(request):
+    return render_to_response('article_history.html', {})
 
-def contact(request):
-    return render_to_response('contact.html', {})
+def artikel(request):
+    return render_to_response('diffview.html', {})
 
-def front(request):
-    return render_to_response('front.html', {'sources': SOURCES})
+@cache_page(60 * 60)  #60 minute cache
+def entdecken(request):
+    config = {}
+    execfile("/var/www/dev/config.py", config)
+    twitter = Twitter(auth = OAuth(config["access_key"], config["access_secret"], config["consumer_key"], config["consumer_secret"]))
+    alltrends = twitter.trends.place(_id = 23424829)
+    results = []
+
+    for location in alltrends:
+        for trend in location["trends"]:
+            result = trend["name"].encode("utf-8")
+            if result.startswith('#'):
+                result = result.replace("#", "")
+            results.append(result)
+
+    return render_to_response('entdecken.html', {
+                        'trend1': results[0],
+						'trend2': results[1],
+						'trend3': results[2],
+						'trend4': results[3],
+						'trend5': results[4],
+						'trend6': results[5],
+						'trend7': results[6],
+						'trend8': results[7],
+						'trend9': results[8],
+						'trend10': results[9],
+						})
 
 
+
+def highlights(request):
+    return render_to_response('highlights.html', {})
+
+def plugin(request):
+    return render_to_response('plugin.html', {})
+
+def kontakt(request):
+    return render_to_response('kontakt.html', {})
+
+def impressum(request):
+    return render_to_response('impressum.html', {})
+
+def index(request):
+    return render_to_response('index.html', {'sources': SOURCES})
