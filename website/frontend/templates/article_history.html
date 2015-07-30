@@ -4,7 +4,6 @@
 {% block css_import %}
     <link href="{% url 'static' 'css/custom-article-history.css' %}" rel="stylesheet" type="text/css">
 {% endblock %}
-{% block active_entdecken %}class="active"{% endblock %}
 {% block content %}
 
 	<div class="container-fluid maincontent">
@@ -12,7 +11,7 @@
 
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-                <img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf"></img><h3>Versionsübersicht</h3>
+                <img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf"><h3>Versionsübersicht</h3>
 
 				<h1 class="hover-color"><a  href="{% url 'article_history' %}?id={{article.id}}">{{ article.latest_version.title }}</a></h1>
 				<p><span class="glyphicon glyphicon-book"></span>
@@ -37,9 +36,16 @@
                             {% if difflink %}
                                 <td><a class="hover-color" href="{{difflink}}">
                                     <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
-                                         alt="Vergleichen-Icon">Version ansehen</a></td>
+                                         alt="Vergleichen-Icon">Diff mit vorheriger Version</a>
+                                </td>
                             {% else %}
-                                <td></td>
+                                <td>
+                                    <a href="{{all_diffs}}">
+                                        <img class="ownbtn"
+                                             src="../static/images/Icon_Vergleichen.png"
+                                             alt="Vergleichen-Icon">Diff mit neuester Version
+                                    </a>
+                                </td>
                             {% endif %}
 
                             <!-- Schlagzeile Spalte -->
@@ -52,10 +58,6 @@
                         </tr>
                     {% endfor %}
 				</table>
-                <p>
-                    <a href="{{all_diffs}}"><img class="ownbtn" src="../static/images/Icon_Vergleichen.png"
-                                                 alt="Vergleichen-Icon">alle Änderungen</a>
-                </p>
 
 
 			</div>
