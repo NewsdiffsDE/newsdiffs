@@ -220,7 +220,7 @@ footer p a{
 }
 
 .archive-buttons div {
-    display:inline;
+    display: inline-block;
 }
 
 .archive-buttons {

@@ -56,7 +56,7 @@
                                 <a  href="{% url 'article_history' %}?id={{article.id}}">{{ article.title }}</a>
                             </h3>
                             <div class="archive-buttons">
-                                <div class="round-btn-hover">
+                                <div class="round-btn-hover col-sm-6">
                                     <a href="{% url 'article_history' %}?id={{article.id}}">
                                         <img src="{% url 'static' 'images/Icon_Artikelverlauf16px.png' %}"
                                         alt="Vergleichen-Icon">Versionsübersicht ({{article.versioncount}})</a>
