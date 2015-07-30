@@ -10,7 +10,7 @@
 	margin-bottom: 3px;
 }
 
-@media (max-width: 768px){
+@media (max-width: 550px){
 	.pager .next > a, .pager .previous > a {
 		float: none;
 		margin-left: auto;
