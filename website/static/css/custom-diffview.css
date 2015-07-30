@@ -10,11 +10,17 @@
 	margin-bottom: 3px;
 }
 
-@media (min-width: 550px){
+@media (max-width: 550px){
 	.pager li {
 		float: none;
 		margin-left: auto;
 		margin-right: auto;
+	}
+}
+
+@media (max-width: px) and (min-width: 550px {
+	.pager li {
+		display: inline;
 	}
 }
 
