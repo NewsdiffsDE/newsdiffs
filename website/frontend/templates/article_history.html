@@ -12,9 +12,10 @@
 
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-                <img class="ownbtn" src="../static/images/Icon_Artikelverlauf.png" alt="Artikelverlauf"><h3>Versionsübersicht</h3>
+                <h1>Versionsübersicht</h1>
 
-				<h1 class="hover-color"><a  href="{% url 'article_history' %}?id={{article.id}}">{{ article.latest_version.title }}</a></h1>
+				<h2 class="hover-color"><a href="{% url 'article_history' %}?id={{article.id}}">{{ article
+				.latest_version.title }}</a></h2>
 				<p><span class="glyphicon glyphicon-book"></span>
                     Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> (<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
                     Ressort: {{article.category}}
@@ -24,15 +25,24 @@
 				<table class="table table-condensed table-striped">
 					<thead>
 						<tr>
-                            <th>Diff</th>
+
 							<th>Schlagzeile</th>
 							<th>Datum/Zeit der Archivierung</th>
+                            <th>Diff</th>
 
 						</tr>
 					</thead>
 
                     {% for difflink, version in versions %}
                         <tr>
+
+
+                            <!-- Schlagzeile Spalte -->
+                            <td><a class="hover-color" href="{{link}}">{{version.title}} {%if version.byline != '' %}({{version.byline}}){%endif%}</a></td>
+
+                            <!-- Datum Spalte -->
+                            <td>{{version.date}}</td>
+
                             <!--Diff Spalte-->
                             {% if difflink %}
                                 <td><a class="hover-color" href="{{difflink}}">
@@ -47,12 +57,6 @@
                                     </a>
                                 </td>
                             {% endif %}
-
-                            <!-- Schlagzeile Spalte -->
-                            <td><a class="hover-color" href="{{link}}">{{version.title}} {%if version.byline != '' %}({{version.byline}}){%endif%}</a></td>
-
-                            <!-- Datum Spalte -->
-                            <td>{{version.date}}</td>
 
 
                         </tr>
