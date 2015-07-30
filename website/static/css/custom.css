@@ -41,6 +41,7 @@ code {
  Navbar
  **************************************************************************** */
 
+
 .navbar-brand img{
 	height: 50px;
 	margin: 15px 15px 15px 0;
@@ -214,7 +215,7 @@ footer p a{
     border-radius: 15px;
 }
 
-div.archive-buttons{
+.archive-buttons{
     margin-top: 15px;
     margin-bottom: 15px;
 }
