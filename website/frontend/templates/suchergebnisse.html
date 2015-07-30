@@ -74,20 +74,20 @@
                                 <a  href="{% url 'article_history' %}?id={{article.id}}">{{ article.title }}</a>
                             </h3>
 
-                            <span class="text"><p>
-                                <a class="no-link-color" href="article_history.html">
+                            <span class="text no-line-under-icon">
+                                <p><a class="no-link-color" href="article_history.html">
                                     <img src="../static/images/Icon_Artikelverlauf.png"
                                          alt="Artikelverlauf-Icon">
                                 </a>
                                 <a href="{% url 'article_history' %}?id={{article.id}}">Versionsübersicht
                                     ({{article.versioncount}})</a>
-                            </p>
 
 
-                            <p><a href="{{article.all_diffs}}"><img
+
+                            <a href="{{article.all_diffs}}"><img
                                                                    src="../static/images/Icon_Vergleichen.png"
-                                                                   alt="Vergleichen-Icon">alle Änderungen</a></p>
-                            </span>
+                                                                   alt="Vergleichen-Icon">alle Änderungen</a>
+                            </p></span>
                         </td>
                     </tr>
                     {% endfor %}
