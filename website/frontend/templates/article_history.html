@@ -19,17 +19,12 @@
                     Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> (<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
                     Ressort: {{article.category}}
                 </p>
-                <p>
-                    <ul>
-                        <li class="col-xs-12 col-sm-4 pager">
-                            <a href="{{all_diffs}}">
-                                <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
-                                alt="Vergleichen-Icon"> Diff neueste:älteste Version
-                            </a>
-                        </li>
-                    </ul>
-
-                </p>
+                <div class="round-btn">
+                    <a href="{{all_diffs}}">
+                            <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
+                            alt="Vergleichen-Icon"> Diff neueste:älteste Version
+                    </a>
+                </div>
 
 
 
