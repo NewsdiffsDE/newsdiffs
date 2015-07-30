@@ -201,8 +201,8 @@ def get_articles_by_url(url):
         html = grab_url(url)
         soup = BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES, fromEncoding='utf-8')
         articles = {}
-        a = Article.objects.filter(url=url)
-        if not a.count():
+        alreadyOriginal = Article.objects.filter(url=url)
+        if not alreadyOriginal.count():
             if soup.find('meta', {'property': 'og:url'}):
                 url = soup.find('meta', {'property': 'og:url'})['content']
             elif soup.find('meta', {'name': 'og:url'}):
