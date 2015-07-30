@@ -571,9 +571,6 @@ def history(request):
 def artikel(request):
     return render_to_response('diffview.html', {})
 
-
-
-
 def highlights(request):
     return render_to_response('highlights.html', {})
 
@@ -603,11 +600,11 @@ def entdecken(request):
     results = []
 
     for location in alltrends:
-	for trend in location["trends"]:
-		result = trend["name"].encode("utf-8")
-		if result.startswith('#'):
-			result = result.replace("#", "")
-		results.append(result)
+        for trend in location["trends"]:
+            result = trend["name"].encode("utf-8")
+            if result.startswith('#'):
+                result = result.replace("#", "")
+            results.append(result)
 
     return render_to_response('entdecken.html', {'trend1': results[0],
 						 'trend2': results[1],
