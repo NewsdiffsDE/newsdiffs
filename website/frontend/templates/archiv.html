@@ -55,19 +55,26 @@
                             <h3 class="title">
                                 <a  href="{% url 'article_history' %}?id={{article.id}}">{{ article.title }}</a>
                             </h3>
-                            <div class="archive-buttons">
-                                <div class="round-btn-hover">
-                                    <a href="{% url 'article_history' %}?id={{article.id}}">
-                                        <img src="{% url 'static' 'images/Icon_Artikelverlauf16px.png' %}"
-                                        alt="Vergleichen-Icon">Versionsübersicht ({{article.versioncount}})</a>
-                                </div>
-                                <div class="round-btn-hover">
-                                    <a href="{{article.all_diffs}}">
-                                        <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
-                                        alt="Vergleichen-Icon">Neueste vs. älteste Version
+
+                             <span class="text">
+                                <p>
+                                    <a class="no-link-color no-line-under-icon" href="article_history.html">
+                                    <img class="no-line-under-icon"
+                                        src="../static/images/Icon_Artikelverlauf.png"
+                                         alt="Artikelverlauf-Icon">
                                     </a>
-                                </div>
-                            </div>
+                                    <a class="no-link-color margin-right" href="{% url 'article_history' %}?id={{article.id}}">Versionsübersicht
+                                    ({{article.versioncount}})</a>
+
+
+
+                                    <a class="no-link-color no-line-under-icon" href="{{article.all_diffs}}"><img
+                                                                   src="../static/images/Icon_Vergleichen.png"
+                                                                   alt="Vergleichen-Icon"></a>
+                                    <a class="no-link-color" href="{{article.all_diffs}}">Neueste Version vs. Originalversion</a>
+                                </p>
+                            </span>
+                           
                         </td>
                     </tr>
                     {% endfor %}
