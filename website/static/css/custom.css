@@ -34,6 +34,10 @@ h1{
 	border-bottom: 1px #333333 dotted;
 }
 
+a.no-line-under-icon {
+	border-bottom-style: none;
+}
+
 .text a:hover {
 	color: #333333;
 	text-decoration: none;
