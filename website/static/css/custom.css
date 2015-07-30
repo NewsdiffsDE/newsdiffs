@@ -221,11 +221,11 @@ footer p a{
 
 .archive-buttons div {
     display: inline;
+    margin-bottom: 15px;
 }
 
 .archive-buttons {
     margin-top:15px;
-    margin-bottom: 15px;
 }
 
 
