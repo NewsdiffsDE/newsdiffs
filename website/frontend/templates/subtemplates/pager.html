@@ -1,3 +1,4 @@
+ {% if articles|length > 0 %}
 <p>Seite {{page}}: Ergebnis {{begin_at}} bis {{end_at}}</p>
 <nav>
     <ul class="pager">
@@ -17,3 +18,4 @@
         {%endif%}
     </ul>
 </nav>
+ {%endif%}

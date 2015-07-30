@@ -1,6 +1,6 @@
 from datetime import datetime
 import re
-import operator
+from itertools import *
 from django.shortcuts import render_to_response, get_object_or_404
 from models import Article, Version
 import models
@@ -151,9 +151,8 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
     # get all articles which were updated on s specific date
     article_ids = Version.objects.filter(date__year=date[6:10],
                                             date__month=date[3:5],
-                                            date__day=date[0:2]).exclude(diff_json__isnull = True).values_list('article_id')
+                                            date__day=date[0:2]).exclude(diff_json__isnull = True).distinct().values_list('article_id')
 
-    all_articles = []
     if len(article_ids) > 0:
         article_objects = Article.objects.filter(id__in=article_ids)
         if search_source in SOURCES:
@@ -163,7 +162,7 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
         all_articles = article_objects.order_by('-last_update')[begin_at : end_at]          # range of results
 
         for a in all_articles:
-            versions = Version.objects.filter(article_id = a.id)
+            versions = Version.objects.filter(article_id = a.id, boring = 0)
             version_count = versions.count()
             all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
             article_title = versions.order_by('-date')[0].title
@@ -174,7 +173,7 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
                     'source':  a.source,
                     'ressort' : a.category,
                     'date':  a.initial_date,
-                    'versioncount': version_count-1,
+                    'versioncount': version_count,
                     'all_diffs' : all_diffs
                     }
     return articles
@@ -209,7 +208,7 @@ def get_articles_by_url(url):
                 url = soup.find('meta', {'name': 'og:url'})['content']
         all_articles = Article.objects.filter(url = url).exclude(source='')
         for a in all_articles:
-            versions = Version.objects.filter(article_id = a.id)
+            versions = Version.objects.filter(article_id = a.id, boring = 0)
             version_count = versions.count()
             if version_count > 1:           # get all articles with changes
                 all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
@@ -220,7 +219,7 @@ def get_articles_by_url(url):
                     'url': a.url,
                     'source':  a.source,
                     'date':  a.initial_date,
-                    'versioncount': version_count-1,
+                    'versioncount': version_count,
                     'ressort' : a.category,
                     'all_diffs' : all_diffs
                 }
@@ -229,7 +228,7 @@ def get_articles_by_url(url):
 def get_articles_by_author(searchterm, search_source, ressort, date, begin_at, end_at):
     articles = {}
     all_articles = []
-    article_ids = Version.objects.filter(byline__icontains = searchterm).exclude(diff_json__isnull = True).values_list('article_id')
+    article_ids = Version.objects.filter(byline__icontains = searchterm).exclude(diff_json__isnull = True).distinct().values_list('article_id')
 
     if len(article_ids) > 0:
         article_objects = Article.objects.filter(id__in=article_ids)
@@ -244,7 +243,7 @@ def get_articles_by_author(searchterm, search_source, ressort, date, begin_at, e
         all_articles = article_objects.order_by('-last_update')[begin_at : end_at]          # range of results
 
     for a in all_articles:
-        versions = Version.objects.filter(article_id = a.id)
+        versions = Version.objects.filter(article_id = a.id, boring = 0)
         version_count = versions.count()     # get all articles with changes
         all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
         article_title = versions.order_by('-date')[0].title
@@ -255,7 +254,7 @@ def get_articles_by_author(searchterm, search_source, ressort, date, begin_at, e
                 'source':  a.source,
                 'date':  a.initial_date,
                 'ressort':  a.category,
-                'versioncount': version_count-1,
+                'versioncount': version_count,
                 'all_diffs' : all_diffs
         }
     return articles
@@ -274,11 +273,11 @@ def get_articles_by_keyword(searchterm, search_source, ressort, date, begin_at, 
     if ressort in RESSORTS:
         all_articles = all_articles.filter(category__icontains = ressort)
 
-    all_articles = all_articles.order_by('-initial_date')[begin_at : end_at]
+    all_articles = all_articles.order_by('-initial_date')
 
     for a in all_articles:
-        versions = Version.objects.filter(article_id = a.id)
-        version_count = versions.count()
+        versions = Version.objects.filter(article_id = a.id, boring = 0)
+        version_count = len(versions)
         if version_count > 1:           # get all articles with changes
             article_title = versions.order_by('-date')[0].title
             all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
@@ -288,11 +287,11 @@ def get_articles_by_keyword(searchterm, search_source, ressort, date, begin_at, 
                 'url': a.url,
                 'source':  a.source,
                 'date':  a.initial_date,
-                'versioncount': version_count-1,
+                'versioncount': version_count,
                 'ressort' : a.category,
                 'all_diffs' : all_diffs
             }
-    return articles
+    return list(islice(articles.iteritems(),begin_at, end_at))
 
 def get_articles(source=None, distance=0):
     articles = []
@@ -572,9 +571,6 @@ def history(request):
 def artikel(request):
     return render_to_response('diffview.html', {})
 
-
-
-
 def highlights(request):
     return render_to_response('highlights.html', {})
 
@@ -604,11 +600,11 @@ def entdecken(request):
     results = []
 
     for location in alltrends:
-	for trend in location["trends"]:
-		result = trend["name"].encode("utf-8")
-		if result.startswith('#'):
-			result = result.replace("#", "")
-		results.append(result)
+        for trend in location["trends"]:
+            result = trend["name"].encode("utf-8")
+            if result.startswith('#'):
+                result = result.replace("#", "")
+            results.append(result)
 
     return render_to_response('entdecken.html', {'trend1': results[0],
 						 'trend2': results[1],
