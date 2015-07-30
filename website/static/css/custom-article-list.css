@@ -6,7 +6,7 @@
 }
 
 .label-default {
-    background-color: #999;
+    background-color: #999; !important
 }
 
 .radio + .radio {
