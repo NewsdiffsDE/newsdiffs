@@ -48,9 +48,11 @@
                                 <td>
 
                                         <div class="text">
-                                        <a href="{{difflink}}">
+                                        <a class="no-line-under-icon" href="{{difflink}}">
                                             <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
-                                            alt="Vergleichen-Icon">Vgl. mit vorheriger Version
+                                            alt="Vergleichen-Icon">
+										</a>
+										<a href="{{difflink}}">Vgl. mit vorheriger Version
                                         </a>
                                         </div>
 
@@ -58,9 +60,11 @@
                             {% else %}
                                 <td>
                                     <div class="text">
-                                    <a href="{{all_diffs}}">
+                                    <a class="no-line-under-icon" href="{{all_diffs}}">
                                         <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
-                                        alt="Vergleichen-Icon">Neueste vs. älteste Version
+                                        alt="Vergleichen-Icon">
+									</a>
+									<a href="{{all_diffs}}">Neueste vs. älteste Version
                                     </a>
                                     </div>
 
