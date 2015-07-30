@@ -9,6 +9,10 @@
     background-color: #999; !important
 }
 
+.margin-right {
+    margin-right: 10px;
+}
+
 .radio + .radio {
 	margin-top: 10px;
 }
