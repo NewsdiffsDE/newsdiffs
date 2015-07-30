@@ -55,7 +55,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for id, article in articles.items %}
+                    {% for id, article in articles %}
 
                     <tr>
                         <td>
@@ -64,7 +64,6 @@
 
                                 Ressort: {{article.ressort}}
                             </em>
-
                             <h3 class="title">
                                 <a  href="{% url 'article_history' %}?id={{article.id}}">{{ article.title }}</a>
                             </h3>
