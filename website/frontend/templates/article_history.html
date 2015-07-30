@@ -20,10 +20,15 @@
                     Ressort: {{article.category}}
                 </p>
                 <p>
-                    <a href="{{all_diffs}}">
-                        <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
-                         alt="Vergleichen-Icon"> Diff neueste:älteste Version
-                    </a>
+                    <ul class="pager">
+                        <li class="col-xs-12 col-sm-4">
+                            <a href="{{all_diffs}}">
+                                <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
+                                alt="Vergleichen-Icon"> Diff neueste:älteste Version
+                            </a>
+                        </li>
+                    </ul>
+
                 </p>
 
 

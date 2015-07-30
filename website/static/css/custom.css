@@ -185,6 +185,14 @@ footer p a{
 	padding: 0px 2px;
 }
 
+.pager li {
+	padding: 0;
+}
+
+.pager a, .pager a:hover {
+    border-bottom: 1px solid #ddd;
+}
+
 
 
 /* *****************************************************************************

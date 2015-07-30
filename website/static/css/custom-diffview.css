@@ -6,14 +6,6 @@
 	padding:0 3px;
 }
 
-.pager li {
-	padding: 0;
-}
-
-.pager a, .pager a:hover {
-    border-bottom: 1px solid #ddd;
-}
-
 @media (max-width: 768px){
 	.pager .next > a, .pager .previous > a {
 		float: none;
