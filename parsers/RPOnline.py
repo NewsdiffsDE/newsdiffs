@@ -13,10 +13,10 @@ class RPOParser(BaseParser):
                              fromEncoding='utf-8')
         self.meta = soup.findAll('meta')
         self.source = ', '.join(self.domains)
+        keywords = self.url.strip('http://www.rp-online.de/').replace('/', ', ')
         self.url = soup.find('meta', {'property': 'og:url'})['content'] if soup.find('meta', {'property': 'og:url'}) else self.url
         # category
-        keywords = soup.find('meta', {'property': 'vr:category'})
-        self.category = self.compute_category(keywords['content'] if keywords else '')
+        self.category = self.compute_category(keywords if keywords else '')
         #article headline
         elt = soup.find('meta', {'property': 'og:title'})
         if elt is None:
@@ -26,7 +26,7 @@ class RPOParser(BaseParser):
         # tags from meta-keywords and title
         meta_keywords = soup.find('meta', {'name': 'news_keywords'})['content'] if soup.find('meta', {'name': 'news_keywords'}) else ""
         self.keywords = self.extract_keywords(meta_keywords)
-        self.keywords += self.extract_keywords(self.title)
+        self.keywords += ', ' + self.extract_keywords(self.title)
         # byline / author
         self.byline = ''
         self._cleanByline()

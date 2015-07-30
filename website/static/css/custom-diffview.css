@@ -6,6 +6,17 @@
 	padding:0 3px;
 }
 
+.pager li {
+	padding: 0;
+}
+@media (max-width: 768px){
+	.pager .next > a, .pager .previous > a {
+		float: none;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
 .content{
 	text-align: justify;
 	margin: 20px auto 20px;
@@ -30,6 +41,11 @@
 	width: 18px;
 }
 
+ul.del-ins{
+    list-style: none;
+    padding-left: 0px;
+}
+
 del{
 	background-color: #ff8080;
 	text-decoration: line-through;
@@ -44,20 +60,12 @@ button[type=button] {
 	margin-top: 5px;
 }
 
-
-@media (max-width: 950px){
-	.share li {
-	  margin-top: 8px;
-	  margin-bottom: 10px;
-	  padding: 5px;
-	  list-style: none;
-	  display: block;
-	  float: left;
-	  width: 110px;
-	}
-
-@media (min-width: 450px){
+@media (min-width: 992px){
 	.share {
   	 margin-top: 300px;
 	}
+}
+
+span.shtitle{
+  font-size: 18px;
 }

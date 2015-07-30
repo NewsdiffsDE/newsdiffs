@@ -2,13 +2,17 @@
  Body 
  **************************************************************************** */
 
+body{
+    font-family: 'Open Sans', sans-serif;
+}
+
 code {
   font-size: 80%;
 }
 
 
 .maincontent a{
-	color: #909090;
+	color: #333333;
 
 }
 
@@ -46,7 +50,7 @@ code {
 
 @media screen and (max-width: 768px){
 	.navbar-brand img{
-		height: 70%;
+		height: 60%;
 		margin-top: 12px;
 	}
 }
@@ -80,6 +84,11 @@ ul.nav.navbar-nav.navbar-right li > a{
     border: none;
 }
 
+
+.navbar-default .navbar-nav > .active > a{
+    background-color:rgba(236, 236, 236, 0.68);
+}
+
 /* *****************************************************************************
  Footer
  **************************************************************************** */
@@ -95,7 +104,7 @@ footer img {
 }
 footer p a{
 	color: #fff;
-	/*border-bottom: 1px #fff dotted;*/
+	border-bottom: 1px #fff dotted;
 
 }
 
@@ -153,6 +162,18 @@ footer p a{
 }
 
 
+/* *****************************************************************************
+ Display for large screens: affects header (menu) and footer
+ **************************************************************************** */
+@media (min-width: 1366px) {
+    .limit-header {
+        width: 74%;
+    }
+    .limit-footer {
+        padding-left: 9%;
+        width: 58%;
+    }
+}
 
 /* *****************************************************************************
  Buttons
@@ -196,4 +217,3 @@ body {
 #datepicker{
   width: 100%;
 }
-

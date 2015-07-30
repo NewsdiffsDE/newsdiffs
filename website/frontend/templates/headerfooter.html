@@ -2,9 +2,9 @@
 <html>
 <head lang="en">
      <meta charset="utf-8">
-    <title>NewsDiffsDE | {% block title %}redaktionelle Änderungen an Nachrichten verfolgen{% endblock %}</title>
+    <title>newsdiffs.de | {% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Die Idee hinter NewsDiffs.de ist es, Änderungen an Nachrichtenartikeln sichtbar und nachvollziehbar zu machen. NewsDiffs.de trackt alle Änderungen an Artikeln der Titelseiten der 10 größten deutschsprachigen Nachrichtenportale. Nutze die Suchfunktion, um nach Artikeln zu suchen oder sieh dir unsere Highlights an.">
+    <meta name="description" content="Die Idee hinter newsdiffs.de ist es, Änderungen an Nachrichtenartikeln sichtbar und nachvollziehbar zu machen. newsdiffs.de trackt alle Änderungen an Artikeln der Titelseiten der 10 größten deutschsprachigen Nachrichtenportale. Nutze die Suchfunktion, um nach Artikeln zu suchen oder sieh dir unsere Highlights an.">
     <meta name="author" content="Robert, Cat, Relana, Shenglin, Paula, Anja, Moreno">
 
     <!-- CSS -->
@@ -12,7 +12,7 @@
     <link href="{% url 'static' 'css/bootstrap-datepicker.min.css' %}" rel="stylesheet" type="text/css">
     <link href="{% url 'static' 'css/custom.css' %}" rel="stylesheet" media ="screen">
     <!-- for individula styles of the pages: -->
-    {% block css_import %} {% endblock %}
+    {% block css_import %} <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'> {% endblock %}
 
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -29,21 +29,21 @@
 
 </head>
 <body>
-    <div class="container-fluid" id="top">
+    <div class="container-fluid limit-header" id="top">
         <div class="row">
-             <nav class="navbar navbar-default navbar-static-top">
-            <div class="col-md-8 col-md-offset-2">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="{% url 'root' %}"><img src="{% url 'static' 'images/logo_nd_neu.png' %}" alt="NewsDiffs Logo"></a>
-                </div>
+            <nav class="navbar navbar-default navbar-static-top">
+                <div class="col-md-8 col-md-offset-2">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="{% url 'root' %}"><img src="{% url 'static' 'images/logo_nd_neu.png' %}" alt="NewsDiffs Logo"></a>
+                    </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -52,7 +52,7 @@
                         <li {% block active_entdecken %}{% endblock %}><a href="{% url 'entdecken' %}">Entdecken</a></li>
                         <li {% block active_highlights %}{% endblock %}><a href="{% url 'highlights' %}">Highlights</a></li>
                         <li {% block active_archive %}{% endblock %}><a href="{% url 'archive' %}">Archiv</a></li>
-			<li {% block active_plugin %}{% endblock %}><a href="{% url 'plugin' %}">Plugin</a></li>
+						<li {% block active_plugin %}{% endblock %}><a href="{% url 'plugin' %}">Plugin</a></li>
                         <li {% block active_about %}{% endblock %}><a href="{% url 'about' %}">Über NewsDiffs</a></li>
                     </ul>
                 </div>
@@ -60,6 +60,7 @@
             </div>
             <!-- /.container-fluid -->
         </nav>
+
         </div>
 
     </div>
@@ -71,9 +72,9 @@
 
 
     <footer class="footer">
-        <div class="container-fluid col-md-8 col-md-offset-2">
+        <div class="container-fluid col-md-8 col-md-offset-2 limit-footer">
             <div class="footer-left">
-                <p>© 2015 NewsDiffs DE</p>
+                <p>© 2015 newsdiffs.de</p>
                 <p><a href="{% url 'kontakt' %}">Kontakt</a></p>
                 <p><a href="{% url 'impressum' %}">Impressum</a></p>
             </div>

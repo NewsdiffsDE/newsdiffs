@@ -15,7 +15,7 @@ class NTVParser(BaseParser):
         self.source = ', '.join(self.domains)
         self.url = soup.find('meta', {'property': 'og:url'})['content'] if soup.find('meta', {'property': 'og:url'}) else self.url
         # category
-        keywords = self.url.strip('http://www.n-tv.de').replace('/', ',')
+        keywords = self.url.strip('http://www.n-tv.de').replace('/', ', ')
         self.category = self.compute_category(keywords if keywords else '')
         # Remove any potential "rogue" video articles, that bypass the URL check
         try:
@@ -33,7 +33,7 @@ class NTVParser(BaseParser):
         # tags from meta-keywords and title
         meta_keywords = soup.find('meta', {'name': 'news_keywords'})['content'] if soup.find('meta', {'name': 'news_keywords'}) else ""
         self.keywords = self.extract_keywords(meta_keywords)
-        self.keywords += self.extract_keywords(self.title)
+        self.keywords += ', ' + self.extract_keywords(self.title)
         # byline / author
         author = soup.find('p', {'class': 'author'})
         self.byline = author.getText() if author else ''

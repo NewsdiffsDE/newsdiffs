@@ -148,7 +148,7 @@ class BaseParser(object):
         raise NotImplementedError()
 
     def __unicode__(self):
-        return canonicalize(u'\n'.join((self.date, self.category, self.title, self.byline,
+        return canonicalize(u'\n'.join((self.date, self.title, self.byline,
                                         self.body,)))
 
     @classmethod
@@ -196,15 +196,19 @@ class BaseParser(object):
         #extracts keywords from text
     def extract_keywords(self, text):
         text.encode('utf-8')
-        words = text.replace(',', ' ').split(' ')
+        conversion = '!@#$%^&*()[]{};:,./<>?\|`~-=_+'
+        newtext = ''
+        for c in text:
+            newtext += ' ' if c in conversion else c
+        words = newtext.replace('  ', ' ').split(' ')
         results = []
         map(lambda x : (results.append(x) if x and x[0].isupper() else None), words)
-        return ', '.join(results)
-
+        return (', '.join(results)).lower()
 
         # clean byline tag, replaces "und" with a comma, strips "Von"
     def _cleanByline(self):
+        if self.byline.startswith(' '):
+            self.byline = self.byline[1:]
         if self.byline.startswith('Von ') or self.byline.startswith('von '):
             self.byline = self.byline[4:]
-        self.byline = self.byline.replace(' und ', ',')
-
+        self.byline = self.byline.replace(' und ', ', ')

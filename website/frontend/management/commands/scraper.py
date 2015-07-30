@@ -46,12 +46,12 @@ scanned them recently, unless --all is passed.
         ch = logging.FileHandler('/tmp/newsdiffs_logging', mode='w')
         ch.setLevel(logging.DEBUG)
         ch.setFormatter(formatter)
-        logger.addHandler(ch)
+#        logger.addHandler(ch)
 
         ch = logging.FileHandler('/tmp/newsdiffs_logging_errs', mode='a')
         ch.setLevel(logging.WARNING)
         ch.setFormatter(formatter)
-        logger.addHandler(ch)
+#        logger.addHandler(ch)
 
         for repo in all_git_repos():
             cleanup_git_repo(repo)
@@ -176,7 +176,7 @@ def run_git_command(command, git_dir, max_timeout=15):
 def get_all_article_urls():
     ans = set()
     for parser in parsers.parsers:
-        logger.info('Looking up %s' % parser.domains)
+#        logger.info('Looking up %s' % parser.domains)
         urls = parser.feed_urls()
         ans = ans.union(map(canonicalize_url, urls))
     return ans
@@ -209,7 +209,7 @@ def is_boring(old, new):
     for charset in CHARSET_LIST:
         try:
             if oldu.encode(charset) == new:
-                logger.debug('Boring!')
+#                logger.debug('Boring!')
                 return True
         except UnicodeEncodeError:
             pass
@@ -251,7 +251,7 @@ def add_to_git_repo(data, filename, article):
 
     if already_exists:
         if previous == data:
-            logger.debug('Article matches current version in repo')
+#            logger.debug('Article matches current version in repo')
             return None, None, None
 
         #Now check how many times this same version has appeared before
@@ -260,8 +260,7 @@ def add_to_git_repo(data, filename, article):
 
         commits = [v.v for v in article.versions()]
         if len(commits) > 2:
-            logger.debug('Checking for duplicates among %s commits',
-                          len(commits))
+#            logger.debug('Checking for duplicates among %s commits', len(commits))
             def get_hash(version):
                 """Return the SHA1 hash of filename in a given version"""
                 output = run_git_command(['ls-tree', '-r', version, filename],
@@ -271,7 +270,7 @@ def add_to_git_repo(data, filename, article):
 
             number_equal = sum(1 for h in hashes if h == my_hash)
 
-            logger.debug('Got %s', number_equal)
+#            logger.debug('Got %s', number_equal)
 
             if number_equal >= 2: #Refuse to list a version more than twice
                 run_git_command(['checkout', filename], article.full_git_dir)
@@ -287,10 +286,10 @@ def add_to_git_repo(data, filename, article):
         commit_message = 'Adding file %s' % filename
     else:
         commit_message = 'Change to %s' % filename
-    logger.debug('Running git commit... %s', time.time()-start_time)
+#    logger.debug('Running git commit... %s', time.time()-start_time)
     run_git_command(['commit', filename, '-m', commit_message],
                     article.full_git_dir)
-    logger.debug('git revlist... %s', time.time()-start_time)
+#    logger.debug('git revlist... %s', time.time()-start_time)
 
     # Now figure out what the commit ID was.
     # I would like this to be "git rev-list HEAD -n1 filename"
@@ -300,7 +299,7 @@ def add_to_git_repo(data, filename, article):
     # (looks like the slowness is fixed in git HEAD)
     v = run_git_command(['rev-list', 'HEAD', '-n1'],
                         article.full_git_dir).strip()
-    logger.debug('done %s', time.time()-start_time)
+#    logger.debug('done %s', time.time()-start_time)
     return v, boring, diff_info
 
 
@@ -308,31 +307,28 @@ def load_article(url):
     try:
         parser = parsers.get_parser(url)
     except KeyError:
-        logger.info('Unable to parse domain, skipping')
+#        logger.info('Unable to parse domain, skipping')
         return
     try:
         parsed_article = parser(url)
     except (AttributeError, urllib2.HTTPError, httplib.HTTPException), e:
         if isinstance(e, urllib2.HTTPError) and e.msg == 'Gone':
             return
-        logger.error('Exception when parsing %s', url)
-        logger.error(traceback.format_exc())
-        logger.error('Continuing')
-        return
-    if not parsed_article.real_article:
+#        logger.error('Exception when parsing %s', url)
+#        logger.error(traceback.format_exc())
+#        logger.error('Continuing')
         return
     return parsed_article
 
 #Update url in git
 #Return whether it changed
-def update_article(article):
-    parsed_article = load_article(article.url)
+def update_article(article, parsed_article):
     if parsed_article is None:
         return
     to_store = unicode(parsed_article).encode('utf8')
     t = datetime.now()
-    logger.debug('Article parsed; trying to store')
-    article.category = parsed_article.category
+#    logger.debug('Article parsed; trying to store')
+    article.category = article.category if article.category else parsed_article.category
     article.keywords = parsed_article.keywords
     article.source = parsed_article.source
     article.save()
@@ -341,7 +337,7 @@ def update_article(article):
                                            article)
 
     if v:
-        logger.info('Modifying! new blob: %s', v)
+#        logger.info('Modifying! new blob: %s', v)
         v_row = models.Version(v=v,
                                boring=boring,
                                title=parsed_article.title,
@@ -357,20 +353,35 @@ def update_article(article):
 
 
 def update_articles(todays_git_dir):
-    logger.info('Starting scraper; looking for new URLs')
+#    logger.info('Starting scraper; looking for new URLs')
     all_urls = get_all_article_urls()
-    logger.info('Got all %s urls; storing to database' % len(all_urls))
+#    logger.info('Got all %s urls; storing to database' % len(all_urls))
     for i, url in enumerate(all_urls):
-        logger.debug('Woo: %d/%d is %s' % (i+1, len(all_urls), url))
+#        logger.debug('Woo: %d/%d is %s' % (i+1, len(all_urls), url))
         if len(url) > 255:  #Icky hack, but otherwise they're truncated in DB.
             continue
         if not models.Article.objects.filter(url=url).count():
-            logger.debug('Adding!')
-            models.Article(url=url, git_dir=todays_git_dir).save()
-    logger.info('Done storing to database')
+#            logger.debug('Adding!')
+            parsed_article = load_article(url)
+            if not parsed_article:
+                continue
+            ogUrl = parsed_article.url
+            if not parsed_article.real_article:
+                models.Article(url=url, git_dir='old').save()
+            else:
+                if not models.Article.objects.filter(url=ogUrl).count():
+                    if not ogUrl == url:
+                        models.Article(url=url, git_dir='old').save();
+                    article = models.Article(url=ogUrl, git_dir=todays_git_dir)
+                else:
+                    models.Article(url=url, git_dir='old').save();
+                    article = models.Article.objects.get(url=ogUrl)
+
+                update_article(article, parsed_article)
+#    logger.info('Done storing to database')
 
 def get_update_delay(minutes_since_update):
-    days_since_update = minutes_since_update // (24 * 60)
+    days_since_update = minutes_since_update // (24*60)
     if minutes_since_update < 60*3:
         return 15
     elif days_since_update < 1:
@@ -385,7 +396,7 @@ def get_update_delay(minutes_since_update):
         return 60*24*365*1e5  #ignore old articles
 
 def update_versions(todays_repo, do_all=False):
-    logger.info('Looking for articles to check')
+#    logger.info('Looking for articles to check')
     articles = list(models.Article.objects.exclude(git_dir='old'))
     total_articles = len(articles)
 
@@ -393,11 +404,11 @@ def update_versions(todays_repo, do_all=False):
     articles = sorted([a for a in articles if update_priority(a) > 1 or do_all],
                       key=update_priority, reverse=True)
 
-    logger.info('Checking %s of %s articles', len(articles), total_articles)
+#    logger.info('Checking %s of %s articles', len(articles), total_articles)
 
     # Do git gc at the beginning, so if we're falling behind and killed
     # it still happens and I don't run out of quota. =)
-    logger.info('Starting with gc:')
+#    logger.info('Starting with gc:')
     try:
         run_git_command(['gc'], models.GIT_DIR + todays_repo)
     except subprocess.CalledProcessError as e:
@@ -407,20 +418,20 @@ def update_versions(todays_repo, do_all=False):
         print >> sys.stderr, '"""'
         raise
 
-    logger.info('Done!')
+#    logger.info('Done!')
     for i, article in enumerate(articles):
-        logger.debug('Woo: %s %s %s (%s/%s)',
-                     article.minutes_since_update(),
-                     article.minutes_since_check(),
-                     update_priority(article), i+1, len(articles))
+#        logger.debug('Woo: %s %s %s (%s/%s)',
+#                     article.minutes_since_update(),
+#                     article.minutes_since_check(),
+#                     update_priority(article), i+1, len(articles))
         delay = get_update_delay(article.minutes_since_update())
         if article.minutes_since_check() < delay and not do_all:
             continue
-        logger.info('Considering %s', article.url)
+#        logger.info('Considering %s', article.url)
 
         article.last_check = datetime.now()
         try:
-            update_article(article)
+            update_article(article, load_article(article.url))
         except Exception, e:
             if isinstance(e, subprocess.CalledProcessError):
                 logger.error('CalledProcessError when updating %s', article.url)
@@ -432,7 +443,7 @@ def update_versions(todays_repo, do_all=False):
         article.save()
     #logger.info('Ending with gc:')
     #run_git_command(['gc'])
-    logger.info('Done!')
+#    logger.info('Done!')
 
 #Remove index.lock if 5 minutes old
 def cleanup_git_repo(git_dir):

@@ -6,8 +6,15 @@
 
 {% block content %}
 
-<h1>Nanu, das sieht nicht richtig aus.</h1>
-<p>Wenn du auf dieser Seite bist, scheint etwas schief gelaufen zu sein.</p>
-<p>Falls du mehr darüber weißt, kannst du uns gerne <a href="{% url 'contact' %}">kontaktieren</a>.</p>
-  
+<div class="container-fluid maincontent">
+	{% include "searchbar.html" %}
+	<div class="row">
+            <div class="col-md-8 col-md-offset-2">
+
+		<h1>Nanu, das sieht nicht richtig aus.</h1>
+		<p>Wenn du auf dieser Seite bist, scheint etwas schief gelaufen zu sein.</p>
+		<p>Falls du mehr darüber weißt, kannst du uns gerne <a href="{% url 'contact' %}">kontaktieren</a>.</p>
+	    </div>
+	</div>
+</div>
 {% endblock content%}

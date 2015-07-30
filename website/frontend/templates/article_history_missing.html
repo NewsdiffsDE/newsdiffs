@@ -4,10 +4,15 @@
 
 {% block content %}
 
-{% include "searchbar.html" %}
-
-<h1>Änderungsübersicht</h1>
-<h3><a href="{{url}}">{{url}}</a></h3>
-<p>Huch! Diesen Artikel finden wir leider nicht. Sorry!</p>
+<div class="container-fluid maincontent">
+	{% include "searchbar.html" %}
+	<div class="row">
+            <div class="col-md-8 col-md-offset-2">
+		<h1>Änderungsübersicht</h1>
+		<h3><a href="{{url}}">{{url}}</a></h3>
+		<p>Huch! Diesen Artikel finden wir leider nicht. Sorry!</p>
+	    </div>
+	</div>
+</div>
 
 {% endblock %}

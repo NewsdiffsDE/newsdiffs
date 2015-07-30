@@ -1,7 +1,8 @@
 {% extends 'headerfooter.html' %}
 {% load url from future %}
 {% block css_import %}
-<link href="{% url 'static' 'css/custom-article-list.css' %}" rel="stylesheet" type="text/css">
+   <link href="{% url 'static' 'css/custom-article-list.css' %}" rel="stylesheet" type="text/css">
+   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
 {% endblock %}
 
 {% block title %}Suchergebnisse{% endblock %}
@@ -12,15 +13,6 @@
 <!-- Begin page content -->
 <div class="container-fluid maincontent">
     {% include "searchbar.html" %}
-
-    <!-- Breadcrumbs -->
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <ol class="breadcrumb">
-                <li class="active">Archiv</li>
-            </ol>
-        </div>
-    </div>
 
     <div class="row" id="sort-btn-row">
 
@@ -40,9 +32,9 @@
         <div class="col-md-6">
 
             <h1>Archiv vom {{archive_date}}</h1>
-            {% if articles|length > 0 %}
             {% include "subtemplates/pager.html" %}
             {% include "subtemplates/filterTags.html" %}
+            {% if articles|length > 0 %}
             <div class="table">
                 <table class="table table-condensed table-striped">
                     <thead>
@@ -74,7 +66,7 @@
                                     ({{article.versioncount}})</a>
                             </p>
 
-                            <p><a href="{{all_diffs}}"><img class="ownbtn"
+                            <p><a href="{{article.all_diffs}}"><img class="ownbtn"
                                                                    src="../static/images/Icon_Vergleichen.png"
                                                                    alt="Vergleichen-Icon">alle Änderungen</a></p>
                         </td>
@@ -84,7 +76,7 @@
                 </table>
                 {% include "subtemplates/pager.html" %}
                  {%else%}
-                <p>Keine Artikel gefunden für Seite {{page}}</p>
+                <p>Keine Ergebnisse</p>
                 {%endif%}
             </div>
             <!-- /.table -->

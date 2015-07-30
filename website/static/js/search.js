@@ -62,6 +62,7 @@ $(window).load(function () {
 	var body = document.body;
     var dateElement = document.getElementById('datepicker');
     var sortButton = document.getElementById('sortbutton');
+    var datePicker = document.getElementById('datepicker');
 
 
 	searchInputLineElement.onclick = function(e) {
@@ -80,6 +81,8 @@ $(window).load(function () {
 		}
 	});
 
+
+
     $.fn.datepicker.dates['de'] = {
             days: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
             daysShort: ["Son", "Mon", "Din", "Mit", "Don", "Fre", "Sam"],
@@ -89,6 +92,8 @@ $(window).load(function () {
             today: "Heute",
             clear: "Löschen"
     };
+
+    /**$('#datepicker').attr("placeholder", "Datum wählen");**/
 
     $('#datepicker').datepicker({
         //format: "dd/mm/yyyy",
@@ -124,7 +129,6 @@ $(window).load(function () {
         }
         window.location = url;
     });
-
 
     $('sort-btn').click(function(){
         $(this).text(function(i,old){

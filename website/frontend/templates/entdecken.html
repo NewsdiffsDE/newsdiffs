@@ -2,8 +2,7 @@
 {% load url from future %}
 {% block css_import %}
     <link href="{% url 'static' 'css/custom-entdecken.css' %}" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Oswald:400,700,300" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
 {% endblock %}
 {% block title %}Entdecken{% endblock %}
 {% block active_entdecken %}class="active"{% endblock %}
@@ -12,23 +11,13 @@
     <div class="container-fluid maincontent">
         {% include "searchbar.html" %}
 
-   <!-- Breadcrumbs -->
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <ol class="breadcrumb">
-                <li class="active">Entdecken</li>
-            </ol>
-        </div>
-    </div>
-
-
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
 			<div class="slide">
 				Was aktuell die Welt bewegt
 			</div>
 			<div class="subtitle">
-				Klicke dich durch die aktuellen Twitter Trends, global oder deutschlandweit.
+				Klicke dich durch die aktuellen deutschen Twitter Trends.
 				<br><span class="glyphicon glyphicon-globe"></span>
 			</div>
 		</div>
@@ -55,7 +44,7 @@
 		
 		
 		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
+			<div class="text-center">
 				<div class="slide">
 					Kategorien
 				</div>
@@ -65,7 +54,7 @@
 				</div>
 			</div> 
 			
-			<div class="col-md-9 col-md-offset-2">
+			<div class="">
 			
 				 
 				 <div class="categories_list">

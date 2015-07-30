@@ -14,10 +14,10 @@ class ZeitParser(BaseParser):
                              fromEncoding='utf-8')
 
         self.meta = soup.findAll('meta')
+        keywords = self.url.strip('http://www.zeit.de').replace('/', ',')
         self.source = ', '.join(self.domains)
         self.url = soup.find('meta', {'property': 'og:url'})['content'] if soup.find('meta', {'property': 'og:url'}) else self.url
         # category
-        keywords = self.url.strip('http://www.zeit.de').replace('/', ',')
         self.category = self.compute_category(keywords if keywords else '')
         #article headline
         elt = soup.find('span', 'title')
@@ -28,7 +28,7 @@ class ZeitParser(BaseParser):
         # tags from meta-keywords and title
         meta_keywords = soup.find('meta', {'name': 'keywords'})['content'] if soup.find('meta', {'name': 'keywords'}) else ""
         self.keywords = self.extract_keywords(meta_keywords)
-        self.keywords += self.extract_keywords(self.title)
+        self.keywords += ', ' + self.extract_keywords(self.title)
         # byline / author
         author = soup.find('span', {'class': 'header_author'})
         self.byline = author.getText() if author else ''
