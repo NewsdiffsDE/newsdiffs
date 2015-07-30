@@ -16,7 +16,7 @@ h1{
 }
 
 .maincontent a{
-	color: #FF2121;
+	color: #333333;
 
 }
 
@@ -142,7 +142,7 @@ footer p a{
 }
 
 .footer-right img:hover{
-	background-color: #e7e7e7;
+	background-color: #ff2121;
 }
 
 .footer-social{
