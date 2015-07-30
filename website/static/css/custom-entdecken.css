@@ -62,9 +62,8 @@ border: none;
 
 
 .slide{
-  font-size: 50px;
+  font-size: 45px;
   font-weight: 300;
-  font-family: 'Open Sans', sans-serif;
   margin-top: 50px;
   text-align: center;
   animation-name: slide;
@@ -134,7 +133,7 @@ border: none;
 @media (min-width: 1380px){
 	.categories_list{
 	    margin-top: 30px;
-	    padding: 0 280px;	
+	    padding: 0 200px;	
 	}
 }
 

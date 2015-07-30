@@ -10,6 +10,10 @@ code {
   font-size: 80%;
 }
 
+h1{
+	font-size: 40px;
+	font-weight: 300;
+}
 
 .maincontent a{
 	color: #333333;
@@ -28,6 +32,10 @@ code {
 	color: #333333;
 	text-decoration: none;
 	border-bottom: 1px #333333 dotted;
+}
+
+a.no-line-under-icon {
+	border-bottom-style: none;
 }
 
 .text a:hover {
@@ -197,6 +205,37 @@ footer p a{
     border-bottom: 1px solid #ddd;
 }
 
+.round-btn-hover > a {
+    display: inline-block;
+    padding: 5px 14px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+
+}
+
+.round-btn-hover > a:hover,
+.round-btn-hover > a:focus {
+    text-decoration: none;
+    background-color: #eee;
+    border: 1px solid transparent;
+}
+
+.round-btn > a {
+    display: inline-block;
+    padding: 5px 14px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+
+}
+
+.archive-buttons div {
+    display: inline;
+    margin-bottom: 15px;
+}
+
+.archive-buttons {
+    margin-top:15px;
+}
 
 
 /* *****************************************************************************

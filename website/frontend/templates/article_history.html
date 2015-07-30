@@ -13,23 +13,20 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 
+                <!-- Heading/Title -->
 				<h1 class="hover-color">{{ article.latest_version.title }}</h1>
-				<p>
+
+                <!-- Information -->
+                <p>
                     <span class="glyphicon glyphicon-book"></span>
                     Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> (<a id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
                     Ressort: {{article.category}}
                 </p>
-                <div class="round-btn">
-                    <a href="{{all_diffs}}">
-                            <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
-                            alt="Vergleichen-Icon"> Diff neueste:älteste Version
-                    </a>
-                </div>
 
 
 
 
-				<table class="table table-condensed table-striped">
+				<table class="table table-condensed">
 					<thead>
 						<tr>
 
@@ -44,19 +41,29 @@
                         <tr>
 
                             <!-- Schlagzeile Spalte -->
-                            <td>{{version.title}} {%if version.byline != '' %}({{version.byline}}){%endif%}</td>
+                            <td><a href="http://{{version.url}}">{{version.title}}</a> {%if version.byline != '' %}({{version.byline}}){%endif%}</td>
 
                             <!-- Datum Spalte -->
                             <td>{{version.date}}</td>
 
                             <!--Diff Spalte-->
                             {% if difflink %}
-                                <td><a class="hover-color" href="{{difflink}}">
-                                    <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
-                                         alt="Vergleichen-Icon">Diff mit vorheriger Version</a>
+                                <td>
+                                    <div class="round-btn-hover">
+                                        <a class="hover-color" href="{{difflink}}">
+                                            <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
+                                            alt="Vergleichen-Icon">Vgl. mit vorheriger Version
+                                        </a>
+                                    </div>
                                 </td>
                             {% else %}
                                 <td>
+                                     <div class="round-btn-hover">
+                                    <a href="{{all_diffs}}">
+                                        <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
+                                        alt="Vergleichen-Icon">Neueste vs. älteste Version
+                                    </a>
+                                    </div>
                                 </td>
                             {% endif %}
 
