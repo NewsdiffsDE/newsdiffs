@@ -177,7 +177,7 @@ def get_articles_by_url(url):
         all_articles = Article.objects.filter(url = url).exclude(source='')
 
         for a in all_articles:
-            versions = Version.objects.filter(article_id = a.id)
+            versions = Version.objects.filter(article_id = a.id, boring = 0)
             version_count = versions.count()
             if version_count > 1:           # get all articles with changes
                 all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
@@ -212,7 +212,7 @@ def get_articles_by_author(searchterm, search_source, ressort, date, begin_at, e
         all_articles = article_objects.order_by('-last_update')[begin_at : end_at]          # range of results
 
     for a in all_articles:
-        versions = Version.objects.filter(article_id = a.id)
+        versions = Version.objects.filter(article_id = a.id, boring = 0)
         version_count = versions.count()     # get all articles with changes
         all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
         article_title = versions.order_by('-date')[0].title
@@ -245,7 +245,7 @@ def get_articles_by_keyword(searchterm, search_source, ressort, date, begin_at, 
     all_articles = all_articles.order_by('-initial_date')[begin_at : end_at]
 
     for a in all_articles:
-        versions = Version.objects.filter(article_id = a.id)
+        versions = Version.objects.filter(article_id = a.id, boring = 0)
         version_count = versions.count()
         if version_count > 1:           # get all articles with changes
             article_title = versions.order_by('-date')[0].title
