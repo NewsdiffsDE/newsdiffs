@@ -23,7 +23,7 @@
 				<table class="table table-condensed table-striped">
 					<thead>
 						<tr>
-                            <th>Version</th>
+                            <th>Diff</th>
 							<th>Schlagzeile</th>
 							<th>Datum/Zeit der Archivierung</th>
 
@@ -41,8 +41,7 @@
                             {% else %}
                                 <td>
                                     <a href="{{all_diffs}}">
-                                        <img class="ownbtn"
-                                             src="../static/images/Icon_Vergleichen.png"
+                                        <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
                                              alt="Vergleichen-Icon">Diff mit neuester Version
                                     </a>
                                 </td>
