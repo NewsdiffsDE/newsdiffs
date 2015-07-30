@@ -81,12 +81,12 @@
                                         src="../static/images/Icon_Artikelverlauf.png"
                                          alt="Artikelverlauf-Icon">
                                     </a>
-                                    <a class="no-link-color no-line-under-icon" href="{% url 'article_history' %}?id={{article.id}}">Versionsübersicht
+                                    <a class="no-link-color" href="{% url 'article_history' %}?id={{article.id}}">Versionsübersicht
                                     ({{article.versioncount}})</a>
 
 
 
-                                    <a class="no-link-color" href="{{article.all_diffs}}"><img class="no-line-under-icon"
+                                    <a class="no-link-color no-line-under-icon" href="{{article.all_diffs}}"><img
                                                                    src="../static/images/Icon_Vergleichen.png"
                                                                    alt="Vergleichen-Icon">Neueste Version vs. Originalversion</a>
                                 </p>
