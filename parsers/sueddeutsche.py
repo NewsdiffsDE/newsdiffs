@@ -21,7 +21,6 @@ class SDParser(BaseParser):
         self.url = soup.find('meta', {'property': 'og:url'})['content'] if soup.find('meta', {'property': 'og:url'}) else self.url
         # category
         self.category = self.compute_category(keywords if keywords else '')
-        print(self.category)
         #article headline
         elt = soup.find('meta', {'property': 'og:title'})
         if elt is None:

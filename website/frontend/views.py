@@ -11,6 +11,12 @@ from django.db.models import Count
 from twitter import *
 from django.template import Context, RequestContext, loader
 from django.views.decorators.cache import cache_page
+from BeautifulSoup import BeautifulSoup
+import urllib2
+import cookielib
+import re
+import socket
+import time
 
 OUT_FORMAT = '%B %d, %Y at %l:%M%P EDT'
 
@@ -173,10 +179,35 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
                     }
     return articles
 
-def get_articles_by_url(url):
-        articles = {}
-        all_articles = Article.objects.filter(url = url).exclude(source='')
+def grab_url(url, max_depth=5, opener=None):
+    if opener is None:
+        cj = cookielib.CookieJar()
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+    retry = False
+    try:
+        text = opener.open(url, timeout=5).read()
+        if '<title>NY Times Advertisement</title>' in text:
+            retry = True
+    except socket.timeout:
+        retry = True
+    if retry:
+        if max_depth == 0:
+            raise Exception('Too many attempts to download %s' % url)
+        time.sleep(1)
+        return grab_url(url, max_depth-1, opener)
+    return text
 
+def get_articles_by_url(url):
+        html = grab_url(url)
+        soup = BeautifulSoup(html, convertEntities=BeautifulSoup.HTML_ENTITIES, fromEncoding='utf-8')
+        articles = {}
+        a = Article.objects.filter(url=url)
+        if not a.count():
+            if soup.find('meta', {'property': 'og:url'}):
+                url = soup.find('meta', {'property': 'og:url'})['content']
+            elif soup.find('meta', {'name': 'og:url'}):
+                url = soup.find('meta', {'name': 'og:url'})['content']
+        all_articles = Article.objects.filter(url = url).exclude(source='')
         for a in all_articles:
             versions = Version.objects.filter(article_id = a.id)
             version_count = versions.count()
