@@ -32,20 +32,26 @@
         <div class="col-md-6">
 
 
+            {% if message%}
+            <div class="alert alert-danger fade in">
+                    <strong>Ooops! </strong> {{message}}
+            </div>
+            {%else%}
+
             {% if search_type = "URL"%}
             <h1>Suchergebnis für {{search_type}}</h1>
             <p>"{{ searchterm }}"</p>
             {% else %}
             <h1>Suchergebnisse für {{search_type}} "{{ searchterm }}"</h1>
             {% endif %}
-            {% if articles|length > 0 %}
+            {% if articles_count > 0 %}
             {% include "subtemplates/pager.html" %}
             {% endif %}
             {% if search_type != "URL"%}
             {% include "subtemplates/filterTags.html" %}
             {% endif %}
-
-            {% if articles|length > 0 %}
+             {%endif%}
+            {% if articles_count > 0 %}
 
             <div class="table">
                 <table class="table table-condensed table-striped">
@@ -85,7 +91,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                {% if articles|length > 0 %}
+                {% if articles_count > 0 %}
                 {% include "subtemplates/pager.html" %}
                 {% endif %}
                 {%else%}

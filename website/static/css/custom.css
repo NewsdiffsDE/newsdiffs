@@ -20,6 +20,9 @@ h1{
 
 }
 
+.table tbody tr td {
+	    border-top-style: none;
+}
 
 .maincontent a:hover {
 	color: #333333;

@@ -144,7 +144,7 @@ def search(request):
                 'template' : 'suchergebnisse'
                 })
     else:
-        return render_to_response('suchergebnisse.html', {})
+        return render_to_response('suchergebnisse.html', {'message': 'Bitte geben Sie ein Suchbegriff ein.'})
 
 def get_archive(date, ressort, search_source, begin_at, end_at):
     articles = {}
