@@ -75,6 +75,7 @@ $(window).load(function () {
 		hideElementFunction(searchFoldOutElement);
 	};
 
+    //Klicking outside of the input bar or foldout should close the foldout
     //advice from https://css-tricks.com/dangers-stopping-event-propagation/
 	$(document).on('click', function(event) {
 		if (!$(event.target).closest('#search-element').length) {
@@ -83,7 +84,7 @@ $(window).load(function () {
 	});
 
 
-
+    //Date Picker Language
     $.fn.datepicker.dates['de'] = {
             days: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
             daysShort: ["Son", "Mon", "Din", "Mit", "Don", "Fre", "Sam"],
@@ -96,6 +97,7 @@ $(window).load(function () {
 
     /**$('#datepicker').attr("placeholder", "Datum wählen");**/
 
+    //Date Picker Create
     $('#datepicker').datepicker({
         //format: "dd/mm/yyyy",
         format: "dd.mm.yyyy",
@@ -105,12 +107,22 @@ $(window).load(function () {
         language: 'de',
         autoclose: true
     }).on("changeDate", function(e){
+        //User selects a date -> it should trigger new search request with the date
+
+        //get the date selected by user
         date_value = $('#datepicker').val();
+
+        //to
         var date_regex = /date=\d{2}([./-])\d{2}\1\d{4}$/;
         var date_tag = "date=";
         var url = window.location.href;
 
+        //if date_tag already exists in url:
+        //replace it using a regular expression
+        //else:
+        //insert it in url
         if(url.indexOf(date_tag) > -1){
+
             index = url.indexOf(date_tag);
             end = url.length;
             suburl = url.substring(index, end);
@@ -131,9 +143,10 @@ $(window).load(function () {
         window.location = url;
     });
 
+    //toggle-button for sort and filter
     $('sort-btn').click(function(){
         $(this).text(function(i,old){
-            return old=='Sortieren & Filtern verbergen' ?  'Sortieren & Filtern anzeigen' : 'Sortieren & Filtern verbergen';
+            return old=='Filter verbergen' ?  'Filter anzeigen' : 'Filter verbergen';
         });
     });
 
