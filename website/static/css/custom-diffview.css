@@ -11,10 +11,16 @@
 }
 
 @media (max-width: 550px){
-	.pager .next > a, .pager .previous > a {
+	.pager li {
 		float: none;
 		margin-left: auto;
 		margin-right: auto;
+	}
+}
+
+@media (max-width: 767px) and (min-width: 550px {
+	.pager li {
+		display: inline;
 	}
 }
 
