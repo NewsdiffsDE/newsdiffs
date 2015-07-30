@@ -147,7 +147,6 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
                                             date__month=date[3:5],
                                             date__day=date[0:2]).exclude(diff_json__isnull = True).values_list('article_id')
 
-    all_articles = []
     if len(article_ids) > 0:
         article_objects = Article.objects.filter(id__in=article_ids)
         if search_source in SOURCES:
@@ -157,7 +156,7 @@ def get_archive(date, ressort, search_source, begin_at, end_at):
         all_articles = article_objects.order_by('-last_update')[begin_at : end_at]          # range of results
 
         for a in all_articles:
-            versions = Version.objects.filter(article_id = a.id)
+            versions = Version.objects.filter(article_id = a.id, boring = 0)
             version_count = versions.count()
             all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
             article_title = versions.order_by('-date')[0].title
