@@ -41,14 +41,6 @@ code {
  Navbar
  **************************************************************************** */
 
-
- @media (max-width: 1160px){
-	.limit-header2, .limit-footer {
-		margin-left: 0;
-		width: 10%
-	} 
- }
- 
 .navbar-brand img{
 	height: 50px;
 	margin: 15px 15px 15px 0;
