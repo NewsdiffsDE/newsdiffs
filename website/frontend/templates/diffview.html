@@ -30,7 +30,33 @@
 
     <!-- Article -->
     <div class="row">
-        <div class="col-md-6 col-md-offset-2">
+        
+		
+
+		<!-- Share -->
+
+		<div class="col-md-2 col-md-offset-2">
+			<ul class="share">
+				<li class="col-xs-12 col-sm-3 col-md-12"><span class="shtitle"><span class="glyphicon glyphicon-share"></span> Teilen</span></li>
+
+				<li class="col-xs-12 col-sm-3 col-md-12">
+					<a href="https://twitter.com/share?url={{ article.url }}&via=newsdiffs_de&text=Neue Änderungen im Artikel '{{ title }}'"
+					   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+					   target="_blank" title="Share on Twitter"><img
+							src="{% url 'static' 'images/Twitter_logo_blue.png' %}">Twitter</a></li>
+
+				<li class="col-xs-12 col-sm-3 col-md-12"><a href="https://www.facebook.com/sharer/sharer.php?url={{ article.url }}&text='{{ title }}'&"
+					   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
+					   target="_blank" title="Share on Facebook"><img src="{% url 'static' 'images/fb_icon_blue.png' %}">Facebook</a>
+				</li>
+				
+				<li class="col-xs-12 col-sm-3 col-md-12">
+					<a href="mailto:?subject=NewsDiffsDE - Neue Änderungen!&amp;body=Neue Änderungen gefunden im Artikel '{{ title }}' {{ article.url }} "
+					   title="Share by Email">
+						<img src="{% url 'static' 'images/mail.png' %}">Email</a></li>
+			</ul>
+		</div>
+		<div class="col-md-6">
 			<div class="row col-xs-12">
 				<nav>
 					<ul class="pager">
@@ -76,32 +102,6 @@
 				</p>
 			</div>
 		</div>
-		
-
-		<!-- Share -->
-
-		<div class="col-md-2">
-			<ul class="share">
-				<li class="col-xs-12 col-sm-3 col-md-12"><span class="shtitle"><span class="glyphicon glyphicon-share"></span> Teilen</span></li>
-
-				<li class="col-xs-12 col-sm-3 col-md-12">
-					<a href="https://twitter.com/share?url={{ article.url }}&via=newsdiffs_de&text=Neue Änderungen im Artikel '{{ title }}'"
-					   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
-					   target="_blank" title="Share on Twitter"><img
-							src="{% url 'static' 'images/Twitter_logo_blue.png' %}">Twitter</a></li>
-
-				<li class="col-xs-12 col-sm-3 col-md-12"><a href="https://www.facebook.com/sharer/sharer.php?url={{ article.url }}&text='{{ title }}'&"
-					   onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;"
-					   target="_blank" title="Share on Facebook"><img src="{% url 'static' 'images/fb_icon_blue.png' %}">Facebook</a>
-				</li>
-				
-				<li class="col-xs-12 col-sm-3 col-md-12">
-					<a href="mailto:?subject=NewsDiffsDE - Neue Änderungen!&amp;body=Neue Änderungen gefunden im Artikel '{{ title }}' {{ article.url }} "
-					   title="Share by Email">
-						<img src="{% url 'static' 'images/mail.png' %}">Email</a></li>
-			</ul>
-		</div>
-
 
 	</div>
 </div>
