@@ -11,7 +11,7 @@
 		{% include "searchbar.html" %}
 
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2 text">
+			<div class="col-md-8 col-md-offset-2">
 
                 <!-- Heading/Title -->
 				<h1 class="hover-color">{{ article.latest_version.title }}</h1>
@@ -19,7 +19,7 @@
                 <!-- Information -->
                 <p>
                     <span class="glyphicon glyphicon-book"></span>
-                    Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> (<a class="hover-color text" id="original" href="{{ article.url }}" target="_blank">zum Original</a>) |
+                    Quelle: <a href="http://{{ article.source }}" target="_blank">{{ article.source }}</a> (<div class="text"> <a class="hover-color" id="original" href="{{ article.url }}" target="_blank">zum Original</a></div>) |
                     Ressort: {{article.category}}
                 </p>
              
@@ -38,7 +38,7 @@
                         <tr>
 
                             <!-- Schlagzeile Spalte -->
-                            <td><a href="http://{{version.url}}">{{version.title}}</a> {%if version.byline != '' %}({{version.byline}}){%endif%}</td>
+                            <td><a href="http://{{article.url}}">{{version.title}}</a> {%if version.byline != '' %}({{version.byline}}){%endif%}</td>
 
                             <!-- Datum Spalte -->
                             <td>{{version.date}}</td>
@@ -47,19 +47,22 @@
                             {% if difflink %}
                                 <td>
 
+                                        <div class="text">
                                         <a href="{{difflink}}">
                                             <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
                                             alt="Vergleichen-Icon">Vgl. mit vorheriger Version
                                         </a>
+                                        </div>
 
                                 </td>
                             {% else %}
                                 <td>
-
+                                    <div class="text">
                                     <a href="{{all_diffs}}">
                                         <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
                                         alt="Vergleichen-Icon">Neueste vs. älteste Version
                                     </a>
+                                    </div>
 
                                 </td>
                             {% endif %}
