@@ -31,9 +31,17 @@
 						</tr>
 					</thead>
 
+                        <tr>
+                            <th>
+                                <a href="{{all_diffs}}">
+                                    <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
+                                         alt="Vergleichen-Icon">neueste:älteste Version
+                                </a><
+                            </th>
+                        </tr>
+
                     {% for difflink, version in versions %}
                         <tr>
-
 
                             <!-- Schlagzeile Spalte -->
                             <td>{{version.title}} {%if version.byline != '' %}({{version.byline}}){%endif%}</td>
@@ -45,14 +53,10 @@
                             {% if difflink %}
                                 <td><a class="hover-color" href="{{difflink}}">
                                     <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
-                                         alt="Vergleichen-Icon">Diff mit vorheriger Version</a>
+                                         alt="Vergleichen-Icon">Diff mit vorheriger Version></a>
                                 </td>
                             {% else %}
                                 <td>
-                                    <a href="{{all_diffs}}">
-                                        <img src="{% url 'static' 'images/Icon_Vergleichen16px.png' %}"
-                                             alt="Vergleichen-Icon">Diff mit neuester Version
-                                    </a>
                                 </td>
                             {% endif %}
 
