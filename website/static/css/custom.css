@@ -43,8 +43,9 @@ code {
 
 
  @media (max-width: 1160px){
-	.limit-header, .limit-footer {
+	.limit-header2, .limit-footer {
 		margin-left: 0;
+		width: 10%
 	} 
  }
  
