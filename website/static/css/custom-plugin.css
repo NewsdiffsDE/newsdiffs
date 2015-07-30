@@ -15,3 +15,7 @@ h4 {
   text-align: right;
 }
 
+.maincontent img {
+	padding: 3px;
+	background-color: #666;
+}
