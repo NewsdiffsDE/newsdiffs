@@ -228,7 +228,7 @@ def get_articles_by_url(url):
 def get_articles_by_author(searchterm, search_source, ressort, date, begin_at, end_at):
     articles = {}
     all_articles = []
-    article_ids = Version.objects.filter(byline__icontains = searchterm).exclude(diff_json__isnull = True).distinct().values_list('article_id')
+    article_ids = Version.objects.filter(byline__icontains = searchterm).values_list('article_id')
 
     if len(article_ids) > 0:
         article_objects = Article.objects.filter(id__in=article_ids)
@@ -240,7 +240,7 @@ def get_articles_by_author(searchterm, search_source, ressort, date, begin_at, e
             article_objects = article_objects.filter(source__icontains = search_source)
         if ressort in RESSORTS :
             article_objects = article_objects.filter(category = ressort)
-            
+
         all_articles = article_objects.order_by('-last_update')
 
     for a in all_articles:
