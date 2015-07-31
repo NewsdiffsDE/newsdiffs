@@ -240,14 +240,16 @@ def get_articles_by_author(searchterm, search_source, ressort, date, begin_at, e
             article_objects = article_objects.filter(source__icontains = search_source)
         if ressort in RESSORTS :
             article_objects = article_objects.filter(category = ressort)
-        all_articles = article_objects.order_by('-last_update')[begin_at : end_at]          # range of results
+            
+        all_articles = article_objects.order_by('-last_update')
 
     for a in all_articles:
         versions = Version.objects.filter(article_id = a.id, boring = 0)
-        version_count = versions.count()     # get all articles with changes
-        all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
-        article_title = versions.order_by('-date')[0].title
-        articles[a.id] = {
+        version_count = len(versions)
+        if version_count > 1:           # get all articles with changes
+            all_diffs = '/diffview/?vid1='+str(a.first_version().id)+'&vid2='+str(a.latest_version().id)
+            article_title = versions.order_by('-date')[0].title
+            articles[a.id] = {
                 'id': a.id,
                 'title': article_title,
                 'url': a.url,
@@ -256,7 +258,7 @@ def get_articles_by_author(searchterm, search_source, ressort, date, begin_at, e
                 'ressort':  a.category,
                 'versioncount': version_count,
                 'all_diffs' : all_diffs
-        }
+            }
     return list(islice(articles.iteritems(),begin_at, end_at))
 
 def get_articles_by_keyword(searchterm, search_source, ressort, date, begin_at, end_at):
