@@ -20,6 +20,7 @@ class BildParser(BaseParser):
         self.source = ', '.join(self.domains)
         keywords = self.url.strip('http://www.bild.de').replace('/', ', ')
         self.url = soup.find('meta', {'name': 'og\:url'})['content'] if soup.find('meta', {'name': 'og\:url'}) else self.url
+        self.url = soup.find('meta', {'property': 'og\:url'})['content'] if soup.find('meta', {'property': 'og\:url'}) else self.url
         # category
         self.category = self.compute_category(keywords if keywords else '')
         #article headline
