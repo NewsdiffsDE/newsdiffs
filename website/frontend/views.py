@@ -223,7 +223,7 @@ def get_articles_by_url(url):
                     'ressort' : a.category,
                     'all_diffs' : all_diffs
                 }
-        return articles
+        return list(islice(articles.iteritems(),0,1))
 
 def get_articles_by_author(searchterm, search_source, ressort, date, begin_at, end_at):
     articles = {}
@@ -257,7 +257,7 @@ def get_articles_by_author(searchterm, search_source, ressort, date, begin_at, e
                 'versioncount': version_count,
                 'all_diffs' : all_diffs
         }
-    return articles
+    return list(islice(articles.iteritems(),begin_at, end_at))
 
 def get_articles_by_keyword(searchterm, search_source, ressort, date, begin_at, end_at):
     articles = {}
