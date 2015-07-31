@@ -172,7 +172,7 @@ def run_git_command(command, git_dir, max_timeout=15):
                                       cwd=git_dir,
                                       stderr=subprocess.STDOUT)
     return output
-
+# Get all urls on the news frontpages
 def get_all_article_urls():
     ans = set()
     for parser in parsers.parsers:
@@ -214,7 +214,7 @@ def is_boring(old, new):
         except UnicodeEncodeError:
             pass
     return False
-
+# Versioning info
 def get_diff_info(old, new):
     dmp = diff_match_patch.diff_match_patch()
     dmp.Diff_Timeout = 3 # seconds; default of 1 is too little
@@ -223,7 +223,7 @@ def get_diff_info(old, new):
     chars_added   = sum(len(text) for (sign, text) in diff if sign == 1)
     chars_removed = sum(len(text) for (sign, text) in diff if sign == -1)
     return dict(chars_added=chars_added, chars_removed=chars_removed)
-
+# Do the versioning
 def add_to_git_repo(data, filename, article):
     start_time = time.time()
 
@@ -302,7 +302,7 @@ def add_to_git_repo(data, filename, article):
 #    logger.debug('done %s', time.time()-start_time)
     return v, boring, diff_info
 
-
+#Parse the article for content
 def load_article(url):
     try:
         parser = parsers.get_parser(url)
@@ -328,6 +328,7 @@ def update_article(article, parsed_article):
     to_store = unicode(parsed_article).encode('utf8')
     t = datetime.now()
 #    logger.debug('Article parsed; trying to store')
+# If there already is a category,no need to change it
     article.category = article.category if article.category else parsed_article.category
     article.keywords = parsed_article.keywords
     article.source = parsed_article.source
@@ -360,25 +361,34 @@ def update_articles(todays_git_dir):
 #        logger.debug('Woo: %d/%d is %s' % (i+1, len(all_urls), url))
         if len(url) > 255:  #Icky hack, but otherwise they're truncated in DB.
             continue
+# Does url already exist in database?
         if not models.Article.objects.filter(url=url).count():
+# If not, does it's original url exist in database?
 #            logger.debug('Adding!')
             parsed_article = load_article(url)
+# Did the parsing fail? Is it a real article?
             if not parsed_article:
                 continue
             ogUrl = parsed_article.url
+# No need to scrape commercials again and again, ignore them by setting dir to 'old'
             if not parsed_article.real_article:
                 models.Article(url=url, git_dir='old').save()
+# Real article
             else:
+# If not in database, write original url
                 if not models.Article.objects.filter(url=ogUrl).count():
                     article = models.Article(url=ogUrl, git_dir=todays_git_dir)
                 else:
+# If in database, ignore the duplicate, new url
                     if not ogUrl == url:
                         models.Article(url=url, git_dir='old').save();
+# As we have already loaded the article, why no parse it right now?
                     article = models.Article.objects.get(url=ogUrl)
-
+#Do the update
                 update_article(article, parsed_article)
 #    logger.info('Done storing to database')
 
+# Defines the article's relevance/ need to update
 def get_update_delay(minutes_since_update):
     days_since_update = minutes_since_update // (24*60)
     if minutes_since_update < 60*3:
@@ -394,6 +404,7 @@ def get_update_delay(minutes_since_update):
     else:
         return 60*24*365*1e5  #ignore old articles
 
+# Do the actual update in repo
 def update_versions(todays_repo, do_all=False):
 #    logger.info('Looking for articles to check')
     articles = list(models.Article.objects.exclude(git_dir='old'))
