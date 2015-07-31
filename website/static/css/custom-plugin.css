@@ -6,6 +6,15 @@ h3 {
   margin-top: 30px;
 }
 
+p {
+    font-size: 14px;
+	margin-left: 22px;
+}
+
+body > div.container-fluid.maincontent > div.row.text > div > p:nth-child(2) {
+	margin-left: 0;
+}
+
 .step {
   font-size: 18px;
   margin-top: 20px;
@@ -20,6 +29,7 @@ h3 {
 	padding: 3px;
 	background-color: #666;
 	margin: 8px 0;
+	margin-left: 22px;
 }
 
 .glyphicon {
