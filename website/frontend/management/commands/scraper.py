@@ -377,12 +377,13 @@ def update_articles(todays_git_dir):
             else:
 # If not in database, write original url
                 if not models.Article.objects.filter(url=ogUrl).count():
-                    article = models.Article(url=ogUrl, git_dir=todays_git_dir)
-                else:
-# If in database, ignore the duplicate, new url
+                    # If in database, ignore the duplicate, new url
                     if not ogUrl == url:
                         models.Article(url=url, git_dir='old').save();
+                    article = models.Article(url=ogUrl, git_dir=todays_git_dir)
+                else:
 # As we have already loaded the article, why no parse it right now?
+                    models.Article(url=url, git_dir='old').save();
                     article = models.Article.objects.get(url=ogUrl)
 #Do the update
                 update_article(article, parsed_article)
