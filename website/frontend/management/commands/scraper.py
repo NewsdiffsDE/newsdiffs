@@ -370,11 +370,10 @@ def update_articles(todays_git_dir):
                 models.Article(url=url, git_dir='old').save()
             else:
                 if not models.Article.objects.filter(url=ogUrl).count():
-                    if not ogUrl == url:
-                        models.Article(url=url, git_dir='old').save();
                     article = models.Article(url=ogUrl, git_dir=todays_git_dir)
                 else:
-                    models.Article(url=url, git_dir='old').save();
+                    if not ogUrl == url:
+                        models.Article(url=url, git_dir='old').save();
                     article = models.Article.objects.get(url=ogUrl)
 
                 update_article(article, parsed_article)
